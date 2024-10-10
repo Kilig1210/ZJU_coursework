@@ -1,0 +1,1393 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>离散随机变量 &#8212; 统计与大数据分析</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint single-page" id="site-navigation">
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/L4.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/L4.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   问题1
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   问题2
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   随机变量
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   分布列
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   分布函数
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   常见离散随机变量
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bernoulli">
+     伯努利随机变量(Bernoulli)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#binomial">
+     二项随机变量(Binomial)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#geometric">
+     几何随机变量（Geometric）
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#poisson">
+     泊松随机变量（Poisson）
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   随机变量的函数
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   期望值和方差
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id10">
+   期望值和方差的性质
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id11">
+   常见随机变量的期望值和方差
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     均匀分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id13">
+     伯努利分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id14">
+     泊松分布
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id15">
+   利用期望值进行决策
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id16">
+   多个随机变量的联合分布
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id17">
+   多个随机变量的函数
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id18">
+     二项分布的期望值和方差
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id19">
+   条件期望值和方差
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id20">
+     几何分布的期望值和方差
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id21">
+   独立随机变量
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id22">
+   作业
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>离散随机变量</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   问题1
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   问题2
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   随机变量
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   分布列
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   分布函数
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   常见离散随机变量
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bernoulli">
+     伯努利随机变量(Bernoulli)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#binomial">
+     二项随机变量(Binomial)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#geometric">
+     几何随机变量（Geometric）
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#poisson">
+     泊松随机变量（Poisson）
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   随机变量的函数
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   期望值和方差
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id10">
+   期望值和方差的性质
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id11">
+   常见随机变量的期望值和方差
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     均匀分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id13">
+     伯努利分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id14">
+     泊松分布
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id15">
+   利用期望值进行决策
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id16">
+   多个随机变量的联合分布
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id17">
+   多个随机变量的函数
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id18">
+     二项分布的期望值和方差
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id19">
+   条件期望值和方差
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id20">
+     几何分布的期望值和方差
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id21">
+   独立随机变量
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id22">
+   作业
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <center>
+<h1> 统计与大数据分析</h1>
+<h2>离散随机变量</h2>
+<h5>肖朦，2023 </h5>
+</center><section id="id1">
+<h1>离散随机变量<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
+<section id="id2">
+<h2>问题1<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<p>假设你去投简历，已知成功的机会是0.2，即每5家公司会有一家有回音。</p>
+<p>你在连投5家后才收到第一个回音的概率是？</p>
+<p>你在投出5份简历之内收到回音的概率是？</p>
+</section>
+<section id="id3">
+<h2>问题2<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
+<p>闯红灯的人数比例为0.01%，在一个十字路口1小时有5万人通过，闯红灯的人数平均值为？服从什么分布？</p>
+</section>
+<section id="id4">
+<h2>随机变量<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>样本空间：所有试验结果的集合
+实验结果 =&gt; 实数</p></li>
+<li><p>随机变量：试验结果的实数函数</p></li>
+</ul>
+<p>例：连续抛硬币5次的结果
+- 长度为5的正反序列：不是随机变量
+- 5次抛掷正面朝上的次数：是随机变量</p>
+<ul class="simple">
+<li><p>离散随机变量：随机变量的取值范围是有限集合</p></li>
+<li><p>离散随机变量的函数也是离散随机变量</p></li>
+</ul>
+</section>
+<section id="id5">
+<h2>分布列<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>分布列：对于随机变量的每个取值，给出一个概率</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ p_X(x) = P(\{X=x\})\]</div>
+<ul class="simple">
+<li><p>X随机变量，x随机变量的取值，<span class="math notranslate nohighlight">\(p_X\)</span> 随机变量X的分布列</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ \sum_x p_X(x) = 1 \]</div>
+<ul class="simple">
+<li><p>例：一枚硬币抛两次，X为正面朝上的次数</p></li>
+</ul>
+<div class="amsmath math notranslate nohighlight" id="equation-0a743e7d-6405-491b-9ef7-0e30645c98e3">
+<span class="eqno">(1)<a class="headerlink" href="#equation-0a743e7d-6405-491b-9ef7-0e30645c98e3" title="Permalink to this equation">#</a></span>\[\begin{equation}
+  p_X(x) =
+    \begin{cases}
+      1/4 &amp; \text{x=0 或 x=2}\\
+      1/2 &amp; \text{x=1}\\
+      0 &amp; \text{其他}
+    \end{cases}       
+\end{equation}\]</div>
+</section>
+<section id="id6">
+<h2>分布函数<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>分布函数 (累积分布函数 CDF)：对随机变量X，取值小于x的概率</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ F(x)=P(X&lt;=x) = \sum_{i|a_i&lt;=x} p_i\]</div>
+<ul class="simple">
+<li><p>对任意随机变量X, F(x)单调递增, <span class="math notranslate nohighlight">\(x\rightarrow \infty, F(x) \rightarrow 1\)</span></p></li>
+</ul>
+</section>
+<section id="id7">
+<h2>常见离散随机变量<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h2>
+<section id="bernoulli">
+<h3>伯努利随机变量(Bernoulli)<a class="headerlink" href="#bernoulli" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>两种取值：正反，患病与否</p></li>
+</ul>
+<div class="amsmath math notranslate nohighlight" id="equation-ff814be0-cca1-4109-beac-8679073c6209">
+<span class="eqno">(2)<a class="headerlink" href="#equation-ff814be0-cca1-4109-beac-8679073c6209" title="Permalink to this equation">#</a></span>\[\begin{equation}
+  p_X(x) =
+    \begin{cases}
+      p &amp; \text{k=1}\\
+      1-p &amp; \text{k=0}
+    \end{cases}       
+\end{equation}\]</div>
+</section>
+<section id="binomial">
+<h3>二项随机变量(Binomial)<a class="headerlink" href="#binomial" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>一个伯努利变量在n次试验中得到特定结果的次数k</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[p(k) = \binom{n}{k} p^{k} (1-p)^{n-k}\]</div>
+<p>其中</p>
+<div class="math notranslate nohighlight">
+\[\binom{n}{k}= \frac{n!}{k!(n - k)!} = C_{n}^k\]</div>
+<ul class="simple">
+<li><p>二项分布的参数：n,p, 随机变量k。用 B(n,p)表示</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[2 3 5 4 3 4 0 8 2 1 2 3 3 1 4 4 6 2 2 4 3 3 2 4 2 2 2 2 2 4 3 3 6 5 2 5 3
+ 3 1 5 2 3 5 4 4 2 3 6 3 1 5 3 3 3 4 4 2 2 2 4 2 2 8 3 4 4 2 4 3 2 3 7 3 3
+ 6 6 3 6 2 5 5 3 0 1 3 0 4 4 1 3 5 1 3 0 5 3 3 4 0 3]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:ylabel=&#39;Count&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/L4_10_1.png" src="_images/L4_10_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">discrete</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:ylabel=&#39;Count&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/L4_11_1.png" src="_images/L4_11_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## 样本的大小</span>
+<span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">f</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">discrete</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">common_bins</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">discrete</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">common_bins</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/L4_12_0.png" src="_images/L4_12_0.png" />
+</div>
+</div>
+</section>
+<section id="geometric">
+<h3>几何随机变量（Geometric）<a class="headerlink" href="#geometric" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>伯努利随机变量得到正面结果的概率p,连续多次实验，直到第k次才得到正面结果</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[p(k) = (1-p)^{k-1}p\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">geometric</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">discrete</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">stat</span><span class="o">=</span><span class="s1">&#39;probability&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:ylabel=&#39;Probability&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/L4_14_1.png" src="_images/L4_14_1.png" />
+</div>
+</div>
+<p>假设你去投简历，已知成功的机会是0.2，即每5家公司会有一家有回音。</p>
+<p>你在连投5家后才收到第一个回音的概率是？</p>
+<p>你在投出5份简历之内收到回音的概率是？</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">axs2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">discrete</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">stat</span><span class="o">=</span><span class="s1">&#39;probability&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">ecdfplot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">axs2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:ylabel=&#39;Probability&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/L4_16_1.png" src="_images/L4_16_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">axs2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">ecdfplot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">axs2</span><span class="p">)</span>
+
+<span class="n">x_special</span> <span class="o">=</span> <span class="mf">5.0</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">axs2</span><span class="o">.</span><span class="n">get_lines</span><span class="p">():</span>
+    <span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>   
+    <span class="n">ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">x_special</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># first index where y is larger than y_special</span>
+    <span class="n">axs2</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x_special</span><span class="p">,</span><span class="n">b</span><span class="p">[</span><span class="n">ind</span><span class="p">],</span> <span class="sa">f</span><span class="s1">&#39; </span><span class="si">{</span><span class="n">b</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">)</span> <span class="c1"># maybe color=line.get_color()</span>
+<span class="n">axs2</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x_special</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#cfcfcf&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/L4_17_0.png" src="_images/L4_17_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+
+<span class="n">st</span><span class="o">.</span><span class="n">geom</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.67232
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="poisson">
+<h3>泊松随机变量（Poisson）<a class="headerlink" href="#poisson" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>泊松分布与二项分布</p>
+<ul>
+<li><p>若二项分布中的n很大，p很小，<span class="math notranslate nohighlight">\(\lambda = np\)</span>，二项分布逼近泊松分布</p></li>
+</ul>
+</li>
+<li><p>随机变量X表示一段时间/空间内发生事件A的次数</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ p_X(k) = e^{-\lambda}\frac{\lambda^k}{k!}\]</div>
+<ul class="simple">
+<li><p>用P(<span class="math notranslate nohighlight">\(\lambda\)</span>)表示</p></li>
+<li><p>例：n=100,p=0.01,k=5时，<span class="math notranslate nohighlight">\(P(k,1)=0.00306\)</span>, <span class="math notranslate nohighlight">\(B(k,100,0.01)=0.0029\)</span></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="c1">##Poisson lambda = 1</span>
+<span class="c1">##Binomial n=100, p=0.01, np=1</span>
+
+<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mf">0.01</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">discrete</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">stat</span><span class="o">=</span><span class="s1">&#39;probability&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">discrete</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">stat</span><span class="o">=</span><span class="s1">&#39;probability&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:ylabel=&#39;Probability&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/L4_20_1.png" src="_images/L4_20_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10000</span><span class="p">)</span>
+<span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mf">0.01</span><span class="p">,</span><span class="mi">10000</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">([</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">],</span><span class="n">discrete</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">stat</span><span class="o">=</span><span class="s1">&#39;probability&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:ylabel=&#39;Probability&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/L4_21_1.png" src="_images/L4_21_1.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="id8">
+<h2>随机变量的函数<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10000</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">x</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">,</span><span class="n">discrete</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">stat</span><span class="o">=</span><span class="s1">&#39;probability&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;__array_function__ internals&gt;:200: RuntimeWarning: Converting input from bool to &lt;class &#39;numpy.uint8&#39;&gt; for compatibility.
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:ylabel=&#39;Probability&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/L4_23_2.png" src="_images/L4_23_2.png" />
+</div>
+</div>
+</section>
+<section id="id9">
+<h2>期望值和方差<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h2>
+<p>随机变量的数字特征</p>
+<ul class="simple">
+<li><p>期望值：X所有取值的概率加权平均 (均值)</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ E(X) = \sum_x x p_X{x}\]</div>
+<ul class="simple">
+<li><p>方差：X在期望值周围分散程度</p></li>
+</ul>
+<div class="amsmath math notranslate nohighlight" id="equation-05928a1c-5642-458c-bd12-90c9f10bcd2c">
+<span class="eqno">(3)<a class="headerlink" href="#equation-05928a1c-5642-458c-bd12-90c9f10bcd2c" title="Permalink to this equation">#</a></span>\[\begin{align}
+ \text{var}(X) &amp;= E[(X-E(X))^2] \\
+ &amp;=E(X^2 + E(X)^2 -2XE(X)) \\
+ &amp;=E(X^2) - (E(X))^2
+\end{align}\]</div>
+<ul class="simple">
+<li><p>标准差：方差的平方根</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ \sigma_X = \sqrt{\text{var}(X)}\]</div>
+<ul class="simple">
+<li><p>n阶矩</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ E[X^n] = \sum_x x^n p_X(x) \]</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>- 一阶矩：期望值
+- 二阶矩：可算出方差
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h2>期望值和方差的性质<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>若Y为X的线性函数，Y=aX+b</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ E(Y) = aE(X)+b \]</div>
+<div class="math notranslate nohighlight">
+\[ \text{var}(Y) = a^2\text{var}(X)\]</div>
+<ul class="simple">
+<li><p>若g(X)不是X的线性函数，<span class="math notranslate nohighlight">\(E(g(X))\neq g(E(X))\)</span></p></li>
+</ul>
+<ul>
+<li><p>例: 平均速度和平均时间。假设上学路途共2公里，天气好时（概率0.6），步行上学，速度5公里/小时，天气不好时，骑车上学，速度30公里/小时。求上学平均用时。</p>
+<ul class="simple">
+<li><p>t = 2/v = g(v)</p></li>
+<li><p>求E(t)</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ \sum_t tp(t) = 2/5 *0.6 + 2/30*0.4 = 4/15\]</div>
+<ul class="simple">
+<li><p>若用 2/E(v) 来计算</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split} E(v) = 5*0.6 + 30*0.4 = 15,\\ 2/E(v) = 2/15 \end{split}\]</div>
+</li>
+</ul>
+</section>
+<section id="id11">
+<h2>常见随机变量的期望值和方差<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h2>
+<section id="id12">
+<h3>均匀分布<a class="headerlink" href="#id12" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>变量X可在[a,b]范围内取任意整数</p></li>
+</ul>
+<div class="amsmath math notranslate nohighlight" id="equation-d5827ca0-3ef6-4a84-9f9e-5700e0ced267">
+<span class="eqno">(4)<a class="headerlink" href="#equation-d5827ca0-3ef6-4a84-9f9e-5700e0ced267" title="Permalink to this equation">#</a></span>\[\begin{equation}
+      p_X(k) =
+        \begin{cases}
+          1/(b-a+1) &amp; k=a,a+1,\cdots,b  \\
+          0 &amp; \text{其他}
+        \end{cases}       
+\end{equation}\]</div>
+<div class="math notranslate nohighlight">
+\[ E(X) =  1/(b-a+1) \sum_{k=a}^{b} k = (a+b)/2\]</div>
+<div class="math notranslate nohighlight">
+\[ E(X^2) = 1/(b-a+1) \sum_{k=a}^{b} k^2 \]</div>
+<ul class="simple">
+<li><p>若 a=1, b=n</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ E(X^2) = \frac{1}{n} \sum_{k=1}^{n} k^2 = \frac{1}{6}(n+1)(2n+1)\]</div>
+<div class="math notranslate nohighlight">
+\[ \text{var}(X) = E(X^2)-(E(X))^2 = \frac{n^2-1}{12}  \]</div>
+<ul class="simple">
+<li><p>平移 a=1, b=n 至 [a,b]区间，保持区间长度相等，方差相同，n=b-a+1</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ \text{var}(X) = \frac{(b-a)(b-a+2)}{12} \]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">##计算均匀分布的各种数学特征</span>
+
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">b</span><span class="o">=</span><span class="mi">10</span>
+<span class="n">m</span><span class="o">=</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+<span class="n">v</span><span class="o">=</span><span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="n">a</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="n">a</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mi">12</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">v</span><span class="p">)</span>
+
+<span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">skew</span><span class="p">,</span> <span class="n">kurt</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">randint</span><span class="o">.</span><span class="n">stats</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">moments</span><span class="o">=</span><span class="s1">&#39;mvsk&#39;</span><span class="p">)</span> <span class="c1">## n阶中心矩</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">skew</span><span class="p">,</span> <span class="n">kurt</span><span class="p">)</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">randint</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">st</span><span class="o">.</span><span class="n">randint</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.0 10.0
+5.0 10.0 0.0 -1.22
+5.0 10.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">x</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">randint</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">discrete</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">randint</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">randint</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">randint</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">st</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.0 5.146
+10.0 9.786470470470471
+3.1622776601683795 3.1283334973225716
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DescribeResult(nobs=1000, minmax=(0, 10), mean=5.146, variance=9.786470470470473, skewness=-0.063570030900215, kurtosis=-1.212139705751393)
+</pre></div>
+</div>
+<img alt="_images/L4_29_2.png" src="_images/L4_29_2.png" />
+</div>
+</div>
+</section>
+<section id="id13">
+<h3>伯努利分布<a class="headerlink" href="#id13" title="Permalink to this headline">#</a></h3>
+<div class="amsmath math notranslate nohighlight" id="equation-44f29f5a-1c24-41b5-b26e-64ce03b687e7">
+<span class="eqno">(5)<a class="headerlink" href="#equation-44f29f5a-1c24-41b5-b26e-64ce03b687e7" title="Permalink to this equation">#</a></span>\[\begin{equation}
+  p_X(x) =
+    \begin{cases}
+      p &amp; \text{k=1}\\
+      1-p &amp; \text{k=0}
+    \end{cases}       
+\end{equation}\]</div>
+<div class="math notranslate nohighlight">
+\[ E(X) = p\cdot 1 + (1-p)\cdot 0 = p\]</div>
+<div class="math notranslate nohighlight">
+\[ E(X^2) = p\cdot 1 + (1-p)\cdot 0 = p\]</div>
+<div class="math notranslate nohighlight">
+\[ \text{var}(X) = E(X^2) - (E(X))^2= p-p^2= p(1-p)\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="n">p</span><span class="o">=</span><span class="mf">0.3</span>
+<span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">skew</span><span class="p">,</span> <span class="n">kurt</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">bernoulli</span><span class="o">.</span><span class="n">stats</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">moments</span><span class="o">=</span><span class="s1">&#39;mvsk&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">skew</span><span class="p">,</span> <span class="n">kurt</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">p</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3 0.21 0.8728715609439694 -1.2380952380952381
+0.3 0.21
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">bernoulli</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">stat</span><span class="o">=</span><span class="s1">&#39;probability&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:ylabel=&#39;Probability&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/L4_32_1.png" src="_images/L4_32_1.png" />
+</div>
+</div>
+</section>
+<section id="id14">
+<h3>泊松分布<a class="headerlink" href="#id14" title="Permalink to this headline">#</a></h3>
+<div class="math notranslate nohighlight">
+\[ p_X(k) = e^{-\lambda}\frac{\lambda^k}{k!}\]</div>
+<div class="math notranslate nohighlight">
+\[ E(X) = \lambda \]</div>
+<div class="math notranslate nohighlight">
+\[ \text{var}(X) = \lambda \]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="n">lambdak</span><span class="o">=</span><span class="mi">8</span>
+<span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">skew</span><span class="p">,</span> <span class="n">kurt</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">poisson</span><span class="o">.</span><span class="n">stats</span><span class="p">(</span><span class="n">lambdak</span><span class="p">,</span> <span class="n">moments</span><span class="o">=</span><span class="s1">&#39;mvsk&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">skew</span><span class="p">,</span> <span class="n">kurt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8.0 8.0 0.3535533905932738 0.125
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="id15">
+<h2>利用期望值进行决策<a class="headerlink" href="#id15" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>一个问题的多个方案，选择具有最大期望回报的策略</p></li>
+<li><p>例：智力游戏：2个问题，问题1简单，回答正确的概率是0.8，可以得到100元；问题2难，回答正确的概率是0.5，可以得到200元。</p></li>
+</ul>
+<p>需要选定答题顺序，但第一题答对了才能答第二题。问应该先答哪一题？</p>
+<ul class="simple">
+<li><p>策略1：先答第一题, E(X) = 0.8 * 100+  0.8 * 0.5 * 200 = 160</p></li>
+<li><p>策略2：先答第二题：E(X) = 0.5 * 200 + 0.5 * 0.8 * 100 = 140</p></li>
+</ul>
+</section>
+<section id="id16">
+<h2>多个随机变量的联合分布<a class="headerlink" href="#id16" title="Permalink to this headline">#</a></h2>
+<div class="math notranslate nohighlight">
+\[ p_{X,Y}(x,y) = P(X=x,Y=y) \]</div>
+<ul class="simple">
+<li><p>边缘分布</p></li>
+</ul>
+<div class="amsmath math notranslate nohighlight" id="equation-4882b092-bbfd-4b99-a23e-8824fa816b52">
+<span class="eqno">(6)<a class="headerlink" href="#equation-4882b092-bbfd-4b99-a23e-8824fa816b52" title="Permalink to this equation">#</a></span>\[\begin{align}
+ p_{X}(x) &amp;= P(X=x) \\
+   &amp;=\sum_{y}P(X=x,Y=y) \\
+   &amp;=\sum_{y}P_{X,Y}(x,y)
+ \end{align}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## 例：XY的联合分布和边缘分布</span>
+
+<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">10000</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">discrete</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">discrete</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> 
+<span class="n">g0</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;hex&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/L4_37_0.png" src="_images/L4_37_0.png" />
+<img alt="_images/L4_37_1.png" src="_images/L4_37_1.png" />
+</div>
+</div>
+</section>
+<section id="id17">
+<h2>多个随机变量的函数<a class="headerlink" href="#id17" title="Permalink to this headline">#</a></h2>
+<p>-若多个随机变量构建新的变量，Z= g(X,Y), 则可以通过联合分布得到Z的分布</p>
+<div class="math notranslate nohighlight">
+\[ E(g(X,Y)) = \sum_x\sum_y g(x,y)p(x,y)\]</div>
+<ul class="simple">
+<li><p>若g是X,Y的线性函数时</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ E(aX+bY+c) = a E(X)+ bE(Y)+c\]</div>
+<section id="id18">
+<h3>二项分布的期望值和方差<a class="headerlink" href="#id18" title="Permalink to this headline">#</a></h3>
+<ul>
+<li><p>班上有300个学生，每人得A的概率是1/3。X是班上得到A的学生的总数，问X的期望值？</p>
+<ul class="simple">
+<li><p>二项分布的期望值</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[p(k) = \binom{n}{k} p^{k} (1-p)^{n-k}\]</div>
+<div class="math notranslate nohighlight">
+\[ E(k) = \sum_k k \binom{n}{k} p^{k} (1-p)^{n-k} \]</div>
+<ul class="simple">
+<li><p>二项分布 =&gt; 泊松分布， <span class="math notranslate nohighlight">\(\lambda = np = 300\cdot 1/3 =100\)</span>, 泊松分布的期望值为<span class="math notranslate nohighlight">\(\lambda\)</span></p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## 此时用泊松分布代替二项分布是否合理？</span>
+
+<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">10000</span><span class="p">)</span>
+<span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="mi">10000</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">discrete</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">discrete</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:ylabel=&#39;Count&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/L4_39_1.png" src="_images/L4_39_1.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>多个随机变量的联合分布</p></li>
+<li><p><span class="math notranslate nohighlight">\(X_i\)</span>为第i个学生的得分情况，得A，<span class="math notranslate nohighlight">\(X_i=1\)</span>, 否则，<span class="math notranslate nohighlight">\(X_i=0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(X_i\)</span>为伯努利变量，p = 1/3, E(<span class="math notranslate nohighlight">\(X_i\)</span>)=1/3</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split} X = X_1+ X_2 + X_3 + \cdots + X_n \\
+  E(X) = \sum_{i=1}^{300} E(X_i) = 300 \cdot 1/3 = 100 \end{split}\]</div>
+<ul>
+<li><p>方差？</p>
+<ul>
+<li><p>若利用泊松近似，方差= <span class="math notranslate nohighlight">\(\lambda = 100\)</span></p></li>
+<li><p>若利用多变量函数方法</p>
+<div class="amsmath math notranslate nohighlight" id="equation-783bed2d-414e-439f-900a-c3ca6d9fa128">
+<span class="eqno">(7)<a class="headerlink" href="#equation-783bed2d-414e-439f-900a-c3ca6d9fa128" title="Permalink to this equation">#</a></span>\[\begin{align}
+         \text{var}(X) = &amp;1^2 \sum \text{var}(X_i)\\
+            &amp;= \sum p(1-p) \\
+             &amp;= 1/3\cdot 2/3 \cdot 300 = 66.666
+         \end{align}\]</div>
+</li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="n">n</span><span class="o">=</span><span class="mi">300</span><span class="p">;</span><span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span>
+<span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">skew</span><span class="p">,</span> <span class="n">kurt</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">binom</span><span class="o">.</span><span class="n">stats</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">,</span> <span class="n">moments</span><span class="o">=</span><span class="s1">&#39;mvsk&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">skew</span><span class="p">,</span> <span class="n">kurt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100.0 66.66666666666667 0.040824829046386304 -0.005000000000000002
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>闯红灯的人数比例为0.01%，在一个十字路口1小时有5万人通过，闯红灯的人数平均值为？服从什么分布？方差？</p></li>
+<li><p>在一个十字路口1小时有5万人通过，观测到5个人闯红灯，闯红灯的概率服从什么分布？方差？</p></li>
+</ul>
+<ul class="simple">
+<li><p>var = 5?</p></li>
+<li><p>p = x/N , var(p)</p></li>
+</ul>
+<p>例：帽子问题</p>
+<p>共有n个人，每人有自己的帽子，都放一个盒子里。每人随机拿一顶，问最后拿回自己帽子的人数平均值？</p>
+<p>对每个人i，<span class="math notranslate nohighlight">\(X_i =1\)</span>,拿回自己的帽子，=0，没有拿回</p>
+<div class="math notranslate nohighlight">
+\[E（X_i）= 1/n\]</div>
+<div class="math notranslate nohighlight">
+\[ X = X_1 + X_2 + \cdots + X_n \]</div>
+<div class="math notranslate nohighlight">
+\[ E(x) = \sum E(X_i) = n\cdot 1/n =1\]</div>
+</section>
+</section>
+<section id="id19">
+<h2>条件期望值和方差<a class="headerlink" href="#id19" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>条件概率： P(X|Y），在给定条件Y下，也可以计算X的期望值和方差</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ E(X|Y=y) = \sum_x x p(x|Y=y)\]</div>
+<ul>
+<li><p>全概率公式：</p>
+<div class="amsmath math notranslate nohighlight" id="equation-e289b37f-e898-4334-8b09-cfb92baed756">
+<span class="eqno">(8)<a class="headerlink" href="#equation-e289b37f-e898-4334-8b09-cfb92baed756" title="Permalink to this equation">#</a></span>\[\begin{align}
+    E(X) &amp;= \sum_x x p(x)\\
+    &amp;=\sum_x \sum_y xp(x|y)p(y)\\
+    &amp;=\sum_y E(X|Y=y)p_Y(y)
+    \end{align}\]</div>
+</li>
+</ul>
+<section id="id20">
+<h3>几何分布的期望值和方差<a class="headerlink" href="#id20" title="Permalink to this headline">#</a></h3>
+<ul>
+<li><p>写一个程序成功的概率是p，连写X次直到成功。X的期望值和方差？</p>
+<ul class="simple">
+<li><p>X符合几何分布</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ p(X) = (1-p)^{x-1}p\]</div>
+<div class="math notranslate nohighlight">
+\[ E(X) = \sum_x x(1-p)^{x-1}p \]</div>
+<ul class="simple">
+<li><p>全概率公式：</p>
+<ul>
+<li><p>条件A：写一次就成功，X=1</p></li>
+<li><p>条件<span class="math notranslate nohighlight">\(A^c\)</span>: 写大于1次成功, X&gt;1</p></li>
+</ul>
+</li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ E(X|x=1) = 1\]</div>
+<div class="math notranslate nohighlight">
+\[ E(X|x&gt;1) = ? \]</div>
+<ul>
+<li><p>坐标变换: x-1 =&gt; y, x&gt;1 =&gt; y&gt;0</p>
+<p>E(X|x&gt;1) =&gt; E(Y+1|y&gt;0) = E(Y+1) = E(Y)+1, y&gt;0</p>
+</li>
+<li><p>总期望值:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-daf05d02-ebef-4d42-8a1b-d300dab39296">
+<span class="eqno">(9)<a class="headerlink" href="#equation-daf05d02-ebef-4d42-8a1b-d300dab39296" title="Permalink to this equation">#</a></span>\[\begin{align}
+       E(X) &amp;= p(x=1)E(X|x=1)+ p(x&gt;1)E(X|x&gt;1)\\
+       &amp;= p\cdot 1 + (1-p)(E(X)+1)\\
+       &amp;= 1/p
+      \end{align}\]</div>
+</li>
+<li><p>方差：</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a899b5cc-9c27-4f94-a898-4af7ee5251c8">
+<span class="eqno">(10)<a class="headerlink" href="#equation-a899b5cc-9c27-4f94-a898-4af7ee5251c8" title="Permalink to this equation">#</a></span>\[\begin{align}
+       E(X^2) &amp;= p(x=1)E(X^2|x=1)+ p(x&gt;1)E(X^2|x&gt;1)\\
+       &amp;= p\cdot 1 + (1-p)(E(X+1)^2)\\
+       &amp;= p+(1-p)(E(X^2)+2E(X)+1) \\
+       &amp;= \frac{2}{p^2}-\frac{1}{p}\\
+       \text{var}(X) &amp;= E(X^2)-E(X)^2 = \frac{1-p}{p^2}
+      \end{align}\]</div>
+</li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="n">p</span><span class="o">=</span><span class="mf">0.2</span>
+<span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">skew</span><span class="p">,</span> <span class="n">kurt</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">geom</span><span class="o">.</span><span class="n">stats</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">moments</span><span class="o">=</span><span class="s1">&#39;mvsk&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">skew</span><span class="p">,</span> <span class="n">kurt</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">p</span><span class="p">,(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span><span class="o">/</span><span class="n">p</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.0 20.0 2.0124611797498106 6.05
+5.0 19.999999999999996
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="id21">
+<h2>独立随机变量<a class="headerlink" href="#id21" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>独立随机变量X,Y：</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[p(x|Y)=p(x) =&gt; p(x,y) = p(x)p(y)\]</div>
+<div class="math notranslate nohighlight">
+\[ E(XY)=E(X)E(Y)\]</div>
+<div class="math notranslate nohighlight">
+\[ \text{var}(X+Y) = \text{var}(X)+\text{var}(Y)\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+
+<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">sem</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">st</span><span class="o">.</span><span class="n">sem</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">((</span><span class="n">x</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10.112 3.469 34.989 35.078528
+0.09908215416144964 0.05351544546112741
+0.09908215416144951
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id22">
+<h2>作业<a class="headerlink" href="#id22" title="Permalink to this headline">#</a></h2>
+<p>一个人连续掷硬币，直到出现正面朝上的所用的次数记为n，他将赢得得<span class="math notranslate nohighlight">\(2^n\)</span>元。问他赢得的奖金期望值是？</p>
+<p>请用Jupyter的markdown先写出解析答案。若最多可以投掷k次，用code实现随着k的变化，奖金期望值的变化，用图形表示（x轴k，y轴对应的期望值）。</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 肖朦<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

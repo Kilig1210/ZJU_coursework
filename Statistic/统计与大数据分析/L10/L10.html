@@ -1,0 +1,574 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>回归 &#8212; 统计与大数据分析</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint single-page" id="site-navigation">
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/L10.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/L10.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   回归
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   一元线性回归
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#least-squares">
+   最小二乘法（Least Squares）
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sigma-2">
+   残差与
+   <span class="math notranslate nohighlight">
+    \(\sigma^2\)
+   </span>
+   的估计
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>回归</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   回归
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   一元线性回归
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#least-squares">
+   最小二乘法（Least Squares）
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sigma-2">
+   残差与
+   <span class="math notranslate nohighlight">
+    \(\sigma^2\)
+   </span>
+   的估计
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <center>
+<h1> 统计与大数据分析</h1>
+<h2> 回归</h2>
+<h5>肖朦，2023</h5>
+</center><section id="id1">
+<h1>回归<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>高尔顿(1886年)研究父母与子女的身高关系，父母身高Y，子女身高X</p></li>
+</ul>
+<img alt="_images/Table1.jpg" src="_images/Table1.jpg" />
+<img alt="_images/Galton's_correlation_diagram_1875.jpeg" src="_images/Galton's_correlation_diagram_1875.jpeg" />
+<ul>
+<li><p>Y与X可以用线性函数来描述</p></li>
+<li><p>若考虑<span class="math notranslate nohighlight">\(Y-\bar{Y}\)</span>与<span class="math notranslate nohighlight">\(X-\bar{X}\)</span>的关系，对于极端的<span class="math notranslate nohighlight">\(Y-\bar{Y}\)</span>值，<span class="math notranslate nohighlight">\(|X-\bar{X}|\)</span>会变小</p></li>
+<li><p>均值回归 （Regression to the mean）</p>
+<div class="math notranslate nohighlight">
+\[ X= aY +b\]</div>
+<div class="math notranslate nohighlight">
+\[ \bar{X}= a\bar{Y} +b\]</div>
+<div class="math notranslate nohighlight">
+\[ X- \bar{X} = a (Y-\bar{Y})\]</div>
+</li>
+</ul>
+<ul class="simple">
+<li><p>对于变量Y，想找出影响它的所有<span class="math notranslate nohighlight">\(X_i\)</span>，并用函数描述它</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ Y = f(X_1,\cdots,X_p)+e\]</div>
+<ul class="simple">
+<li><p>e为未考虑的其他随机因素，要求它均值为0，E(e)=0</p></li>
+<li><p><span class="math notranslate nohighlight">\(f(X_i)\)</span>称为Y对<span class="math notranslate nohighlight">\(X_i\)</span>的回归函数</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ E[Y-f(X_i)]^2 = E(e^2) = \text{Var}(e) = \sigma^2\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\sigma^2\)</span>越小，用f逼近Y导致的均方误差越小</p></li>
+</ul>
+<p>回归分析的应用</p>
+<ol class="simple">
+<li><p>描述观测到的一组X和Y的关系</p></li>
+<li><p>估计回归函数</p></li>
+<li><p>预测Y值</p></li>
+</ol>
+<p>通常假设，X的测量没有误差，而Y受到e的因素影响有随机误差</p>
+</section>
+<section id="id2">
+<h1>一元线性回归<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>对于一组n个测量(<span class="math notranslate nohighlight">\(X_i,Y_i\)</span>)值，认为Y与X符合线性关系</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ Y_i = b_0+b_1X_i+e_i \]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(b_0\)</span>截距，<span class="math notranslate nohighlight">\(b_1\)</span>斜率</p></li>
+<li><p>Y的方差为: var(Y) = var(e) = <span class="math notranslate nohighlight">\(\sigma^2\)</span></p></li>
+<li><p>如何估计<span class="math notranslate nohighlight">\(b_0\)</span>和<span class="math notranslate nohighlight">\(b_1\)</span>?</p></li>
+</ul>
+</section>
+<section id="least-squares">
+<h1>最小二乘法（Least Squares）<a class="headerlink" href="#least-squares" title="Permalink to this headline">#</a></h1>
+<p>希望Y的预测值与测量值偏差越小越好,对于n个测量</p>
+<div class="math notranslate nohighlight">
+\[ Q = \sum (Y_i - (b_0+b_1X_i))^2\]</div>
+<p>最小化Q,最小二乘法</p>
+<p>将回归函数的表达式改写为</p>
+<div class="math notranslate nohighlight">
+\[ Y = \beta_0 + \beta_1 (X-\bar{X})\]</div>
+<p>上式被称为模型的中心化</p>
+<div class="math notranslate nohighlight">
+\[ Q = \sum [Y_i - (\beta_0+\beta_1(X_i-\bar{X}))]^2 \]</div>
+<p>对<span class="math notranslate nohighlight">\(\beta_0\)</span>和<span class="math notranslate nohighlight">\(\beta_1\)</span>求偏导</p>
+<div class="math notranslate nohighlight">
+\[ \frac{\partial Q}{\partial \beta_0} = -2 \sum [Y_i-\beta_0-\beta_1(X_i-\bar{X})] =0\]</div>
+<div class="math notranslate nohighlight">
+\[ \frac{\partial Q}{\partial \beta_1} = -2 \sum [Y_i-\beta_0-\beta_1(X_i-\bar{X})](X_i-\bar{X}) =0\]</div>
+<p>得到</p>
+<div class="math notranslate nohighlight">
+\[ \hat{\beta_0} = \sum Y_i/n = \bar{Y}\]</div>
+<div class="math notranslate nohighlight">
+\[ \hat{\beta_1} = \frac{\sum (X_i -\bar{X})Y_i}{S^2_X}\]</div>
+<p><span class="math notranslate nohighlight">\(\hat{\beta_0},  \hat{\beta_1}\)</span>均为<span class="math notranslate nohighlight">\(Y_i\)</span>的线性函数</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\hat{\beta_0},  \hat{\beta_1}\)</span>是<span class="math notranslate nohighlight">\(\beta_0,\beta_1\)</span>的无偏估计</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ \text{var}(\hat\beta_0) = \text{var}(\bar{Y}) = \sigma^2/n \]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-730a1da5-5809-495e-a60d-da75668aa58d">
+<span class="eqno">(1)<a class="headerlink" href="#equation-730a1da5-5809-495e-a60d-da75668aa58d" title="Permalink to this equation">#</a></span>\[\begin{align}
+\text{var}(\hat\beta_1) &amp;= \text{var}(\frac{\sum (X_i -\bar{X})Y_i}{S^2_X})\\
+&amp;= \sum(\frac{ (X_i -\bar{X})}{S^2_X})^2\text{var}(Y_i)\\
+&amp;= \text{var}(Y_i)/S^2_X = \sigma^2/S^2_X
+\end{align}\]</div>
+<ul class="simple">
+<li><p>截距<span class="math notranslate nohighlight">\(\beta_0\)</span>的方差由测量数据的样本决定</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta_1\)</span>的方差由<span class="math notranslate nohighlight">\(S^2_x\)</span>决定，X的点取得越紧密，方差越大，应尽量取分散的点</p></li>
+<li><p>可以证明，<span class="math notranslate nohighlight">\(\beta_0\)</span>和<span class="math notranslate nohighlight">\(\beta_1\)</span>的协方差cov<span class="math notranslate nohighlight">\((\beta_0,\beta_1)=0\)</span></p></li>
+</ul>
+<div class="amsmath math notranslate nohighlight" id="equation-b8ab989d-bfe2-4a36-a3f1-9aaa0f44696b">
+<span class="eqno">(2)<a class="headerlink" href="#equation-b8ab989d-bfe2-4a36-a3f1-9aaa0f44696b" title="Permalink to this equation">#</a></span>\[\begin{align}
+Y &amp;= \beta_0 + \beta_1 (X-\bar{X}) \\
+b_0 &amp;= \beta_0 - \beta_1\bar{X}\\
+b_1&amp;= \beta_1\\
+\text{var}(b_0) &amp;= \text{var}(\beta_0) + \bar{X}^2\text{var}(\beta_1)\\
+\text{var}(b_1) &amp;= \text{var}(\beta_1)
+\end{align}\]</div>
+</section>
+<section id="sigma-2">
+<h1>残差与<span class="math notranslate nohighlight">\(\sigma^2\)</span>的估计<a class="headerlink" href="#sigma-2" title="Permalink to this headline">#</a></h1>
+<p>参数估计的Y与测量值Y的差，</p>
+<div class="math notranslate nohighlight">
+\[ \delta_i = Y_i - \hat{Y}_i\]</div>
+<p>称为残差。是最小二乘法中的分量</p>
+<ul class="simple">
+<li><p>残差用于检验回归函数与数据的符合程度，不随x有特定趋势</p></li>
+<li><p>残差用于估计<span class="math notranslate nohighlight">\(\sigma^2\)</span></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ Y = b_0+b_1X + e\]</div>
+<div class="math notranslate nohighlight">
+\[ \text{var}(Y) = \text{var}(e) = \sigma^2\]</div>
+<ul class="simple">
+<li><p>如何估计<span class="math notranslate nohighlight">\(\sigma^2\)</span>?</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ \hat{\sigma}^2=\sum \delta_i ^2 / (n-?)\]</div>
+<ul class="simple">
+<li><p>分母为n-2, 证明请参照概率论与数理统计6.2.2章。2个未知参量</p></li>
+<li><p>当<span class="math notranslate nohighlight">\(e_i\)</span>符合正态分布N(<span class="math notranslate nohighlight">\(0,\sigma^2\)</span>)时，<span class="math notranslate nohighlight">\(\hat{\sigma}^2/\sigma^2 \sim \chi^2_{n-2}\)</span></p>
+<ul>
+<li><p>可以用于估计拟合与实验数据的符合程度</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">a</span><span class="o">=</span><span class="mi">3</span>
+<span class="n">b</span><span class="o">=</span><span class="mi">4</span>
+<span class="n">x</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="n">b</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="mi">95</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/L10_12_1.png" src="_images/L10_12_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">residplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/L10_13_1.png" src="_images/L10_13_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#检验趋势</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">residplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span><span class="n">lowess</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/L10_14_1.png" src="_images/L10_14_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">linregress</span>
+
+<span class="c1">#sx=sum (x-xi)^2</span>
+<span class="n">sx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">sy</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">meanx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">meany</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="c1">#b1=beta1</span>
+<span class="n">b1</span><span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">x</span><span class="o">-</span><span class="n">meanx</span><span class="p">)</span><span class="o">*</span><span class="n">y</span><span class="p">)</span><span class="o">/</span><span class="n">sx</span>
+<span class="c1">#b0=beta0-b1*xbar=ybar-b1*xbar</span>
+<span class="n">b0</span><span class="o">=</span> <span class="n">meany</span><span class="o">-</span><span class="n">b1</span><span class="o">*</span><span class="n">meanx</span>
+<span class="n">residual</span><span class="o">=</span><span class="nb">sum</span><span class="p">((</span><span class="n">y</span><span class="o">-</span><span class="n">b0</span><span class="o">-</span><span class="n">b1</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">varb1</span> <span class="o">=</span> <span class="n">residual</span><span class="o">/</span><span class="n">sx</span><span class="o">/</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">varb0</span> <span class="o">=</span> <span class="n">residual</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="n">meanx</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">varb1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Calculation: slope=&quot;</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="s2">&quot;err=&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">varb1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Calculation: intercept=&quot;</span><span class="p">,</span><span class="n">b0</span><span class="p">,</span><span class="s2">&quot;err=&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">varb0</span><span class="p">))</span>
+<span class="n">result</span><span class="o">=</span><span class="n">linregress</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fit: slope=&quot;</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">slope</span><span class="p">,</span><span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fit: intercept=&quot;</span><span class="p">,</span><span class="n">result</span><span class="o">.</span><span class="n">intercept</span><span class="p">,</span><span class="n">result</span><span class="o">.</span><span class="n">intercept_stderr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Calculation: slope= 2.673200837026146 err= 0.31747618192943394
+Calculation: intercept= 5.216099892669153 err= 1.853101865852724
+Fit: slope= 2.6732008370261453 0.31747618192943405
+Fit: intercept= 5.216099892669158 1.853101865852725
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 肖朦<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

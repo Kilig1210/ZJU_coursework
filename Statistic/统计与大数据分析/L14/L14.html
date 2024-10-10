@@ -1,0 +1,1373 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>二元分类 &#8212; 统计与大数据分析</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint single-page" id="site-navigation">
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/L14.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/L14.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   二元分类
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     单特征值情形
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   阶梯函数
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#logistic-sigmoid">
+   Logistic (Sigmoid) 函数
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#logistic">
+   Logistic函数的拟合
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     最小二乘法求解
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     最大似然法求解
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#gradient-descent">
+   阶梯下降法(Gradient Descent)
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#step">
+     Step的选择
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   拟合（分类 ）结果
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sklearn-logistic-regression">
+   Sklearn包实现 （Logistic Regression）
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#regularization">
+   正则化 (Regularization)
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>二元分类</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   二元分类
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     单特征值情形
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   阶梯函数
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#logistic-sigmoid">
+   Logistic (Sigmoid) 函数
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#logistic">
+   Logistic函数的拟合
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     最小二乘法求解
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     最大似然法求解
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#gradient-descent">
+   阶梯下降法(Gradient Descent)
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#step">
+     Step的选择
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   拟合（分类 ）结果
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sklearn-logistic-regression">
+   Sklearn包实现 （Logistic Regression）
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#regularization">
+   正则化 (Regularization)
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <center>
+<h1> 统计与大数据分析</h1>
+<h2>机器学习2: 二元分类</h2>
+<h5>肖朦，2023 </h5>
+</center><section id="id1">
+<h1>二元分类<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>将数据分为A、B两类</p></li>
+<li><p>输入：特征值 (<span class="math notranslate nohighlight">\(x_{1i},x_{2i}\)</span>)</p></li>
+<li><p>输出：(<span class="math notranslate nohighlight">\(y_{1i},y_{2i}\)</span>)，每个y为离散值，0或1</p></li>
+<li><p>假设函数：如何找到一个好的函数来描述x和y的对应关系？</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<span class="n">iris_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span><span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="o">+</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">])</span>
+<span class="n">iris_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal length (cm)</th>
+      <th>sepal width (cm)</th>
+      <th>petal length (cm)</th>
+      <th>petal width (cm)</th>
+      <th>target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>6.7</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.3</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>6.3</td>
+      <td>2.5</td>
+      <td>5.0</td>
+      <td>1.9</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>6.5</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.0</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>6.2</td>
+      <td>3.4</td>
+      <td>5.4</td>
+      <td>2.3</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>5.9</td>
+      <td>3.0</td>
+      <td>5.1</td>
+      <td>1.8</td>
+      <td>2.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>150 rows × 5 columns</p>
+</div></div></div>
+</div>
+<section id="id2">
+<h2>单特征值情形<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">iris_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">iris_df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span><span class="o">!=</span><span class="mi">0</span><span class="p">,[</span><span class="s2">&quot;petal width (cm)&quot;</span><span class="p">,</span><span class="s2">&quot;petal length (cm)&quot;</span><span class="p">]],</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="p">[</span><span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="o">!=</span><span class="mi">0</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="s2">&quot;petal width (cm)&quot;</span><span class="p">],</span><span class="n">y_train</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Paired</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x1622ae790&gt;
+</pre></div>
+</div>
+<img alt="_images/L14_4_1.png" src="_images/L14_4_1.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="id3">
+<h1>阶梯函数<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h1>
+<ul>
+<li><p>定义</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}f(x)=\begin{cases}
+    1,&amp;  x&gt; 0\\
+    0,              &amp; x\leq 0
+    \end{cases}
+    \end{split}\]</div>
+</li>
+<li><p>导数不连续</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">xarr</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1">#heaviside：阶梯函数</span>
+<span class="c1">#heaviside(x1, x2) =  0   if x1 &lt; 0</span>
+<span class="c1">#                  = x2   if x1 == 0</span>
+<span class="c1">#                  =  1   if x1 &gt; 0</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">heaviside</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="mf">0.5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x16240ed90&gt;]
+</pre></div>
+</div>
+<img alt="_images/L14_6_1.png" src="_images/L14_6_1.png" />
+</div>
+</div>
+</section>
+<section id="logistic-sigmoid">
+<h1>Logistic (Sigmoid) 函数<a class="headerlink" href="#logistic-sigmoid" title="Permalink to this headline">#</a></h1>
+<div class="math notranslate nohighlight">
+\[ f(x) = \frac{1}{1+e^{-x}}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">expit</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+<span class="n">xarr</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="c1">#sigmoid函数</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">expit</span><span class="p">(</span><span class="n">xarr</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x162488be0&gt;]
+</pre></div>
+</div>
+<img alt="_images/L14_8_1.png" src="_images/L14_8_1.png" />
+</div>
+</div>
+<ul>
+<li><p>y只能取0,1两个值，将函数f(x)看做x取特定值时，y=1的概率</p>
+<ul class="simple">
+<li><p>f(x)= P(y=1|x)</p></li>
+<li><p>1-f(x)对应<span class="math notranslate nohighlight">\(y\neq1\)</span>的概率，即y=0的概率，1-f(x)=1-P(y=1|x)=P(y=0|x)</p></li>
+</ul>
+</li>
+<li><p>阶梯函数</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}f(x)=\begin{cases}
+    1,&amp;  x&gt; 0\\
+    0,              &amp; x\leq 0
+    \end{cases}
+    \end{split}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x&gt;0\)</span>时，y=1的概率为1, <span class="math notranslate nohighlight">\(P(y=1|x&gt;0)=1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(x\leq 0\)</span>时，y=0的概率为1, <span class="math notranslate nohighlight">\(P(y=0|x\leq0)=1-P(y=1|x\leq0)=1\)</span></p></li>
+</ul>
+</li>
+<li><p>Logistic 函数</p>
+<div class="math notranslate nohighlight">
+\[ f(x) = \frac{1}{1+e^{-x}}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x&gt;0\)</span>时，y=1的概率为f(x),<span class="math notranslate nohighlight">\(P(y=1|x&gt;0)=f(x)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(x\leq 0\)</span>时，y=0的概率为1-f(x),<span class="math notranslate nohighlight">\(P(y=0|x\leq 0)=1-P(y=1|x\leq0)=1-f(x)\)</span></p></li>
+</ul>
+</li>
+</ul>
+<ul class="simple">
+<li><p>检查Logistic函数与数据的符合程度</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xmin</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="s2">&quot;petal width (cm)&quot;</span><span class="p">])</span>
+<span class="n">xmax</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="s2">&quot;petal width (cm)&quot;</span><span class="p">])</span>
+<span class="c1">#中心化操作        </span>
+<span class="n">xval</span><span class="o">=</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="s2">&quot;petal width (cm)&quot;</span><span class="p">]</span><span class="o">-</span><span class="n">xmin</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">xmax</span><span class="o">-</span><span class="n">xmin</span><span class="p">)</span>
+<span class="n">yval</span><span class="o">=</span><span class="n">y_train</span><span class="o">-</span><span class="mi">1</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xval</span><span class="p">,</span><span class="n">yval</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Paired</span><span class="p">)</span>
+<span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/L14_11_0.png" src="_images/L14_11_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span> <span class="n">expit</span><span class="p">(</span><span class="n">xarr</span><span class="o">*</span><span class="mf">0.5</span><span class="p">))</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span> <span class="n">expit</span><span class="p">(</span><span class="n">xarr</span><span class="o">*</span><span class="mi">50</span><span class="p">))</span>
+<span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/L14_12_0.png" src="_images/L14_12_0.png" />
+</div>
+</div>
+</section>
+<section id="logistic">
+<h1>Logistic函数的拟合<a class="headerlink" href="#logistic" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>对x取某种函数z，使得y与z满足logistic函数</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ y = f(z) = \frac{1}{1+e^{-z}}\]</div>
+<ul class="simple">
+<li><p>假设z是x的线性函数</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ z= b_0 +b_1 x\]</div>
+<ul class="simple">
+<li><p>如何找到<span class="math notranslate nohighlight">\(b_0\)</span>和<span class="math notranslate nohighlight">\(b_1\)</span>的最佳值？</p></li>
+</ul>
+<section id="id4">
+<h2>最小二乘法求解<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>最小二乘法：残差的平方和最小</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ \delta^2 = [y - f(z)]^2 \]</div>
+<ul class="simple">
+<li><p>损失函数（代价函数）, cost function：<span class="math notranslate nohighlight">\(\delta^2\)</span></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">lsq</span><span class="p">(</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(((</span><span class="n">expit</span><span class="p">(</span><span class="n">b1</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">b0</span><span class="p">)</span><span class="o">-</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">xval</span><span class="p">,</span><span class="n">yval</span><span class="p">))</span>
+
+<span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figaspect</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">lsq</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">yy</span><span class="p">),</span> <span class="n">rstride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cstride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">lsq</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">yy</span><span class="p">),</span> <span class="n">linewidths</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span><span class="n">linestyles</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.contour.QuadContourSet at 0x1624b8850&gt;
+</pre></div>
+</div>
+<img alt="_images/L14_15_1.png" src="_images/L14_15_1.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>局部最小值有多个</p></li>
+<li><p>对<span class="math notranslate nohighlight">\(b_0\)</span>和<span class="math notranslate nohighlight">\(b_1\)</span>偏微分为0的解有多个</p></li>
+<li><p>可以通过扫描全空间找到全局最小值</p></li>
+</ul>
+</section>
+<section id="id5">
+<h2>最大似然法求解<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>找到<span class="math notranslate nohighlight">\(b_0\)</span>和<span class="math notranslate nohighlight">\(b_1\)</span>的解使得整体数据发生的概率最大</p></li>
+</ul>
+<div class="amsmath math notranslate nohighlight" id="equation-d5cabde4-6de7-49aa-99a3-d799ed27695c">
+<span class="eqno">(1)<a class="headerlink" href="#equation-d5cabde4-6de7-49aa-99a3-d799ed27695c" title="Permalink to this equation">#</a></span>\[\begin{align}
+L &amp;= \Pi_{i=1}^{n} P(y=1|x_i) \Pi_{i=1}^{m}P(y=0|x_i)\\
+&amp;=\Pi_{i=1}^{n} f(z_i)\ \Pi_{i=1}^{m} [1-f(z_i)]
+\end{align}\]</div>
+<ul class="simple">
+<li><p>即要求log(L)最大</p></li>
+</ul>
+<div class="amsmath math notranslate nohighlight" id="equation-a2df59dd-acf5-4322-b666-231076e460d2">
+<span class="eqno">(2)<a class="headerlink" href="#equation-a2df59dd-acf5-4322-b666-231076e460d2" title="Permalink to this equation">#</a></span>\[\begin{align}
+\ln L &amp;= \sum_{i=1}^{n} \log (f(z_i)) + \sum_{i=1}^{m} \log [1-f(z_i)]\\
+&amp;= \sum_{i=1}^{n} \log\frac{1}{1+e^{-z_i}} + \sum_{i=1}^{m}\log\frac{e^{-z_i}}{1+e^{-z_i}}\\
+&amp;= \sum_{i=1}^{N}  y_i\log\frac{1}{1+e^{-z_i}} + (1-y_i)\log\frac{e^{-z_i}}{1+e^{-z_i}}
+\end{align}\]</div>
+<ul class="simple">
+<li><p>代价函数：</p>
+<ul>
+<li><p>y=1时, <span class="math notranslate nohighlight">\(-\log\frac{1}{1+e^{-z_i}}\)</span></p></li>
+<li><p>y=0时，<span class="math notranslate nohighlight">\(-\log\frac{e^{-z_i}}{1+e^{-z_i}}\)</span></p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">xarr</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">expit</span><span class="p">(</span><span class="n">xarr</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="c1">#MLE的代价函数</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">y</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">((</span><span class="s2">&quot;hypothesis function&quot;</span><span class="p">,</span><span class="s2">&quot;y=1 loss function&quot;</span><span class="p">,</span><span class="s2">&quot;y=0 loss function&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x162def490&gt;
+</pre></div>
+</div>
+<img alt="_images/L14_18_1.png" src="_images/L14_18_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#最小二乘法的代价函数 (y-f(z))^2</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xarr</span><span class="p">,(</span><span class="mi">1</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">heaviside</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="mf">0.5</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">heaviside</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="mf">0.5</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">legend</span><span class="p">((</span><span class="s2">&quot;hypothesis function&quot;</span><span class="p">,</span><span class="s2">&quot;y=1 loss function, mle&quot;</span><span class="p">,</span><span class="s2">&quot;y=0 loss function, mle&quot;</span><span class="p">,</span><span class="s2">&quot;y=1 loss function, lsq&quot;</span><span class="p">,</span><span class="s2">&quot;y=0 loss function, lsq&quot;</span><span class="p">))</span>
+<span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/L14_19_0.png" src="_images/L14_19_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mle</span><span class="p">(</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span> <span class="o">-</span> <span class="n">y</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">expit</span><span class="p">(</span><span class="n">b1</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">b0</span><span class="p">))</span><span class="o">-</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">y</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">expit</span><span class="p">(</span><span class="n">b1</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">b0</span><span class="p">))</span> <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">xval</span><span class="p">,</span><span class="n">yval</span><span class="p">))</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figaspect</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">mle</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">yy</span><span class="p">),</span> <span class="n">rstride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cstride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">mle</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">yy</span><span class="p">),</span> <span class="n">linewidths</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span><span class="n">linestyles</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.contour.QuadContourSet at 0x1626db220&gt;
+</pre></div>
+</div>
+<img alt="_images/L14_20_1.png" src="_images/L14_20_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">=</span><span class="n">lsq</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">yy</span><span class="p">)</span>
+<span class="n">l</span><span class="o">=</span><span class="n">mle</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">yy</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="c1">#b0为特定值时，代价函数与b1的关系</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">80</span><span class="p">]:</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">yy</span><span class="p">[</span><span class="mi">50</span><span class="p">:,</span><span class="n">i</span><span class="p">],</span><span class="n">s</span><span class="p">[</span><span class="mi">50</span><span class="p">:,</span><span class="n">i</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;lsq, b0=</span><span class="si">{:.1f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xx</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">]))</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">yy</span><span class="p">[</span><span class="mi">50</span><span class="p">:,</span><span class="n">i</span><span class="p">],</span><span class="n">l</span><span class="p">[</span><span class="mi">50</span><span class="p">:,</span><span class="n">i</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;mle, b0=</span><span class="si">{:.1f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xx</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">]),</span><span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+<span class="c1">#b1为特定值时，代价函数与b0的关系</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">80</span><span class="p">]:</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">[</span><span class="n">i</span><span class="p">,:],</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">,:],</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;lsq, b1=</span><span class="si">{:.1f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">yy</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">[</span><span class="n">i</span><span class="p">,:],</span><span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">,:],</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;mle, b1=</span><span class="si">{:.1f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">yy</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]),</span><span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="c1">#寻找代价函数的最小值</span>
+<span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="p">[</span><span class="n">s</span><span class="p">,</span><span class="n">l</span><span class="p">]:</span>
+    <span class="n">ind</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">unravel_index</span><span class="p">(</span><span class="n">el</span><span class="o">.</span><span class="n">argmin</span><span class="p">(),</span> <span class="n">el</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">xx</span><span class="p">[</span><span class="n">ind</span><span class="p">],</span><span class="n">yy</span><span class="p">[</span><span class="n">ind</span><span class="p">],</span><span class="n">el</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-7.0 16.02020202020202 4.243807971447406
+-7.0 16.585858585858585 14.220652775051398
+</pre></div>
+</div>
+<img alt="_images/L14_21_1.png" src="_images/L14_21_1.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="gradient-descent">
+<h1>阶梯下降法(Gradient Descent)<a class="headerlink" href="#gradient-descent" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>寻找使得代价函数L最小的参数（b0, b1）值，偏导<span class="math notranslate nohighlight">\(\frac{\partial{L}}{\partial{b_{0,1}}}\)</span>为0</p></li>
+<li><p>导数简单时，解析解</p></li>
+<li><p>复杂时，利用阶梯下降法求解
+$<span class="math notranslate nohighlight">\( \frac{\partial {L (y, f(x))}}{\partial{b_{0}}} =0\)</span>$</p></li>
+<li><p>初始值<span class="math notranslate nohighlight">\(b_0=b'_0, b_1=b'_1\)</span></p></li>
+<li><p>迭代法
+$<span class="math notranslate nohighlight">\( b''_0= b'_0 - \alpha \frac{\partial {L (y, f(x,b_0,b_1))}}{\partial{b_{0}}}|{(b_0=b'_0, b_1=b'_1)}\)</span>$</p></li>
+<li><p>直到<span class="math notranslate nohighlight">\(b''_0\)</span>趋于稳定</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#%matplotlib notebook</span>
+<span class="kn">from</span> <span class="nn">matplotlib.animation</span> <span class="kn">import</span> <span class="n">FuncAnimation</span>
+
+<span class="c1">#定义代价函数为最小二乘法时对b1的偏导</span>
+<span class="k">def</span> <span class="nf">gd_lsq_b1</span><span class="p">(</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">j</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">j</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">expit</span><span class="p">(</span><span class="n">b1</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">b0</span><span class="p">)</span><span class="o">-</span><span class="n">y</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">expit</span><span class="p">(</span><span class="n">b1</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">b0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">b1</span><span class="o">*</span><span class="n">x</span><span class="o">-</span><span class="n">b0</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">xval</span><span class="p">,</span><span class="n">yval</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span> <span class="o">-</span> <span class="n">y</span><span class="o">/</span><span class="p">(</span><span class="n">expit</span><span class="p">(</span><span class="n">b1</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">b0</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">expit</span><span class="p">(</span><span class="n">b1</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">b0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">b1</span><span class="o">*</span><span class="n">x</span><span class="o">-</span><span class="n">b0</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">y</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">expit</span><span class="p">(</span><span class="n">b1</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">b0</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">expit</span><span class="p">(</span><span class="n">b1</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">b0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">b1</span><span class="o">*</span><span class="n">x</span><span class="o">-</span><span class="n">b0</span><span class="p">)</span><span class="o">*</span><span class="n">x</span> <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">xval</span><span class="p">,</span><span class="n">yval</span><span class="p">))</span>
+
+<span class="c1">#定义代价函数为最小二乘法时对b0的偏导</span>
+<span class="k">def</span> <span class="nf">gd_lsq_b0</span><span class="p">(</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">j</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">j</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">expit</span><span class="p">(</span><span class="n">b1</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">b0</span><span class="p">)</span><span class="o">-</span><span class="n">y</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">expit</span><span class="p">(</span><span class="n">b1</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">b0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">b1</span><span class="o">*</span><span class="n">x</span><span class="o">-</span><span class="n">b0</span><span class="p">))</span> <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">xval</span><span class="p">,</span><span class="n">yval</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span> 
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span> <span class="o">-</span> <span class="n">y</span><span class="o">/</span><span class="p">(</span><span class="n">expit</span><span class="p">(</span><span class="n">b1</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">b0</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">expit</span><span class="p">(</span><span class="n">b1</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">b0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">b1</span><span class="o">*</span><span class="n">x</span><span class="o">-</span><span class="n">b0</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">y</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">expit</span><span class="p">(</span><span class="n">b1</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">b0</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">expit</span><span class="p">(</span><span class="n">b1</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">b0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">b1</span><span class="o">*</span><span class="n">x</span><span class="o">-</span><span class="n">b0</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">xval</span><span class="p">,</span><span class="n">yval</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">dolsq</span><span class="p">(</span><span class="n">it</span><span class="p">,</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">b0_</span><span class="p">,</span><span class="n">b1_</span><span class="p">,</span><span class="n">lsq_</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">):</span>
+    <span class="n">b0_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b0</span><span class="p">)</span>
+    <span class="n">b1_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b1</span><span class="p">)</span>
+    <span class="c1">#阶梯下降法求b0和b1,b0&#39;&#39;=b0&#39;-alpha*(partialL/partialb0)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">it</span><span class="p">):</span>
+        <span class="n">b0</span><span class="o">=</span><span class="n">b0</span><span class="o">-</span><span class="n">gd_lsq_b0</span><span class="p">(</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">alpha</span>
+        <span class="n">b1</span><span class="o">=</span><span class="n">b1</span><span class="o">-</span><span class="n">gd_lsq_b1</span><span class="p">(</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">alpha</span>
+        <span class="c1">#将迭代中得到的b0‘’存储至数组b0_</span>
+        <span class="n">b0_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b0</span><span class="p">)</span>
+        <span class="n">b1_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">j</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">lsq_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lsq</span><span class="p">(</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">lsq_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mle</span><span class="p">(</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">))</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">b0_</span><span class="p">,</span><span class="n">b1_</span><span class="p">,</span><span class="n">lsq_</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">animate_lsq</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">line</span><span class="p">,</span><span class="n">line2</span><span class="p">):</span>
+    <span class="c1">#画出从初始值到第i次迭代的b0值</span>
+    <span class="n">line</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">b0_</span><span class="p">[:</span><span class="n">i</span><span class="p">],</span><span class="n">lsq_</span><span class="p">[:</span><span class="n">i</span><span class="p">])</span>
+    <span class="c1">#画出从初始值到第i次迭代的b0值</span>
+    <span class="n">line2</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">b1_</span><span class="p">[:</span><span class="n">i</span><span class="p">],</span><span class="n">lsq_</span><span class="p">[:</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="n">line2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b1_init</span><span class="o">=</span><span class="mi">0</span>
+
+<span class="k">def</span> <span class="nf">init_all</span><span class="p">(</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">b0_</span><span class="p">,</span><span class="n">b1_</span><span class="p">,</span><span class="n">lsq_</span><span class="p">):</span>
+    <span class="n">b0_</span><span class="o">=</span><span class="p">[];</span><span class="n">b1_</span><span class="o">=</span><span class="p">[];</span><span class="n">lsq_</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">b0</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">b1</span><span class="o">=</span><span class="n">b1_init</span>    
+    <span class="k">return</span> <span class="p">(</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">b0_</span><span class="p">,</span><span class="n">b1_</span><span class="p">,</span><span class="n">lsq_</span><span class="p">)</span>
+
+<span class="n">b0_</span><span class="o">=</span><span class="p">[];</span><span class="n">b1_</span><span class="o">=</span><span class="p">[];</span><span class="n">lsq_</span><span class="o">=</span><span class="p">[]</span>
+<span class="c1">#初始化b0和b1</span>
+<span class="n">b0</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">b1</span><span class="o">=</span><span class="n">b1_init</span>  
+<span class="c1">#迭代40次</span>
+<span class="n">it</span><span class="o">=</span><span class="mi">40</span>
+<span class="n">b0_lsq</span><span class="o">=</span><span class="p">[];</span><span class="n">b1_lsq</span><span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">b0_</span><span class="p">,</span><span class="n">b1_</span><span class="p">,</span><span class="n">lsq_</span><span class="o">=</span><span class="n">init_all</span><span class="p">(</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">b0_</span><span class="p">,</span><span class="n">b1_</span><span class="p">,</span><span class="n">lsq_</span><span class="p">)</span>
+    <span class="n">line</span><span class="p">,</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([],[],</span><span class="s2">&quot;X&quot;</span><span class="p">)</span>
+    <span class="n">line2</span><span class="p">,</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([],[],</span><span class="s2">&quot;X&quot;</span><span class="p">)</span>
+    <span class="n">b0_</span><span class="p">,</span><span class="n">b1_</span><span class="p">,</span><span class="n">lsq_</span><span class="o">=</span><span class="n">dolsq</span><span class="p">(</span><span class="n">it</span><span class="p">,</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">b0_</span><span class="p">,</span><span class="n">b1_</span><span class="p">,</span><span class="n">lsq_</span><span class="p">,</span><span class="n">j</span><span class="p">)</span> 
+    <span class="k">if</span> <span class="p">(</span><span class="n">j</span><span class="o">==</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">b0_lsq</span><span class="o">=</span><span class="n">b0_</span>
+        <span class="n">b1_lsq</span><span class="o">=</span><span class="n">b1_</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">lsq_</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="nb">max</span><span class="p">(</span><span class="n">lsq_</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">anim</span><span class="o">=</span><span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">animate_lsq</span><span class="p">,</span> <span class="n">fargs</span><span class="o">=</span><span class="p">[</span><span class="n">line</span><span class="p">,</span><span class="n">line2</span><span class="p">],</span><span class="n">repeat</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">frames</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">it</span><span class="p">))</span> 
+    <span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;gd</span><span class="si">{:d}</span><span class="s1">.gif&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">j</span><span class="p">),</span><span class="n">fps</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># update</span>
+</pre></div>
+</div>
+</div>
+</div>
+<a class="reference internal image-reference" href="_images/gd0.gif"><img alt="_images/gd0.gif" src="_images/gd0.gif" style="width: 47%;" /></a>
+<a class="reference internal image-reference" href="_images/gd1.gif"><img alt="_images/gd1.gif" src="_images/gd1.gif" style="width: 47%;" /></a>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">animate_2d_lsq</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="n">line</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">b0_</span><span class="p">[:</span><span class="n">i</span><span class="p">],</span><span class="n">b1_</span><span class="p">[:</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">line2</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">b0_lsq</span><span class="p">[:</span><span class="n">i</span><span class="p">],</span><span class="n">b1_lsq</span><span class="p">[:</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="n">line2</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">mle</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">yy</span><span class="p">),</span> <span class="n">linewidths</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span><span class="n">linestyles</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">)</span>
+<span class="n">line</span><span class="p">,</span><span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">([],[],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">lsq</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">yy</span><span class="p">),</span> <span class="n">linewidths</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">40</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span><span class="n">linestyles</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">)</span>
+<span class="n">line2</span><span class="p">,</span><span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">([],[],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+<span class="n">anim</span><span class="o">=</span><span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">animate_2d_lsq</span><span class="p">,</span><span class="n">repeat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">frames</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">it</span><span class="p">))</span> 
+<span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;gd_2d.gif&quot;</span><span class="p">,</span><span class="n">fps</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># update</span>
+</pre></div>
+</div>
+</div>
+</div>
+<a class="reference internal image-reference" href="_images/gd_2d.gif"><img alt="_images/gd_2d.gif" src="_images/gd_2d.gif" style="width: 100%;" /></a>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b0_1</span><span class="o">=</span><span class="n">b0_</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="n">b1_1</span><span class="o">=</span><span class="n">b1_</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+<span class="c1">#每次迭代的b&#39;&#39;-b&#39;的变化</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">b0_1</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">b0_</span><span class="p">[:</span><span class="n">it</span><span class="p">]))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">b1_1</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">b1_</span><span class="p">[:</span><span class="n">it</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x163fb66d0&gt;]
+</pre></div>
+</div>
+<img alt="_images/L14_28_1.png" src="_images/L14_28_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#%matplotlib notebook</span>
+<span class="n">b1_init</span><span class="o">=-</span><span class="mi">9</span>
+
+<span class="n">b0_</span><span class="o">=</span><span class="p">[];</span><span class="n">b1_</span><span class="o">=</span><span class="p">[];</span><span class="n">lsq_</span><span class="o">=</span><span class="p">[]</span>
+<span class="n">b0</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">b1</span><span class="o">=</span><span class="n">b1_init</span>    
+<span class="n">it</span><span class="o">=</span><span class="mi">40</span>
+<span class="n">anim</span><span class="o">=</span><span class="p">[]</span>
+<span class="n">b0_lsq</span><span class="o">=</span><span class="p">[];</span><span class="n">b1_lsq</span><span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">b0_</span><span class="p">,</span><span class="n">b1_</span><span class="p">,</span><span class="n">lsq_</span><span class="o">=</span><span class="n">init_all</span><span class="p">(</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">b0_</span><span class="p">,</span><span class="n">b1_</span><span class="p">,</span><span class="n">lsq_</span><span class="p">)</span>
+    <span class="n">line</span><span class="p">,</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([],[],</span><span class="s2">&quot;X&quot;</span><span class="p">)</span>
+    <span class="n">line2</span><span class="p">,</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([],[],</span><span class="s2">&quot;X&quot;</span><span class="p">)</span>
+    <span class="n">b0_</span><span class="p">,</span><span class="n">b1_</span><span class="p">,</span><span class="n">lsq_</span><span class="o">=</span><span class="n">dolsq</span><span class="p">(</span><span class="n">it</span><span class="p">,</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">b0_</span><span class="p">,</span><span class="n">b1_</span><span class="p">,</span><span class="n">lsq_</span><span class="p">,</span><span class="n">j</span><span class="p">)</span> 
+    <span class="k">if</span> <span class="p">(</span><span class="n">j</span><span class="o">==</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">b0_lsq</span><span class="o">=</span><span class="n">b0_</span>
+        <span class="n">b1_lsq</span><span class="o">=</span><span class="n">b1_</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">lsq_</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="nb">max</span><span class="p">(</span><span class="n">lsq_</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">anim</span><span class="o">=</span><span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">animate_lsq</span><span class="p">,</span> <span class="n">fargs</span><span class="o">=</span><span class="p">[</span><span class="n">line</span><span class="p">,</span><span class="n">line2</span><span class="p">],</span><span class="n">repeat</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">frames</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">it</span><span class="p">))</span> 
+    <span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;gd_init-10_</span><span class="si">{:d}</span><span class="s1">.gif&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">j</span><span class="p">),</span><span class="n">fps</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># update</span>
+</pre></div>
+</div>
+</div>
+</div>
+<a class="reference internal image-reference" href="_images/gd_init-10_0.gif"><img alt="_images/gd_init-10_0.gif" src="_images/gd_init-10_0.gif" style="width: 47%;" /></a>
+<a class="reference internal image-reference" href="_images/gd_init-10_1.gif"><img alt="_images/gd_init-10_1.gif" src="_images/gd_init-10_1.gif" style="width: 47%;" /></a>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">animate_2d_lsq</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="n">line</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">b0_</span><span class="p">[:</span><span class="n">i</span><span class="p">],</span><span class="n">b1_</span><span class="p">[:</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">line2</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">b0_lsq</span><span class="p">[:</span><span class="n">i</span><span class="p">],</span><span class="n">b1_lsq</span><span class="p">[:</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="n">line2</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">mle</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">yy</span><span class="p">),</span> <span class="n">linewidths</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span><span class="n">linestyles</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">)</span>
+<span class="n">line</span><span class="p">,</span><span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">([],[],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">lsq</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">yy</span><span class="p">),</span> <span class="n">linewidths</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">40</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span><span class="n">linestyles</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">)</span>
+<span class="n">line2</span><span class="p">,</span><span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">([],[],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+<span class="n">anim</span><span class="o">=</span><span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">animate_2d_lsq</span><span class="p">,</span><span class="n">repeat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">frames</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">it</span><span class="p">))</span> 
+<span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;gd_2d_init.gif&quot;</span><span class="p">,</span><span class="n">fps</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># update</span>
+</pre></div>
+</div>
+</div>
+</div>
+<a class="reference internal image-reference" href="_images/gd_2d_init.gif"><img alt="_images/gd_2d_init.gif" src="_images/gd_2d_init.gif" style="width: 100%;" /></a>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b0_1</span><span class="o">=</span><span class="n">b0_</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="n">b1_1</span><span class="o">=</span><span class="n">b1_</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">b0_1</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">b0_</span><span class="p">[:</span><span class="n">it</span><span class="p">]))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">b1_1</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">b1_</span><span class="p">[:</span><span class="n">it</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1642400d0&gt;]
+</pre></div>
+</div>
+<img alt="_images/L14_33_1.png" src="_images/L14_33_1.png" />
+</div>
+</div>
+<section id="step">
+<h2>Step的选择<a class="headerlink" href="#step" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b1_init</span><span class="o">=-</span><span class="mi">9</span>
+
+<span class="n">b0_</span><span class="o">=</span><span class="p">[];</span><span class="n">b1_</span><span class="o">=</span><span class="p">[];</span><span class="n">lsq_</span><span class="o">=</span><span class="p">[]</span>
+<span class="n">b0</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">b1</span><span class="o">=</span><span class="n">b1_init</span>    
+<span class="n">it</span><span class="o">=</span><span class="mi">100</span>
+
+<span class="n">b0_lsq</span><span class="o">=</span><span class="p">[];</span><span class="n">b1_lsq</span><span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">b0_</span><span class="p">,</span><span class="n">b1_</span><span class="p">,</span><span class="n">lsq_</span><span class="o">=</span><span class="n">init_all</span><span class="p">(</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">b0_</span><span class="p">,</span><span class="n">b1_</span><span class="p">,</span><span class="n">lsq_</span><span class="p">)</span>
+    <span class="c1">#步长alpha从0.2降到0.06</span>
+    <span class="n">b0_</span><span class="p">,</span><span class="n">b1_</span><span class="p">,</span><span class="n">lsq_</span><span class="o">=</span><span class="n">dolsq</span><span class="p">(</span><span class="n">it</span><span class="p">,</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">b0_</span><span class="p">,</span><span class="n">b1_</span><span class="p">,</span><span class="n">lsq_</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="mf">0.06</span><span class="p">)</span> 
+    <span class="k">if</span> <span class="p">(</span><span class="n">j</span><span class="o">==</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">b0_lsq</span><span class="o">=</span><span class="n">b0_</span>
+        <span class="n">b1_lsq</span><span class="o">=</span><span class="n">b1_</span>
+    
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">mle</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">yy</span><span class="p">),</span> <span class="n">linewidths</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span><span class="n">linestyles</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">)</span>
+<span class="n">line</span><span class="p">,</span><span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">([],[],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">lsq</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">yy</span><span class="p">),</span> <span class="n">linewidths</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">40</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span><span class="n">linestyles</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">)</span>
+<span class="n">line2</span><span class="p">,</span><span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">([],[],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+<span class="n">anim</span><span class="o">=</span><span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">animate_2d_lsq</span><span class="p">,</span><span class="n">repeat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">frames</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">it</span><span class="p">))</span> 
+<span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;gd_2d_init_small.gif&quot;</span><span class="p">,</span><span class="n">fps</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># update</span>
+</pre></div>
+</div>
+</div>
+</div>
+<a class="reference internal image-reference" href="_images/gd_2d_init_small.gif"><img alt="_images/gd_2d_init_small.gif" src="_images/gd_2d_init_small.gif" style="width: 100%;" /></a>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b0_1</span><span class="o">=</span><span class="n">b0_</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="n">b1_1</span><span class="o">=</span><span class="n">b1_</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">b0_1</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">b0_</span><span class="p">[:</span><span class="n">it</span><span class="p">]))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">b1_1</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">b1_</span><span class="p">[:</span><span class="n">it</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1644086d0&gt;]
+</pre></div>
+</div>
+<img alt="_images/L14_37_1.png" src="_images/L14_37_1.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="id6">
+<h1>拟合（分类 ）结果<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+<span class="n">b0_f</span><span class="o">=</span><span class="n">b0_</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">b1_f</span><span class="o">=</span><span class="n">b1_</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b0_f</span><span class="p">,</span><span class="n">b1_f</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xval</span><span class="p">,</span> <span class="n">yval</span><span class="p">)</span>
+<span class="n">xval_s</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">1.1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">loss</span> <span class="o">=</span><span class="n">expit</span><span class="p">(</span><span class="n">xval_s</span><span class="o">*</span><span class="n">b1_f</span><span class="o">+</span><span class="n">b0_f</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xval_s</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-4.3282596235446995 10.099823481626302
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1644668b0&gt;]
+</pre></div>
+</div>
+<img alt="_images/L14_39_2.png" src="_images/L14_39_2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">xval_s</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">loss</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="n">loss</span><span class="o">&gt;=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">xval_s</span><span class="p">,</span><span class="n">loss</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="n">loss</span><span class="o">&lt;=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/L14_40_0.png" src="_images/L14_40_0.png" />
+</div>
+</div>
+</section>
+<section id="sklearn-logistic-regression">
+<h1>Sklearn包实现 （Logistic Regression）<a class="headerlink" href="#sklearn-logistic-regression" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span><span class="p">,</span> <span class="n">LinearRegression</span>
+
+<span class="n">clf</span><span class="o">=</span><span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xval</span><span class="p">,</span><span class="n">yval</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Paired</span><span class="p">)</span>
+
+<span class="c1">#变成多维数组</span>
+<span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xval</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yval</span><span class="p">)</span>
+
+<span class="n">Z</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">Z</span><span class="o">-</span><span class="mf">0.05</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;X&quot;</span><span class="p">)</span>
+
+<span class="n">xarr</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">1.1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="n">expit</span><span class="p">(</span><span class="n">xarr</span> <span class="o">*</span> <span class="n">clf</span><span class="o">.</span><span class="n">coef_</span> <span class="o">+</span> <span class="n">clf</span><span class="o">.</span><span class="n">intercept_</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">loss</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="n">loss</span><span class="o">&gt;=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="n">loss</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="n">loss</span><span class="o">&lt;=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="c1">## Gradient decent</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="n">expit</span><span class="p">(</span><span class="n">xarr</span><span class="o">*</span><span class="n">b1_f</span><span class="o">+</span><span class="n">b0_f</span><span class="p">),</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">clf</span><span class="o">.</span><span class="n">intercept_</span><span class="p">,</span><span class="n">clf</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-4.00358089] [[9.22674752]]
+</pre></div>
+</div>
+<img alt="_images/L14_42_1.png" src="_images/L14_42_1.png" />
+</div>
+</div>
+</section>
+<section id="regularization">
+<h1>正则化 (Regularization)<a class="headerlink" href="#regularization" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>对于logistic假设函数，代价函数为</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ L =  \sum_{i=1}^{N}  y_i\log\frac{1}{1+e^{-z_i}} + (1-y_i)\log\frac{e^{-z_i}}{1+e^{-z_i}}\]</div>
+<p>其中</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} z = b_0+b_1 x,\\ \omega = \{b_0,b_1\cdots\}\end{split}\]</div>
+<ul class="simple">
+<li><p>不希望系数太大和太多</p>
+<ul>
+<li><p>方差过大</p></li>
+<li><p>过拟合</p></li>
+</ul>
+</li>
+<li><p>加入惩罚项（Penalty）</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ L' = C L+r(\omega) \]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(r(\omega)\)</span>可以有多种选择</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(l_1=\sum |\omega|\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(l_2=\frac{1}{2} \omega^T \omega\)</span></p></li>
+</ul>
+</li>
+<li><p>C越大，惩罚项的效应越小</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs_</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">intercept_</span><span class="o">=</span><span class="p">[]</span>
+<span class="n">cs</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cs</span><span class="p">:</span>
+    <span class="n">clf</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="n">c</span><span class="p">)</span>
+    <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yval</span><span class="p">)</span>
+    <span class="n">coefs_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">clf</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+    <span class="n">intercept_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">clf</span><span class="o">.</span><span class="n">intercept_</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+<span class="n">coefs_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">coefs_</span><span class="p">)</span>
+<span class="c1">#随着参数正则化参数C的变化，b0和b1的变化</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span><span class="n">coefs_</span><span class="p">,</span><span class="n">cs</span><span class="p">,</span><span class="n">intercept_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x16375f760&gt;,
+ &lt;matplotlib.lines.Line2D at 0x16375f490&gt;]
+</pre></div>
+</div>
+<img alt="_images/L14_44_1.png" src="_images/L14_44_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xval</span><span class="p">,</span><span class="n">yval</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Paired</span><span class="p">)</span>
+
+<span class="n">xval_test</span><span class="o">=</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="s2">&quot;petal width (cm)&quot;</span><span class="p">]</span><span class="o">-</span><span class="n">xmin</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">xmax</span><span class="o">-</span><span class="n">xmin</span><span class="p">)</span>
+<span class="n">yval_test</span><span class="o">=</span><span class="n">y_test</span><span class="o">-</span><span class="mi">1</span>
+
+<span class="n">l</span><span class="o">=</span><span class="mi">0</span>
+<span class="c1">#由b0+b1*x变为b0+b1*x+b2*x^2</span>
+<span class="n">xx2</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xval</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xval</span><span class="o">**</span><span class="mi">2</span><span class="p">)])</span><span class="o">.</span><span class="n">T</span>
+<span class="n">xx2_test</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xval_test</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xval_test</span><span class="o">**</span><span class="mi">2</span><span class="p">)])</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1">#print(xx2)</span>
+<span class="c1">#不同正则化参数下的学习结果</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">]:</span>
+    <span class="n">clf</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="n">c</span><span class="p">)</span>
+    <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xx2</span><span class="p">,</span> <span class="n">yval</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xx2</span><span class="p">)</span><span class="o">-</span><span class="mf">0.09</span><span class="o">-</span><span class="mf">0.05</span><span class="o">*</span><span class="n">l</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;X&quot;</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s2">&quot;C</span><span class="si">{:d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">clf</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+
+    <span class="n">coef1</span><span class="o">=</span><span class="n">clf</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">ravel</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">coef2</span><span class="o">=</span><span class="n">clf</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">ravel</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">expit</span><span class="p">(</span> <span class="n">xarr</span><span class="o">*</span><span class="n">coef1</span><span class="o">+</span> <span class="n">xarr</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">coef2</span><span class="o">+</span> <span class="n">clf</span><span class="o">.</span><span class="n">intercept_</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">loss</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="n">loss</span><span class="o">&gt;=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;C</span><span class="si">{:d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="n">loss</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="n">loss</span><span class="o">&lt;</span><span class="mf">0.5</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;C</span><span class="si">{:d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Train MSE: &quot;</span><span class="p">,</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">yval</span><span class="p">,</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xx2</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test MSE: &quot;</span><span class="p">,</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">yval_test</span><span class="p">,</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xx2_test</span><span class="p">)))</span>
+    <span class="n">l</span><span class="o">+=</span><span class="mi">1</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xval_test</span><span class="p">,</span><span class="n">yval_test</span><span class="o">-</span><span class="mf">0.09</span><span class="o">-</span><span class="mf">0.05</span><span class="o">*</span><span class="n">l</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;v&quot;</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s2">&quot;C</span><span class="si">{:d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.63387991 0.56990986]
+Train MSE:  0.07142857142857142
+Test MSE:  0.03333333333333333
+[2.74409396 2.33188366]
+Train MSE:  0.07142857142857142
+Test MSE:  0.03333333333333333
+[6.3526574  5.20705407]
+Train MSE:  0.07142857142857142
+Test MSE:  0.03333333333333333
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x1636d3460&gt;
+</pre></div>
+</div>
+<img alt="_images/L14_45_2.png" src="_images/L14_45_2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs_</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">intercept_</span><span class="o">=</span><span class="p">[]</span>
+<span class="n">cs</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cs</span><span class="p">:</span>
+    <span class="n">clf</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="n">c</span><span class="p">)</span>
+    <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xx2</span><span class="p">,</span> <span class="n">yval</span><span class="p">)</span>
+    <span class="n">coefs_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">clf</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+    <span class="n">intercept_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">clf</span><span class="o">.</span><span class="n">intercept_</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+<span class="n">coefs_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">coefs_</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span><span class="n">coefs_</span><span class="p">,</span><span class="n">cs</span><span class="p">,</span><span class="n">intercept_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1629d0eb0&gt;,
+ &lt;matplotlib.lines.Line2D at 0x1629d0490&gt;,
+ &lt;matplotlib.lines.Line2D at 0x163678eb0&gt;]
+</pre></div>
+</div>
+<img alt="_images/L14_46_1.png" src="_images/L14_46_1.png" />
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 肖朦<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

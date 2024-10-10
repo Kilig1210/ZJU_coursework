@@ -1,0 +1,1005 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>样本空间与概率2 &#8212; 统计与大数据分析</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint single-page" id="site-navigation">
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/L3.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/L3.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   连续模型
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#python">
+     Python连续随机数产生
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   条件概率
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   乘法规则
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   全概率定理
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   贝叶斯准则
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   独立事件
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   条件独立
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   独立实验和二项概率
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id10">
+   排列组合
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id11">
+     Python实现排列组合
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>样本空间与概率2</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   连续模型
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#python">
+     Python连续随机数产生
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   条件概率
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   乘法规则
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   全概率定理
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   贝叶斯准则
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   独立事件
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   条件独立
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   独立实验和二项概率
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id10">
+   排列组合
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id11">
+     Python实现排列组合
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <center>
+<h1> 统计与大数据分析</h1>
+<h2>样本空间与概率2</h2>
+<h5>肖朦，2023 </h5>
+</center>
+<section id="id1">
+<h1>样本空间与概率2<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
+<section id="id2">
+<h2>连续模型<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>试验的样本空间是连续集合：赌场幸运轮转盘</p></li>
+<li><p>图形方法</p></li>
+</ul>
+<p>例：A和B约定见面，各自将迟到0-1小时。先来者等待15分钟后将离开。</p>
+<p>A和B见到的概率多大？</p>
+<p>M={(x,y)| |x-y|&lt;=1/4, 0&lt;=x&lt;=1, 0&lt;=y&lt;=1}</p>
+<a class="reference internal image-reference" href="_images/Mxy.png"><img alt="_images/Mxy.png" src="_images/Mxy.png" style="width: 500px;" /></a>
+<p>1 - 3/4*3/4 = 7/16</p>
+<section id="python">
+<h3>Python连续随机数产生<a class="headerlink" href="#python" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span>
+<span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.1133014496432807
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.57695757, 0.5972446 , 0.37231573, 0.78900149, 0.1682276 ])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.57695757, 0.78900149, 0.37231573, 0.1682276 , 0.5972446 ])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.57695757, 0.5972446 , 0.78900149, 0.1682276 , 0.37231573])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.57695757, 0.78900149, 0.37231573, 0.1682276 , 0.5972446 ])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">arr</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0, 1, 2],
+       [3, 4, 5],
+       [6, 7, 8]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0, 1, 2],
+       [6, 7, 8],
+       [3, 4, 5]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## A和B约定见面，各自将迟到0-1小时。先来者等待15分钟后将离开。</span>
+<span class="c1">## A和B见到的概率多大？</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">ab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">10000</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ab</span><span class="p">)</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">ab</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">stat</span><span class="o">=</span><span class="s1">&#39;probability&#39;</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">ab</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">stat</span><span class="o">=</span><span class="s1">&#39;probability&#39;</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.66309364 0.97718538 0.21344191 ... 0.59485344 0.18663937 0.95481032]
+ [0.49019835 0.99786976 0.62863356 ... 0.37500946 0.68080535 0.87259677]]
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:ylabel=&#39;Probability&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/L3_14_2.png" src="_images/L3_14_2.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>A和B到达的时间差符合什么分布？</p></li>
+<li><p>AB相差0-10分钟到达的概率和相差10-20分钟到达的概率相等吗？</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">ab</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">ab</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">stat</span><span class="o">=</span><span class="s1">&#39;probability&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:ylabel=&#39;Probability&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/L3_16_1.png" src="_images/L3_16_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">counter</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">ab</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">ab</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">&lt;</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>
+<span class="mi">7</span><span class="o">/</span><span class="mi">16</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Counter({False: 5716, True: 4284})
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.4375
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## 从分布的积分图形得到概率</span>
+<span class="n">f</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ab</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">ab</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">ecdfplot</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">ab</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">ab</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">)</span>
+<span class="n">x_special</span> <span class="o">=</span> <span class="mf">0.25</span>
+
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">axs</span><span class="o">.</span><span class="n">get_lines</span><span class="p">():</span>
+    <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+    <span class="n">ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">x_special</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># first index where x is larger than x_special</span>
+    <span class="n">axs</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x_special</span><span class="p">,</span><span class="n">y</span><span class="p">[</span><span class="n">ind</span><span class="p">],</span> <span class="sa">f</span><span class="s1">&#39; </span><span class="si">{</span><span class="n">y</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">)</span> <span class="c1"># maybe color=line.get_color()</span>
+<span class="n">axs</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x_special</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#cfcfcf&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.66309364 0.97718538 0.21344191 ... 0.59485344 0.18663937 0.95481032] [0.49019835 0.99786976 0.62863356 ... 0.37500946 0.68080535 0.87259677]
+</pre></div>
+</div>
+<img alt="_images/L3_18_1.png" src="_images/L3_18_1.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="id3">
+<h2>条件概率<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
+<p>在给定部分信息的基础上对试验结果的推断</p>
+<ul class="simple">
+<li><p>连续掷2次骰子，已知点数总和为9，第一次为6的可能性多大？</p></li>
+<li><p><font color='red'>作业，用python的随机数实验得到该事件的概率</font></p></li>
+</ul>
+<p>条件概率定义:</p>
+<div class="math notranslate nohighlight">
+\[ P(A|B) = \frac{P (A\cap B )}{P (B) } \]</div>
+<p>条件概率是个概率律</p>
+<ul class="simple">
+<li><p>归一化：</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ P(\Omega|B) = \frac{P (\Omega\cap B )}{P (B) } = 1\]</div>
+<ul class="simple">
+<li><p>可加性：</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ P(A_1 \cup A_2|B) = \frac{P ( (A_1 \cup A_2) \cap B )}{P (B) } = \frac{P ( (A_1 \cap B) \cup ( A_2 \cap B ))}{P (B) }= P(A_1|B)+P(A_2|B) \]</div>
+<p>例：连续抛3次硬币，A={正面比反面次数多}，B={第一次抛出正面}，P (A|B)=?</p>
+<p>A={HHH,HHT,HTH,HTT,THH,THT,TTH,TTT}</p>
+<p>B={HHH,HHT,HTH,HTT}</p>
+<p>P(A|B)=3/4</p>
+</section>
+<section id="id4">
+<h2>乘法规则<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h2>
+<div class="math notranslate nohighlight">
+\[ P(\cap_{i=1}^{n} A_i) = P(A_1) \frac{P(A_2\cap A_1)}{P(A_1)} \frac{P(A_3\cap A_2\cap A_1)}{P(A_2\cap A_1)} \cdots \frac{P(\cap_{i=1}^{n} A_i)}{P(\cap_{i=1}^{n-1} A_i)} \]</div>
+<p>例：从52张扑克牌中连续不放回地抽3张牌，没有红桃的概率</p>
+<ul class="simple">
+<li><p>第一张没有红桃 <span class="math notranslate nohighlight">\(P(A_1)\)</span>：39/52</p></li>
+<li><p>第二张没有红桃 <span class="math notranslate nohighlight">\(P(A_2|A_1)\)</span>：38/51</p></li>
+<li><p>第三张没有红桃 <span class="math notranslate nohighlight">\(P(A_3|A_1\cap A_2)\)</span>：37/50</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[P（A_1 \cap A_2 \cap A_3）= 39/52 \cdot 38/51 \cdot 37/50\]</div>
+<p>例：一个班有4个本科生和12个研究生，随机将他们分成4个4人组，每组分到一个本科生的概率多大？</p>
+<p>分16个位子的问题</p>
+<ul class="simple">
+<li><p>本科生1、2分到不同组 <span class="math notranslate nohighlight">\(P(A_1)\)</span>：12/15</p></li>
+<li><p>本科生1、2、3分到不同组 <span class="math notranslate nohighlight">\(P(A_2|A_1)\)</span>：8/14</p></li>
+<li><p>本科生1、2、3、4分到不同组 <span class="math notranslate nohighlight">\(P(A_3|A_1\cap A_2)\)</span>：4/13</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[P（A_1 \cap A_2 \cap A_3）= 12/15 \cdot 8/14 \cdot 4/13\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">12</span><span class="o">/</span><span class="mi">15</span> <span class="o">*</span> <span class="mi">8</span><span class="o">/</span><span class="mi">14</span> <span class="o">*</span> <span class="mi">4</span><span class="o">/</span><span class="mi">13</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.14065934065934066
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">a</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">s</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">12</span><span class="p">]</span>
+<span class="n">result</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">s</span><span class="p">)</span>
+<span class="n">result</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1, 1, 1, 1],
+       [0, 0, 0, 0],
+       [0, 0, 0, 0],
+       [0, 0, 0, 0]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="n">k</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">sample</span><span class="o">=</span><span class="mi">10000</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sample</span><span class="p">):</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="c1">#随机排列，改变result的值</span>
+    <span class="n">result2d</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span> <span class="c1">#分为4组</span>
+    <span class="n">k</span><span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">([</span><span class="n">i</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">result2d</span><span class="p">])</span> <span class="c1">#每组总和均为1时为真</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">k</span><span class="o">/</span><span class="n">sample</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.1493
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id5">
+<h2>全概率定理<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>全概率定理： 若<span class="math notranslate nohighlight">\(A_1 \cdots A_n\)</span>互不相容，并构成样本空间的一个分割。则
+$<span class="math notranslate nohighlight">\(P(B) = \sum_{i=1}^{n} P(A_i\cap B) = \sum_{i=1}^{n} P(A_i)P(B|A_i)\)</span>$</p></li>
+<li><p>用于推断B事件发生的概率，通常已知A条件下的B概率</p></li>
+</ul>
+<p>例：你参加棋类比赛，50%的一类棋手，你赢的概率是0.3；25%的一类棋手，你赢的概率是0.4；25%的三类棋手，你赢的概率是0.5；随机抽取一位棋手与你比赛，你赢的概率是？</p>
+<ul class="simple">
+<li><p>B：赢得比赛的概率</p></li>
+<li><p>A1: 与一类棋手比赛</p></li>
+<li><p>A2: 与二类棋手比赛</p></li>
+<li><p>A3: 与三类棋手比赛</p></li>
+</ul>
+<div class="amsmath math notranslate nohighlight" id="equation-28263046-0499-49d7-bfac-5be158681a50">
+<span class="eqno">(1)<a class="headerlink" href="#equation-28263046-0499-49d7-bfac-5be158681a50" title="Permalink to this equation">#</a></span>\[\begin{align}
+P(B) &amp;= \sum_{i=1}^{3} P（B \cap A_i）= \sum_{i=1}^{3} P(A_i)P(B|A_i) \\
+&amp;= 0.5\cdot 0.3 +0.25\cdot 0.4 + 0.25\cdot 0.5 = 0.375
+\end{align}\]</div>
+</section>
+<section id="id6">
+<h2>贝叶斯准则<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>贝叶斯准则： 若<span class="math notranslate nohighlight">\(A_1 \cdots A_n\)</span>互不相容，并构成样本空间的一个分割。则</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[P(A_i|B) = \frac{P(A_i)P(B|A_i)}{P(B)}= \frac{P(A_i)P(B|A_i)}{\sum_{i=1}^{n} P(A_i)P(B|A_i)}\]</div>
+<ul class="simple">
+<li><p>用于因果推论：很多原因<span class="math notranslate nohighlight">\(A_i\)</span>造成结果B，现有结果B，推断由某个原因<span class="math notranslate nohighlight">\(A_1\)</span>造成的概率</p></li>
+<li><p>后验概率<span class="math notranslate nohighlight">\(P(A_i|B)\)</span></p></li>
+<li><p>先验概率<span class="math notranslate nohighlight">\(P(A_i)\)</span></p></li>
+</ul>
+<p>例：某种疾病在人群中的患病率是0.1%。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>若患病，检测为阳性的的概率是95%。
+若未患病，检测为阴性的概率是95%。
+
+现一人检测出阳性，他患病的概率是？
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>A1：患病，P(A1)=0.1%</p></li>
+<li><p>A2：未患病，P(A2)=99.9%</p></li>
+<li><p>B：阳性</p></li>
+<li><p>P(B|A1)=95%</p></li>
+<li><p>P(B|A2)= 5%</p></li>
+</ul>
+<div class="amsmath math notranslate nohighlight" id="equation-bba647c6-6668-44ac-bdb5-f40befcbb11b">
+<span class="eqno">(2)<a class="headerlink" href="#equation-bba647c6-6668-44ac-bdb5-f40befcbb11b" title="Permalink to this equation">#</a></span>\[\begin{align}
+P(A_1|B) = &amp;\frac{P(A_1)P(B|A_1)}{P(B)}= \frac{P(A_1)P(B|A_1)}{\sum_{i=1}^{2} P(A_i)P(B|A_i)} \\
+&amp;= \frac{0.001 \cdot 0.95}{0.001 \cdot 0.95 + 0.999\cdot 0.05} 
+\end{align}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">=</span><span class="mf">0.001</span><span class="o">*</span><span class="mf">0.95</span>
+<span class="n">b</span><span class="o">=</span><span class="mf">0.999</span><span class="o">*</span><span class="mf">0.05</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="o">/</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.00095 0.04995 0.018664047151277015
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## 连续三次测量</span>
+<span class="n">a</span><span class="o">=</span><span class="mf">0.001</span><span class="o">*</span><span class="p">(</span><span class="mf">0.95</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">b</span><span class="o">=</span><span class="mf">0.999</span><span class="o">*</span><span class="p">(</span><span class="mf">0.05</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="o">/</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.000857375 0.00012487500000000004 0.8728684143547976
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id7">
+<h2>独立事件<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h2>
+<ul>
+<li><p>若P(A|B) = P(A)，则A,B独立</p></li>
+<li><p>P(A|B) = P(A<span class="math notranslate nohighlight">\(\cap\)</span>B)/P(B) = P(A)</p></li>
+<li><p>独立事件发生概率 P(A<span class="math notranslate nohighlight">\(\cap\)</span>B) = P(A)P(B)</p></li>
+<li><p>不相容和独立是两个概念！</p>
+<div class="math notranslate nohighlight">
+\[A \cap B = \emptyset\]</div>
+<div class="math notranslate nohighlight">
+\[P(A\cap B) = 0 \neq P(A)P(B)\]</div>
+</li>
+</ul>
+<p>例：掷4个面的骰子，A={第一次得到1}，B={两次总和为5}，A,B是否独立？</p>
+<p>两次所有组合4x4=16</p>
+<ul class="simple">
+<li><p>P(A）= 1/4</p></li>
+<li><p>B: {(1,4),(2,3),(3,2),(4,1)}</p></li>
+<li><p>P(B）= 4/16</p></li>
+<li><p>P(A <span class="math notranslate nohighlight">\(\cap\)</span> B) = 1/16</p></li>
+<li><p>P(A <span class="math notranslate nohighlight">\(\cap\)</span> B)= P(A)P(B)</p></li>
+</ul>
+<p>A,B独立</p>
+<p>若B中总和为6,7,8呢？</p>
+</section>
+<section id="id8">
+<h2>条件独立<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>在给定条件下A,B独立： <span class="math notranslate nohighlight">\(P(A \cap B | C) = P(A|C)P(B|C)\)</span></p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(P(A|B \cap C) = P(A|C)\)</span>, 给定C发生，进一步假定B发生，不影响A发生的概率</p></li>
+</ul>
+</li>
+<li><p>A,B互相独立 =&gt; A,B条件独立？</p></li>
+<li><p>A,B条件独立 =&gt; A,B互相独立？</p></li>
+</ul>
+<p>例1：抛一枚均匀的硬币两次，</p>
+<ul class="simple">
+<li><p>H1:第一次正面朝上</p></li>
+<li><p>H2:第二次正面朝上</p></li>
+<li><p>D: 两次实验结果不同</p></li>
+</ul>
+<p>H1, H2互相独立。在条件D下，</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(H1\cap H2|D)=0 \neq P(H1|D)P(H2|D)= 1/4\)</span></p></li>
+</ul>
+<p>H1,H2不独立</p>
+<p>例2：两枚硬币，一枚为蓝，一枚为红，硬币不均匀，蓝色抛到正面的概率是0.99，红色抛到正面的概率为0.01。现随机选一枚硬币进行两次抛掷。第一次抛到正面的事件H1,第二次抛到正面的事件H2。</p>
+<ul class="simple">
+<li><p>H1和H2在硬币为蓝色的条件下独立？</p></li>
+<li><p>H1和H2互相独立？</p></li>
+</ul>
+<p>硬币为蓝色：B</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(H1|B) = 0.99\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(H2|B) = 0.99\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(H1\cap H2|B) = 0.99\cdot 0.99 = P(H1|B)P(H2|B)\)</span></p></li>
+</ul>
+<div class="amsmath math notranslate nohighlight" id="equation-730cc29a-094e-4d28-a009-9bcf6c82164c">
+<span class="eqno">(3)<a class="headerlink" href="#equation-730cc29a-094e-4d28-a009-9bcf6c82164c" title="Permalink to this equation">#</a></span>\[\begin{align}
+P(H1) &amp;= P(H1|B)P(B) + P(H1|B^c)P(B^c) \\
+&amp;= 1/2 \cdot 0.99 + 1/2 \cdot 0.01  = 0.5 \\
+P(H2)&amp;=0.5
+\end{align}\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-7550f576-1bdc-4a9e-b704-b7f743462e8b">
+<span class="eqno">(4)<a class="headerlink" href="#equation-7550f576-1bdc-4a9e-b704-b7f743462e8b" title="Permalink to this equation">#</a></span>\[\begin{align}
+P(H1 \cap H2) &amp;= P(H1\cap H2|B)P(B) + P(H1\cap H2|B^c)P(B^c) \\
+&amp;= 1/2 \cdot 0.99 \cdot 0.99 + 1/2 \cdot 0.01 \cdot 0.01 = 0.49
+\end{align}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(H1 \cap H2) = 0.49 \neq P(H1) P(H2) = 0.25\)</span></p></li>
+</ul>
+</section>
+<section id="id9">
+<h2>独立实验和二项概率<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>一系列独立试验组成的试验，若每个阶段的试验结果只有两种可能，称为独立的伯努利试验序列：抛硬币，下雨</p></li>
+<li><p>单次伯努利试验发生概率:p</p></li>
+<li><p>n次抛硬币，k次朝上的概率: 二项概率</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[p(k) = \binom{n}{k} p^{k} (1-p)^{n-k}\]</div>
+<p>其中二项式系数，从n个元素中抽取k个的可能组合</p>
+<div class="math notranslate nohighlight">
+\[\binom{n}{k}= \frac{n!}{k!(n - k)!} = C_{n}^k\]</div>
+</section>
+<section id="id10">
+<h2>排列组合<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>排列：有序</p></li>
+<li><p>组合：无序</p></li>
+</ul>
+<p>例1：n个元素的集合的子集总个数？</p>
+<ul class="simple">
+<li><p>每个元素进入或不进入子集，2种可能，子集总个数 <span class="math notranslate nohighlight">\(2^n\)</span></p></li>
+</ul>
+<p>例2：n选k个排列</p>
+<ul class="simple">
+<li><p>第一个元素有n种选择，第二个有n-1…，共 <span class="math notranslate nohighlight">\(n(n-1)\cdots (n-k+1)\)</span>种选择，写为<span class="math notranslate nohighlight">\(\frac{n!}{(n-k)!}\)</span></p></li>
+</ul>
+<p>例3：n选k个组合</p>
+<ul class="simple">
+<li><p>选出的排列有<span class="math notranslate nohighlight">\(\frac{n!}{(n-k)!}\)</span>个，对任意一组k个元素，有<span class="math notranslate nohighlight">\(k(k-1)\cdots 1= k!\)</span>种排列方式，共 <span class="math notranslate nohighlight">\(\frac{n!}{(n-k)!k!}\)</span></p></li>
+</ul>
+<section id="id11">
+<h3>Python实现排列组合<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## 计算n选k的排列</span>
+
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">p0</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">perm</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">comb</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;5选&quot;</span><span class="p">,</span><span class="n">k</span><span class="p">,</span> <span class="s2">&quot;, 排列 &quot;</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="s2">&quot;, 组合 &quot;</span><span class="p">,</span> <span class="n">p1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5选 0 , 排列  1 , 组合  1
+5选 1 , 排列  5 , 组合  5
+5选 2 , 排列  20 , 组合  10
+5选 3 , 排列  60 , 组合  10
+5选 4 , 排列  120 , 组合  5
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## 穷举所有排列</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">scipy.special</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1 2 3 4]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">permutations</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span> <span class="c1">## 选出3个的所有排列</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;4选3的排列个数=&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(1, 2, 3), (1, 2, 4), (1, 3, 2), (1, 3, 4), (1, 4, 2), (1, 4, 3), (2, 1, 3), (2, 1, 4), (2, 3, 1), (2, 3, 4), (2, 4, 1), (2, 4, 3), (3, 1, 2), (3, 1, 4), (3, 2, 1), (3, 2, 4), (3, 4, 1), (3, 4, 2), (4, 1, 2), (4, 1, 3), (4, 2, 1), (4, 2, 3), (4, 3, 1), (4, 3, 2)]
+4选3的排列个数= 24
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">z</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span> <span class="c1">## 选出3个的所有组合</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;4选3的组合个数=&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="s2">&quot;,scipy 计算&quot;</span><span class="p">,</span><span class="n">sp</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span><span class="s2">&quot;,math 计算&quot;</span><span class="p">,</span><span class="n">math</span><span class="o">.</span><span class="n">comb</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(1, 2, 3), (1, 2, 4), (1, 3, 4), (2, 3, 4)]
+4选3的组合个数= 4 ,scipy 计算 4.0 ,math 计算 4
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 肖朦<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

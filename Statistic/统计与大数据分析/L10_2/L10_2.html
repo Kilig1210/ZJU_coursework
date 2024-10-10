@@ -1,0 +1,1543 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>线性回归的误差估计 &#8212; 统计与大数据分析</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint single-page" id="site-navigation">
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/L10_2.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/L10_2.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   线性回归的误差估计
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   线性回归的几种误差（区间估计）
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#beta-0-beta-1">
+   参数
+   <span class="math notranslate nohighlight">
+    \(\beta_0\)
+   </span>
+   和
+   <span class="math notranslate nohighlight">
+    \(\beta_1\)
+   </span>
+   的区间
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#f-x-i">
+   <span class="math notranslate nohighlight">
+    \(f(x_i)\)
+   </span>
+   的区间
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#f-x">
+   f(x)的区间
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     多变量的置信区间
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#beta-0-beta-1f-x">
+     利用
+     <span class="math notranslate nohighlight">
+      \(\beta_0\)
+     </span>
+     和
+     <span class="math notranslate nohighlight">
+      \(\beta_1\)
+     </span>
+     的共同边界求
+     <span class="math notranslate nohighlight">
+      \(f(x)\)
+     </span>
+     的区间
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#f-x-i-f-x">
+     <span class="math notranslate nohighlight">
+      \(f(x_i)\)
+     </span>
+     与
+     <span class="math notranslate nohighlight">
+      \(f(x)\)
+     </span>
+     区间的区别
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-0b-1f-x">
+     用
+     <span class="math notranslate nohighlight">
+      \(b_0\)
+     </span>
+     和
+     <span class="math notranslate nohighlight">
+      \(b_1\)
+     </span>
+     来估计
+     <span class="math notranslate nohighlight">
+      \(f(x)\)
+     </span>
+     的区间
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#y">
+   Y的预测区间
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   线性回归的假设检验
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   回归函数的逆转使用
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   线性回归的适用范围
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   多元线性回归
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#python">
+     Python中的矩阵和线性代数
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   作业
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>线性回归的误差估计</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   线性回归的误差估计
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   线性回归的几种误差（区间估计）
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#beta-0-beta-1">
+   参数
+   <span class="math notranslate nohighlight">
+    \(\beta_0\)
+   </span>
+   和
+   <span class="math notranslate nohighlight">
+    \(\beta_1\)
+   </span>
+   的区间
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#f-x-i">
+   <span class="math notranslate nohighlight">
+    \(f(x_i)\)
+   </span>
+   的区间
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#f-x">
+   f(x)的区间
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     多变量的置信区间
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#beta-0-beta-1f-x">
+     利用
+     <span class="math notranslate nohighlight">
+      \(\beta_0\)
+     </span>
+     和
+     <span class="math notranslate nohighlight">
+      \(\beta_1\)
+     </span>
+     的共同边界求
+     <span class="math notranslate nohighlight">
+      \(f(x)\)
+     </span>
+     的区间
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#f-x-i-f-x">
+     <span class="math notranslate nohighlight">
+      \(f(x_i)\)
+     </span>
+     与
+     <span class="math notranslate nohighlight">
+      \(f(x)\)
+     </span>
+     区间的区别
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-0b-1f-x">
+     用
+     <span class="math notranslate nohighlight">
+      \(b_0\)
+     </span>
+     和
+     <span class="math notranslate nohighlight">
+      \(b_1\)
+     </span>
+     来估计
+     <span class="math notranslate nohighlight">
+      \(f(x)\)
+     </span>
+     的区间
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#y">
+   Y的预测区间
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   线性回归的假设检验
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   回归函数的逆转使用
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   线性回归的适用范围
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   多元线性回归
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#python">
+     Python中的矩阵和线性代数
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   作业
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <center>
+<h1> 统计与大数据分析</h1>
+<h2> 回归-2</h2>
+<h5>肖朦</h5>
+</center><section id="id1">
+<h1>线性回归的误差估计<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
+<p>对一组测量(<span class="math notranslate nohighlight">\(X_i,Y_i\)</span>)值，认为Y与X符合线性关系</p>
+<div class="math notranslate nohighlight">
+\[ Y = b_0+b_1X +e \]</div>
+<ul class="simple">
+<li><p>其中<span class="math notranslate nohighlight">\(b_0+b_1X\)</span>是需要确定的回归函数</p></li>
+<li><p>认为E(e)=0, Var(e)=<span class="math notranslate nohighlight">\(\sigma^2\)</span>, 为随机因素</p></li>
+</ul>
+<p>将回归函数的表达式改写为</p>
+<div class="math notranslate nohighlight">
+\[ Y = \beta_0 + \beta_1 (X-\bar{X})\]</div>
+<ul class="simple">
+<li><p>被称为模型的中心化</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(\beta_0\)</span>和<span class="math notranslate nohighlight">\(\beta_1\)</span>独立</p>
+<div class="amsmath math notranslate nohighlight" id="equation-494eb293-a965-4cfd-bff6-cf0415df4ac1">
+<span class="eqno">(1)<a class="headerlink" href="#equation-494eb293-a965-4cfd-bff6-cf0415df4ac1" title="Permalink to this equation">#</a></span>\[\begin{align}
+\hat{\beta_0} &amp;= \sum Y_i/n = \bar{Y} \\
+\hat{\beta_1} &amp;= \frac{\sum (X_i -\bar{X})Y_i}{S^2_X}\\
+\text{var}(\hat\beta_0) &amp;= \sigma^2/n\\
+\text{var}(\hat\beta_1) &amp;= \sigma^2/S^2_X
+\end{align}\]</div>
+<p>转化为<span class="math notranslate nohighlight">\(b_0\)</span>和<span class="math notranslate nohighlight">\(b_1\)</span></p>
+<div class="amsmath math notranslate nohighlight" id="equation-f93b77ad-c715-4e1b-99a8-ede6d19df5a6">
+<span class="eqno">(2)<a class="headerlink" href="#equation-f93b77ad-c715-4e1b-99a8-ede6d19df5a6" title="Permalink to this equation">#</a></span>\[\begin{align}
+b_0 &amp;= \beta_0 - \beta_1\bar{X}\\
+b_1&amp;= \beta_1\\
+\text{var}(b_0) &amp;= \text{var}(\beta_0) + \bar{X}^2\text{var}(\beta_1)\\
+\text{var}(b_1) &amp;= \text{var}(\beta_1)
+\end{align}\]</div>
+</section>
+<section id="id2">
+<h1>线性回归的几种误差（区间估计）<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>参数<span class="math notranslate nohighlight">\(\beta_0\)</span>和<span class="math notranslate nohighlight">\(\beta_1\)</span>的区间</p></li>
+<li><p><span class="math notranslate nohighlight">\(f(x_i)\)</span>的区间</p></li>
+<li><p>回归函数<span class="math notranslate nohighlight">\(f(x)\)</span>的区间</p></li>
+<li><p><span class="math notranslate nohighlight">\(Y_i= f(x_i) + e_i \)</span>的区间</p></li>
+</ul>
+</section>
+<section id="beta-0-beta-1">
+<h1>参数<span class="math notranslate nohighlight">\(\beta_0\)</span>和<span class="math notranslate nohighlight">\(\beta_1\)</span>的区间<a class="headerlink" href="#beta-0-beta-1" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>假设<span class="math notranslate nohighlight">\(e_i\)</span>服从正态分布</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat\beta_{0,1}\)</span>是<span class="math notranslate nohighlight">\(\beta_{0,1}\)</span>的无偏估计，服从正态分布，方差为<span class="math notranslate nohighlight">\(\text{var}(\hat\beta_{0,1})\)</span>，</p></li>
+</ul>
+<div class="amsmath math notranslate nohighlight" id="equation-da21745e-a37b-4ffa-a087-3c2d5adf8237">
+<span class="eqno">(3)<a class="headerlink" href="#equation-da21745e-a37b-4ffa-a087-3c2d5adf8237" title="Permalink to this equation">#</a></span>\[\begin{align}
+\text{var}(\hat\beta_0) &amp;= \sigma^2/n \\
+\text{var}(\hat\beta_1) &amp;= \sigma^2/S^2_X
+\end{align}\]</div>
+<p>根据中心极限定理</p>
+<div class="math notranslate nohighlight">
+\[(\hat\beta_0-\beta_0)/(\sigma/\sqrt{n}) \sim N(0,1)\]</div>
+<ul class="simple">
+<li><p>其中含有未知数<span class="math notranslate nohighlight">\(\sigma\)</span>, <span class="math notranslate nohighlight">\(\hat\sigma = \delta/\sqrt{n-2}\)</span></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[(\hat\beta_0-\beta_0)/(\hat\sigma/\sqrt{n}) \sim t_{n-2}\]</div>
+<ul class="simple">
+<li><p>用<span class="math notranslate nohighlight">\(t_{n-2}(\alpha/2)\)</span>代表p-value为<span class="math notranslate nohighlight">\(\alpha\)</span>的x取值</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(\beta_0\)</span>的1-<span class="math notranslate nohighlight">\(\alpha\)</span>置信区间为</p>
+<div class="math notranslate nohighlight">
+\[ [\hat\beta_0- \hat\sigma/\sqrt{n}t_{n-2}(\alpha/2),\hat\beta_0+ \hat\sigma/\sqrt{n}t_{n-2}(\alpha/2) ]\]</div>
+<p><span class="math notranslate nohighlight">\(\beta_1\)</span>的1-<span class="math notranslate nohighlight">\(\alpha\)</span>置信区间为</p>
+<div class="math notranslate nohighlight">
+\[ [\hat\beta_1- \hat\sigma/S_X t_{n-2}(\alpha/2),\hat\beta_1+ \hat\sigma/S_X t_{n-2}(\alpha/2) ]\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">linregress</span>
+<span class="c1">### t_5(0.025)</span>
+
+<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">t</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="n">x</span><span class="o">&gt;</span><span class="n">st</span><span class="o">.</span><span class="n">t</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.975</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PolyCollection at 0x1632ef5b0&gt;
+</pre></div>
+</div>
+<img alt="_images/L10_2_5_1.png" src="_images/L10_2_5_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### chi2_5(0.05)</span>
+<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">chi2</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="n">x</span><span class="o">&gt;</span><span class="n">st</span><span class="o">.</span><span class="n">chi2</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.95</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PolyCollection at 0x1633c4fd0&gt;
+</pre></div>
+</div>
+<img alt="_images/L10_2_6_1.png" src="_images/L10_2_6_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### F_5,10(0.05)</span>
+<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="n">x</span><span class="o">&gt;</span><span class="n">st</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.95</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PolyCollection at 0x1634641c0&gt;
+</pre></div>
+</div>
+<img alt="_images/L10_2_7_1.png" src="_images/L10_2_7_1.png" />
+</div>
+</div>
+</section>
+<section id="f-x-i">
+<h1><span class="math notranslate nohighlight">\(f(x_i)\)</span>的区间<a class="headerlink" href="#f-x-i" title="Permalink to this headline">#</a></h1>
+<div class="amsmath math notranslate nohighlight" id="equation-1cde1453-72db-4cea-bc06-ecc5625fbba2">
+<span class="eqno">(4)<a class="headerlink" href="#equation-1cde1453-72db-4cea-bc06-ecc5625fbba2" title="Permalink to this equation">#</a></span>\[\begin{align}
+\text{var}(\hat\beta_0) &amp;= \sigma^2/n \\
+\text{var}(\hat\beta_1) &amp;= \sigma^2/S^2_X
+\end{align}\]</div>
+<p>对于函数<span class="math notranslate nohighlight">\(f(x)\)</span>的每一个点 <span class="math notranslate nohighlight">\(f(x_i)\)</span></p>
+<div class="math notranslate nohighlight">
+\[f(x_i) = \beta_0+\beta_1(x_i-\bar{x})\]</div>
+<div class="math notranslate nohighlight">
+\[\hat{f}(x_i) = \hat{\beta_0}+\hat{\beta_1}(x_i-\bar{x})\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\hat{\beta}_{0,1}\)</span>符合正态分布，故<span class="math notranslate nohighlight">\(\hat{f}(x_i)\)</span>符合正态分布</p></li>
+</ul>
+<div class="amsmath math notranslate nohighlight" id="equation-d9a3b147-acdf-4a6d-8349-20497d789833">
+<span class="eqno">(5)<a class="headerlink" href="#equation-d9a3b147-acdf-4a6d-8349-20497d789833" title="Permalink to this equation">#</a></span>\[\begin{align}
+v= \text{var}(\hat{f}(x_i)) &amp;= \text{var}(\hat{\beta_0}+ \hat{\beta_1}(x_i-\bar{x})) \\
+&amp;= \sigma^2[1/n+(x-\bar{x})^2/S^2_X]
+\end{align}\]</div>
+<p>估计<span class="math notranslate nohighlight">\(f(x_i)\)</span>的区间</p>
+<div class="math notranslate nohighlight">
+\[(f(x_i)-\hat f(x_i) )/\sqrt{v} \sim N (0,1)\]</div>
+<p>用<span class="math notranslate nohighlight">\(\hat{\sigma}\)</span>代替<span class="math notranslate nohighlight">\(\sigma\)</span></p>
+<div class="math notranslate nohighlight">
+\[(f(x_i)-\hat f(x_i) )/[\hat\sigma(1/n+(x-\bar{x})^2/S^2_X)^{1/2}]\sim t_{n-2}\]</div>
+<p>则 <span class="math notranslate nohighlight">\(f(x_i)\)</span>的1-<span class="math notranslate nohighlight">\(\alpha\)</span>区间为</p>
+<div class="math notranslate nohighlight">
+\[ [\hat f(x_i) \pm \hat\sigma(1/n+(x-\bar{x})^2/S^2_X)^{1/2} t_{n-2}(\alpha/2)]\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(f(x_i)\)</span>的方差与<span class="math notranslate nohighlight">\(x_i\)</span>的位置有关，离平均值越近，方差越小</p></li>
+<li><p>n趋于无穷大时，1/n趋于0, <span class="math notranslate nohighlight">\((x-\bar{x})^2/S^2_X\)</span>趋于0，方差趋于0</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">=</span><span class="mi">3</span>
+<span class="n">b</span><span class="o">=</span><span class="mi">4</span>
+<span class="n">x</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="n">b</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="mi">95</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/L10_2_9_1.png" src="_images/L10_2_9_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### f(xi)的区间估计</span>
+<span class="n">sx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">sy</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">meanx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">meany</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">n</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">beta0</span><span class="o">=</span><span class="n">meany</span>
+<span class="n">beta1</span><span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">x</span><span class="o">-</span><span class="n">meanx</span><span class="p">)</span><span class="o">*</span><span class="n">y</span><span class="p">)</span><span class="o">/</span><span class="n">sx</span>
+<span class="n">residual</span><span class="o">=</span><span class="nb">sum</span><span class="p">((</span><span class="n">y</span><span class="o">-</span><span class="n">beta0</span><span class="o">-</span><span class="n">beta1</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">meanx</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sigma</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">residual</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="n">std_beta0</span><span class="o">=</span><span class="n">sigma</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">std_beta1</span><span class="o">=</span><span class="n">sigma</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sx</span><span class="p">)</span>
+
+<span class="c1">##f(x_i)=beta0+beta1*(x-meanx)</span>
+<span class="n">xi</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">varf</span><span class="o">=</span><span class="n">std_beta0</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="n">std_beta1</span><span class="o">*</span><span class="p">(</span><span class="n">xi</span><span class="o">-</span><span class="n">meanx</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">errf</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">varf</span><span class="p">)</span><span class="o">*</span><span class="n">st</span><span class="o">.</span><span class="n">t</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.975</span><span class="p">)</span>
+<span class="n">f</span><span class="o">=</span><span class="n">beta0</span><span class="o">+</span><span class="n">beta1</span><span class="o">*</span><span class="p">(</span><span class="n">xi</span><span class="o">-</span><span class="n">meanx</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="mi">95</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span><span class="n">f</span><span class="o">-</span><span class="n">errf</span><span class="p">,</span><span class="n">f</span><span class="o">+</span><span class="n">errf</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x16355a580&gt;]
+</pre></div>
+</div>
+<img alt="_images/L10_2_10_1.png" src="_images/L10_2_10_1.png" />
+</div>
+</div>
+</section>
+<section id="f-x">
+<h1>f(x)的区间<a class="headerlink" href="#f-x" title="Permalink to this headline">#</a></h1>
+<div class="math notranslate nohighlight">
+\[f(x)=\beta_0 + \beta_1 (x-\bar{x})\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\beta_{0}\)</span>的1-<span class="math notranslate nohighlight">\(\alpha\)</span>区间[C1,C2]</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta_{1}\)</span>的1-<span class="math notranslate nohighlight">\(\alpha\)</span>区间[C3,C4]</p></li>
+</ul>
+<p>那么<span class="math notranslate nohighlight">\(f(x)\)</span>的<span class="math notranslate nohighlight">\(1-\alpha\)</span>区间？</p>
+<ul class="simple">
+<li><p>根据<span class="math notranslate nohighlight">\(f(x_i)\)</span>的区间得到边界</p></li>
+<li><p>根据<span class="math notranslate nohighlight">\(\beta_0\)</span>和<span class="math notranslate nohighlight">\(\beta_1\)</span>的区间得到边界</p></li>
+<li><p>根据<span class="math notranslate nohighlight">\(b_0\)</span>和<span class="math notranslate nohighlight">\(b_1\)</span>的区间得到边界</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### based on beta0 and beta1 C1,C2,C3,C4</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+<span class="n">nsigma</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">t</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.975</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">(</span><span class="n">beta0</span><span class="o">-</span><span class="n">nsigma</span><span class="o">*</span><span class="n">std_beta0</span><span class="p">,</span> <span class="n">beta0</span><span class="o">+</span><span class="n">nsigma</span><span class="o">*</span><span class="n">std_beta0</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="n">beta1</span><span class="o">-</span><span class="n">nsigma</span><span class="o">*</span><span class="n">std_beta1</span><span class="p">,</span><span class="n">beta1</span><span class="o">+</span><span class="n">nsigma</span><span class="o">*</span><span class="n">std_beta1</span><span class="p">):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">],[</span><span class="n">i</span><span class="o">*</span><span class="mi">0</span><span class="o">+</span><span class="n">j</span><span class="o">-</span><span class="n">meanx</span><span class="o">*</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="o">*</span><span class="mi">10</span><span class="o">+</span><span class="n">j</span><span class="o">-</span><span class="n">meanx</span><span class="o">*</span><span class="n">i</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/L10_2_12_0.png" src="_images/L10_2_12_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### based on b0 and b1 C1&#39;,C2&#39;,C3&#39;,C4&#39;</span>
+<span class="n">b1</span><span class="o">=</span> <span class="n">beta1</span>
+<span class="n">b0</span><span class="o">=</span> <span class="n">beta0</span><span class="o">-</span><span class="n">b1</span><span class="o">*</span><span class="n">meanx</span>
+
+<span class="n">std_b1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">residual</span><span class="o">/</span><span class="n">sx</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">std_b0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">residual</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="n">meanx</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">std_b1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">(</span><span class="n">b0</span><span class="o">-</span><span class="n">nsigma</span><span class="o">*</span><span class="n">std_b0</span><span class="p">,</span> <span class="n">b0</span><span class="o">+</span><span class="n">nsigma</span><span class="o">*</span><span class="n">std_b0</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="n">b1</span><span class="o">-</span><span class="n">nsigma</span><span class="o">*</span><span class="n">std_b1</span><span class="p">,</span><span class="n">b1</span><span class="o">+</span><span class="n">nsigma</span><span class="o">*</span><span class="n">std_b1</span><span class="p">):</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">],[</span><span class="n">i</span><span class="o">*</span><span class="mi">0</span><span class="o">+</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="o">*</span><span class="mi">10</span><span class="o">+</span><span class="n">j</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/L10_2_13_0.png" src="_images/L10_2_13_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### based on f(x_i) confidence level</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span><span class="n">f</span><span class="o">-</span><span class="n">errf</span><span class="p">,</span><span class="n">f</span><span class="o">+</span><span class="n">errf</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">)</span>
+<span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/L10_2_14_0.png" src="_images/L10_2_14_0.png" />
+</div>
+</div>
+<section id="id3">
+<h2>多变量的置信区间<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\beta_0\)</span>和<span class="math notranslate nohighlight">\(\beta_1\)</span>独立，各自为正态分布，方差分别为<span class="math notranslate nohighlight">\(\sigma^2(\beta_0),\sigma^2(\beta_1\)</span>)</p></li>
+<li><p>它们的联合分布为二维正态分布</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ f(x,y) = \frac{1}{\sqrt{(2\pi)^k \det \Sigma}}  \exp{\bigl(-1/2 (x-\mu)^\intercal \Sigma ^{-1} (x-\mu)\bigl)}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\Sigma= \begin{bmatrix}
+\sigma_1^2 &amp; \rho \sigma_1\sigma_2 \\
+\rho \sigma_1\sigma_2 &amp; \sigma_2^2
+\end{bmatrix}\end{split}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">multivariate_normal</span><span class="p">,</span><span class="n">norm</span>
+<span class="n">cov</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">std_beta0</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="n">std_beta1</span><span class="o">**</span><span class="mi">2</span><span class="p">]])</span>
+<span class="n">rns</span><span class="o">=</span><span class="n">multivariate_normal</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">[</span><span class="n">beta0</span><span class="p">,</span><span class="n">beta1</span><span class="p">],</span> <span class="n">cov</span><span class="o">=</span><span class="n">cov</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+<span class="n">g</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">rns</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">y</span><span class="o">=</span><span class="n">rns</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">g</span><span class="o">.</span><span class="n">plot_joint</span><span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C1&quot;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">beta0</span><span class="o">-</span><span class="n">std_beta0</span><span class="p">,</span><span class="n">beta0</span><span class="o">-</span><span class="n">std_beta0</span><span class="p">],[</span><span class="n">beta1</span><span class="o">-</span><span class="n">std_beta1</span><span class="p">,</span><span class="n">beta1</span><span class="o">+</span><span class="n">std_beta1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">beta0</span><span class="o">+</span><span class="n">std_beta0</span><span class="p">,</span><span class="n">beta0</span><span class="o">+</span><span class="n">std_beta0</span><span class="p">],[</span><span class="n">beta1</span><span class="o">-</span><span class="n">std_beta1</span><span class="p">,</span><span class="n">beta1</span><span class="o">+</span><span class="n">std_beta1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">beta0</span><span class="o">-</span><span class="n">std_beta0</span><span class="p">,</span><span class="n">beta0</span><span class="o">+</span><span class="n">std_beta0</span><span class="p">],[</span><span class="n">beta1</span><span class="o">+</span><span class="n">std_beta1</span><span class="p">,</span><span class="n">beta1</span><span class="o">+</span><span class="n">std_beta1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">beta0</span><span class="o">-</span><span class="n">std_beta0</span><span class="p">,</span><span class="n">beta0</span><span class="o">+</span><span class="n">std_beta0</span><span class="p">],[</span><span class="n">beta1</span><span class="o">-</span><span class="n">std_beta1</span><span class="p">,</span><span class="n">beta1</span><span class="o">-</span><span class="n">std_beta1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x163728730&gt;]
+</pre></div>
+</div>
+<img alt="_images/L10_2_16_1.png" src="_images/L10_2_16_1.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>二维正态分布的<span class="math notranslate nohighlight">\(\alpha\)</span>置信区间不等于各自一维置信区间构成的矩形空间</p></li>
+<li><p>对于一维的正态分布x，有<span class="math notranslate nohighlight">\((x-\mu)^2/\sigma^2\)</span>符合<span class="math notranslate nohighlight">\(\chi^2_1\)</span>分布</p></li>
+<li><p>对于p维正态分布的一组向量X，有</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ (X-\mu)^\intercal \Sigma^{-1}(X-\mu) \sim \chi^2_{p}\]</div>
+<ul class="simple">
+<li><p>当用测量值来估计<span class="math notranslate nohighlight">\(\mu\)</span>时,<span class="math notranslate nohighlight">\(\Sigma\)</span>已知</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ (\bar{X}-\mu)^\intercal \Sigma^{-1}(\bar{X}-\mu) \sim \chi^2_{p}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\Sigma\)</span>未知，用S/(n-p)代替<span class="math notranslate nohighlight">\(\Sigma\)</span>,</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ \frac{n(n-p)}{p(n-1)} (\bar{X}-\mu)^\intercal S^{-1}(\bar{X}-\mu) \sim F_{p,n-p}\]</div>
+<ul class="simple">
+<li><p>对于二维正态分布, 用<span class="math notranslate nohighlight">\(\hat\Sigma\)</span>=S/(n-2)来估计<span class="math notranslate nohighlight">\(\Sigma\)</span></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ \frac{n}{2(n-1)} (\bar{X}-\mu)^\intercal \hat{\Sigma}^{-1}(\bar{X}-\mu) \sim F_{2,n-2}\]</div>
+<div class="math notranslate nohighlight">
+\[ (\hat\beta_0-\beta_0)^2/\sigma^2(\beta_0)+(\hat\beta_1-\beta_1)^2/\sigma^2(\beta_1) &lt; 2F_{2,n-2}(0.05)\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fa</span><span class="o">=</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">a</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.95</span><span class="p">)</span><span class="o">/</span><span class="n">fa</span>
+<span class="n">achi</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">chi2</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.95</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">achi</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.753658576757395 5.991464547107979
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="beta-0-beta-1f-x">
+<h2>利用<span class="math notranslate nohighlight">\(\beta_0\)</span>和<span class="math notranslate nohighlight">\(\beta_1\)</span>的共同边界求<span class="math notranslate nohighlight">\(f(x)\)</span>的区间<a class="headerlink" href="#beta-0-beta-1f-x" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">(</span><span class="n">beta0</span><span class="o">-</span><span class="n">nsigma</span><span class="o">*</span><span class="n">std_beta0</span><span class="p">,</span> <span class="n">beta0</span><span class="o">+</span><span class="n">nsigma</span><span class="o">*</span><span class="n">std_beta0</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="n">beta1</span><span class="o">-</span><span class="n">nsigma</span><span class="o">*</span><span class="n">std_beta1</span><span class="p">,</span><span class="n">beta1</span><span class="o">+</span><span class="n">nsigma</span><span class="o">*</span><span class="n">std_beta1</span><span class="p">):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">],[</span><span class="n">i</span><span class="o">*</span><span class="mi">0</span><span class="o">+</span><span class="n">j</span><span class="o">-</span><span class="n">meanx</span><span class="o">*</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="o">*</span><span class="mi">10</span><span class="o">+</span><span class="n">j</span><span class="o">-</span><span class="n">meanx</span><span class="o">*</span><span class="n">i</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">)</span>
+        
+
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">beta0</span><span class="o">-</span><span class="n">nsigma</span><span class="o">*</span><span class="n">std_beta0</span><span class="p">,</span> <span class="n">beta0</span><span class="o">+</span><span class="n">nsigma</span><span class="o">*</span><span class="n">std_beta0</span><span class="p">,</span><span class="mi">20</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">beta1</span><span class="o">-</span><span class="n">nsigma</span><span class="o">*</span><span class="n">std_beta1</span><span class="p">,</span><span class="n">beta1</span><span class="o">+</span><span class="n">nsigma</span><span class="o">*</span><span class="n">std_beta1</span><span class="p">,</span><span class="mi">20</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">((</span><span class="n">j</span><span class="o">-</span><span class="n">beta0</span><span class="p">)</span><span class="o">/</span><span class="n">std_beta0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="p">((</span><span class="n">i</span><span class="o">-</span><span class="n">beta1</span><span class="p">)</span><span class="o">/</span><span class="n">std_beta1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">&lt;</span><span class="n">a</span><span class="p">:</span>
+            <span class="n">b0j</span><span class="o">=</span><span class="n">j</span><span class="o">-</span><span class="n">i</span><span class="o">*</span><span class="n">meanx</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">],[</span><span class="n">i</span><span class="o">*</span><span class="mi">0</span><span class="o">+</span><span class="n">b0j</span><span class="p">,</span><span class="n">i</span><span class="o">*</span><span class="mi">10</span><span class="o">+</span><span class="n">b0j</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/L10_2_20_0.png" src="_images/L10_2_20_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span><span class="n">f</span><span class="o">-</span><span class="n">errf</span><span class="p">,</span><span class="n">f</span><span class="o">+</span><span class="n">errf</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">)</span>
+<span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/L10_2_21_0.png" src="_images/L10_2_21_0.png" />
+</div>
+</div>
+</section>
+<section id="f-x-i-f-x">
+<h2><span class="math notranslate nohighlight">\(f(x_i)\)</span>与<span class="math notranslate nohighlight">\(f(x)\)</span>区间的区别<a class="headerlink" href="#f-x-i-f-x" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>f(x)的区间要比<span class="math notranslate nohighlight">\(f(x_i)\)</span>的区间要宽一些</p></li>
+<li><p>用<span class="math notranslate nohighlight">\((2F_{2,n-2}(\alpha))^{1/2}\)</span>代替 <span class="math notranslate nohighlight">\(t_{n-2}(\alpha/2)\)</span>，可以涵盖f(x)的区间</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">##errf=np.sqrt(varf)*st.t(n-2).ppf(0.025)</span>
+<span class="c1">##fa=n/2/(n-1)</span>
+<span class="c1">##a=st.f(2,n-2).ppf(0.95)/fa</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">t</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.975</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="n">errfall</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">varf</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.10092204024096 2.5987802093977463
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span><span class="n">f</span><span class="o">-</span><span class="n">errfall</span><span class="p">,</span><span class="n">f</span><span class="o">+</span><span class="n">errfall</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/L10_2_24_0.png" src="_images/L10_2_24_0.png" />
+</div>
+</div>
+</section>
+<section id="b-0b-1f-x">
+<h2>用<span class="math notranslate nohighlight">\(b_0\)</span>和<span class="math notranslate nohighlight">\(b_1\)</span>来估计<span class="math notranslate nohighlight">\(f(x)\)</span>的区间<a class="headerlink" href="#b-0b-1f-x" title="Permalink to this headline">#</a></h2>
+<p>为什么用<span class="math notranslate nohighlight">\(b_0,b_1\)</span>的边界，结果会产生很大的差别？</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">rns</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">rns</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">meanx</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">rns</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">g</span><span class="o">.</span><span class="n">plot_joint</span><span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C1&quot;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">b0</span><span class="o">-</span><span class="n">std_b0</span><span class="p">,</span><span class="n">b0</span><span class="o">-</span><span class="n">std_b0</span><span class="p">],[</span><span class="n">b1</span><span class="o">-</span><span class="n">std_b1</span><span class="p">,</span><span class="n">b1</span><span class="o">+</span><span class="n">std_b1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">b0</span><span class="o">+</span><span class="n">std_b0</span><span class="p">,</span><span class="n">b0</span><span class="o">+</span><span class="n">std_b0</span><span class="p">],[</span><span class="n">b1</span><span class="o">-</span><span class="n">std_b1</span><span class="p">,</span><span class="n">b1</span><span class="o">+</span><span class="n">std_b1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">b0</span><span class="o">-</span><span class="n">std_b0</span><span class="p">,</span><span class="n">b0</span><span class="o">+</span><span class="n">std_b0</span><span class="p">],[</span><span class="n">b1</span><span class="o">-</span><span class="n">std_b1</span><span class="p">,</span><span class="n">b1</span><span class="o">-</span><span class="n">std_b1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">b0</span><span class="o">-</span><span class="n">std_b0</span><span class="p">,</span><span class="n">b0</span><span class="o">+</span><span class="n">std_b0</span><span class="p">],[</span><span class="n">b1</span><span class="o">+</span><span class="n">std_b1</span><span class="p">,</span><span class="n">b1</span><span class="o">+</span><span class="n">std_b1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x165e67850&gt;]
+</pre></div>
+</div>
+<img alt="_images/L10_2_26_1.png" src="_images/L10_2_26_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cov_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">rns</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">rns</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">meanx</span><span class="p">,</span> <span class="n">rns</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">cov_beta</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">rns</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">rns</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cov_beta</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cov_b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 1.35925257 -0.0103706 ]
+ [-0.0103706   0.21405119]]
+[[ 6.4230806  -1.04116567]
+ [-1.04116567  0.21405119]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="y">
+<h1>Y的预测区间<a class="headerlink" href="#y" title="Permalink to this headline">#</a></h1>
+<div class="math notranslate nohighlight">
+\[ Y = f(x)+e \]</div>
+<div class="math notranslate nohighlight">
+\[ \hat {Y}_i = \hat {f}(x_i)+\hat e = \hat {f}(x_i)\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-64dfbc84-e174-4199-8f1f-7d6ecb7671b2">
+<span class="eqno">(6)<a class="headerlink" href="#equation-64dfbc84-e174-4199-8f1f-7d6ecb7671b2" title="Permalink to this equation">#</a></span>\[\begin{align}
+\text{Var} (Y_i) &amp;= \text{Var}(e) + \text{Var}(\hat f(x_i))\\
+&amp;= \sigma^2 (1+1/n+(x-\bar{x})^2/S^2_X)
+\end{align}\]</div>
+<p>用<span class="math notranslate nohighlight">\(\hat{\sigma}\)</span>代替<span class="math notranslate nohighlight">\(\sigma\)</span></p>
+<div class="math notranslate nohighlight">
+\[(\hat {Y}_i - Y_i)/ [\sigma^2 (1+1/n+(x-\bar{x})^2/S^2_X)] \sim t_{n-2}\]</div>
+<p><span class="math notranslate nohighlight">\(Y_i\)</span>的置信区间由<span class="math notranslate nohighlight">\(t_{n-2}(\alpha/2)\)</span>得到</p>
+<ul class="simple">
+<li><p>与<span class="math notranslate nohighlight">\(f(x_i)\)</span>相比，<span class="math notranslate nohighlight">\(Y_i\)</span>的方差多了一项<span class="math notranslate nohighlight">\(\sigma^2\)</span></p></li>
+<li><p>当n趋于无穷时，<span class="math notranslate nohighlight">\(Y_i\)</span>的方差趋于<span class="math notranslate nohighlight">\(\sigma^2\)</span></p></li>
+</ul>
+</section>
+<section id="id4">
+<h1>线性回归的假设检验<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>通常关心两个变量之间是否相关，即<span class="math notranslate nohighlight">\(\beta_1\)</span>是否为0</p></li>
+<li><p>假设<span class="math notranslate nohighlight">\(H_0\)</span>:<span class="math notranslate nohighlight">\(\beta_1=0\)</span>, <span class="math notranslate nohighlight">\(|\hat\beta_1 -0 | \leq t_{n-2}(0.025)\sigma_{\beta_1}\)</span></p></li>
+<li><p>p-value: <span class="math notranslate nohighlight">\(P(t_{n-2}(|x|&gt;\hat\beta_1/\sigma_{\beta_1})) = 2(1-CDF(t_{n-2}(\hat\beta_1/\sigma_{\beta_1})) )\)</span></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pval</span><span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">st</span><span class="o">.</span><span class="n">t</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">beta1</span><span class="o">/</span><span class="n">std_beta1</span><span class="p">))</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">pval</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PearsonRResult(statistic=0.9059147905273294, pvalue=3.883087797299835e-08) 3.8830877846507406e-08
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id5">
+<h1>回归函数的逆转使用<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(Y= b_0+b_1X\)</span> 能否推出<span class="math notranslate nohighlight">\(X=c_0+c_1Y\)</span>?</p></li>
+<li><p><span class="math notranslate nohighlight">\(X = (Y-b_0)/b_1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(c_0 = -b_0/b_1, c_1 = 1/b_1\)</span></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rvb0</span><span class="o">=</span><span class="n">rns</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">rns</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">meanx</span>
+<span class="n">rvb1</span><span class="o">=</span><span class="n">rns</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">rvb0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">rvb1</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="mi">95</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">line_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span><span class="s1">&#39;C2&#39;</span><span class="p">})</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">rvb1</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">rvb0</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="mi">95</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">line_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span><span class="s1">&#39;C2&#39;</span><span class="p">})</span>
+
+<span class="n">result</span><span class="o">=</span><span class="n">linregress</span><span class="p">(</span><span class="n">rvb0</span><span class="p">,</span><span class="n">rvb1</span><span class="p">)</span>
+<span class="n">result2</span><span class="o">=</span><span class="n">linregress</span><span class="p">(</span><span class="n">rvb1</span><span class="p">,</span><span class="n">rvb0</span><span class="p">)</span>
+
+<span class="n">rvb1_sort</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">rvb1</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rvb1_sort</span><span class="p">,</span><span class="o">-</span><span class="n">result</span><span class="o">.</span><span class="n">intercept</span><span class="o">/</span><span class="n">result</span><span class="o">.</span><span class="n">slope</span><span class="o">+</span><span class="mi">1</span><span class="o">/</span><span class="n">result</span><span class="o">.</span><span class="n">slope</span><span class="o">*</span><span class="n">rvb1_sort</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">slope</span><span class="o">*</span><span class="n">result2</span><span class="o">.</span><span class="n">slope</span><span class="p">,</span><span class="o">-</span><span class="n">result</span><span class="o">.</span><span class="n">intercept</span><span class="o">/</span><span class="n">result</span><span class="o">.</span><span class="n">slope</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LinregressResult(slope=-0.16209755716712054, intercept=3.945781526341422, rvalue=-0.8879516802051528, pvalue=0.0, stderr=0.0011876463065118056, intercept_stderr=0.0034034419127169997)
+LinregressResult(slope=-4.864096659805079, intercept=18.909602777567702, rvalue=-0.8879516802051528, pvalue=0.0, stderr=0.03563796107413314, intercept_stderr=0.14926275067946415)
+0.7884581863791539 24.342017210496092
+</pre></div>
+</div>
+<img alt="_images/L10_2_32_1.png" src="_images/L10_2_32_1.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>若要得到X-Y的回归函数，必须重新拟合：通过身高预测体重，若想通过体重预测身高，需重新做回归函数的估计</p></li>
+<li><p>若(X,Y)符合二维正态分布N(a,b,<span class="math notranslate nohighlight">\(\sigma_1^2\)</span>,<span class="math notranslate nohighlight">\(\sigma_2^2\)</span>,<span class="math notranslate nohighlight">\(\rho\)</span>)，则</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ (y-b) = \rho \sigma_1/\sigma_2 (x-a)\]</div>
+<div class="math notranslate nohighlight">
+\[ (x-a) = \rho \sigma_2/\sigma_1 (y-b)\]</div>
+<p>只有当<span class="math notranslate nohighlight">\(\rho=1\)</span>时，即x与y完全是线性关系时，以上两式才相等</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">rvb0</span><span class="p">,</span> <span class="n">rvb1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 1.        , -0.88795168],
+       [-0.88795168,  1.        ]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">st</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">rvb0</span><span class="p">,</span> <span class="n">rvb1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PearsonRResult(statistic=-0.8879516802051531, pvalue=0.0)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id6">
+<h1>线性回归的适用范围<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>假设X没有任何误差</p></li>
+<li><p>若X存在误差，只要(X,Y)符合二维正态分布，以上回归函数<span class="math notranslate nohighlight">\(f(x)，f(x_i), Y_i\)</span>的区间估计都成立，只是<span class="math notranslate nohighlight">\(\beta\)</span>的方差公式不再成立</p></li>
+</ul>
+</section>
+<section id="id7">
+<h1>多元线性回归<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h1>
+<section id="python">
+<h2>Python中的矩阵和线性代数<a class="headerlink" href="#python" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### numpy.array创建矩阵</span>
+<span class="n">a</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">b</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]])</span> <span class="c1">## 注意这里的两个方括号</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1 2]
+[[1 2]
+ [3 4]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### 初始化矩阵</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>          
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span> 
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span> <span class="c1">## 注意这里的两层括号</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1. 1. 1. 1.]
+[0. 0. 0. 0.]
+[[1. 1. 1. 1.]
+ [1. 1. 1. 1.]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1., 0., 0., 0., 0.],
+       [0., 1., 0., 0., 0.],
+       [0., 0., 1., 0., 0.],
+       [0., 0., 0., 1., 0.],
+       [0., 0., 0., 0., 1.]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1, 0, 0],
+       [0, 2, 0],
+       [0, 0, 4]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[6, 0, 0],
+       [0, 7, 0],
+       [0, 0, 7]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1 4 0 9]
+ [7 3 5 8]
+ [9 8 6 2]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">,:])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3
+[7 3 5 8]
+[4 3 8]
+[[4 0]
+ [3 5]
+ [8 6]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],:])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[9 8 6 2]
+ [7 3 5 8]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### 矩阵的运算</span>
+<span class="n">b</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1">### 每个元素的乘法</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">/</span><span class="n">b</span><span class="p">)</span> <span class="c1">### 每个元素的除法</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1 4 0 9]
+ [7 3 5 8]
+ [9 8 6 2]] 
+
+[[ 7  2 10 14]
+ [11  8 13 12]
+ [ 3 12  6 14]] 
+
+[[ 8  6 10 23]
+ [18 11 18 20]
+ [12 20 12 16]] 
+
+[[  7   8   0 126]
+ [ 77  24  65  96]
+ [ 27  96  36  28]] 
+
+[[0.14285714 2.         0.         0.64285714]
+ [0.63636364 0.375      0.38461538 0.66666667]
+ [3.         0.66666667 1.         0.14285714]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### Broadcast</span>
+<span class="n">c</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[2 1 0 0]] 
+
+[[1 4 0 9]
+ [7 3 5 8]
+ [9 8 6 2]] 
+
+[[ 2  4  0  0]
+ [14  3  0  0]
+ [18  8  0  0]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[2]
+ [0]
+ [2]] 
+
+[[1 4 0 9]
+ [7 3 5 8]
+ [9 8 6 2]] 
+
+[[ 2  8  0 18]
+ [ 0  0  0  0]
+ [18 16 12  4]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0]] 
+
+[[1 4 0 9]
+ [7 3 5 8]
+ [9 8 6 2]] 
+
+[[0 0 0 0]
+ [0 0 0 0]
+ [0 0 0 0]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### Transpose</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1 4 0 9]
+ [7 3 5 8]
+ [9 8 6 2]] 
+
+[[1 7 9]
+ [4 3 8]
+ [0 5 6]
+ [9 8 2]] 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### 线性代数运算</span>
+<span class="n">a</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span>
+<span class="n">b</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span>
+<span class="n">c</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span>
+<span class="n">d</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="nd">@b</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="p">,(</span><span class="n">a</span><span class="nd">@b</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="nd">@c</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="nd">@b</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="nd">@a</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="nd">@d</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="nd">@c</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 1 1 1]
+ [1 1 1 0]
+ [1 0 1 1]] 
+
+[[0]
+ [1]
+ [0]
+ [0]] 
+
+[[0 1 0 0]] 
+
+[0 1 1 1] 
+
+[[1]
+ [1]
+ [0]] 
+
+(3, 4) (4, 1) (3, 1) 
+
+[[0 0 0 0]
+ [0 1 0 0]
+ [0 0 0 0]
+ [0 0 0 0]] 
+
+[[1]] 
+
+[[1 1 0]] 
+
+[3 2 2] 
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span> <span class="p">[</span><span class="mi">34</span><span class="p">],</span> <span class="n">line</span> <span class="mi">17</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="nd">@a</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="nd">@d</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">17</span> <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="nd">@c</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nn">ValueError: matmul: Input operand 1 has a mismatch</span> in <span class="ni">its core dimension 0, with gufunc signature (n?,k),(k,m?)-&gt;(n?,m?) </span><span class="nt">(size 1 is different from 4)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### 矩阵求逆和线性方程求解</span>
+<span class="c1"># Ax=b</span>
+<span class="c1"># x= A^{-1}b</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>   
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">b</span><span class="p">),</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="nd">@b</span><span class="p">)</span> <span class="c1">## 更慢</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 0.05901857  0.00994695 -0.09040672  0.09549072]
+ [ 0.25397878 -0.04708223  0.13903625 -0.25198939]
+ [ 0.02122016  0.08222812 -0.03625111 -0.01061008]
+ [-0.13793103 -0.03448276  0.06896552  0.06896552]] 
+
+[[ 0.94496021]
+ [ 1.52718833]
+ [-0.18832891]
+ [-0.27586207]] 
+
+[[ 0.94496021]
+ [ 1.52718833]
+ [-0.18832891]
+ [-0.27586207]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">timeit</span> np.linalg.solve(A,b)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.77 µs ± 236 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">timeit</span> np.linalg.inv(A)@b
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>11 µs ± 406 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="id8">
+<h1>作业<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h1>
+<p>x=[9.86 ,7.29 ,3.87 ,9.99 ,3.06 ,7.82 ,5.98 ,4.47 ,7.38 ,1.14 ,3.92 ,3.41 ,5.86 ,3.52 ,6.00 ,2.06 ,6.29 ,2.06 ,7.40 ,2.54]</p>
+<p>y=[42.40 ,25.32 ,16.10 ,37.22 ,13.06 ,35.36 ,29.34 ,18.79 ,25.98 ,7.59 ,13.89 ,13.67 ,26.13 ,20.87 ,27.76 ,3.66 ,19.01 ,4.00 ,22.22 ,17.93]</p>
+<ol class="simple">
+<li><p>利用<span class="math notranslate nohighlight">\(\beta_0\)</span>和<span class="math notranslate nohighlight">\(\beta_1\)</span>的估计,画出线性回归<span class="math notranslate nohighlight">\(y=f(x)\)</span>的95%置信区间</p></li>
+<li><p>利用<span class="math notranslate nohighlight">\(b_0\)</span>和<span class="math notranslate nohighlight">\(b_1\)</span>的协方差矩阵，画出线性回归<span class="math notranslate nohighlight">\(y=f(x)\)</span>的95%置信区间</p></li>
+</ol>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 肖朦<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

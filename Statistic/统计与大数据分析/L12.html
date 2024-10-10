@@ -1,0 +1,3412 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Dataframe &#8212; 统计与大数据分析</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint single-page" id="site-navigation">
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/L12.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/L12.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Dataframe
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     创建表格
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     表格读入读出
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     表格的行列操作
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     合并表格
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     简单画图
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     时间信息处理
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     分类画图
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sklearn">
+   sklearn的数据
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Dataframe</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Dataframe
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     创建表格
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     表格读入读出
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     表格的行列操作
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     合并表格
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     简单画图
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     时间信息处理
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     分类画图
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sklearn">
+   sklearn的数据
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <center>
+<h1> 统计与大数据分析</h1>
+<h2>常见数据格式和处理</h2>
+<h5>肖朦，2023 </h5>
+</center><section id="dataframe">
+<h1>Dataframe<a class="headerlink" href="#dataframe" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>表格</p></li>
+<li><p>读入和写出</p></li>
+<li><p>处理csv,xls,json,sql</p></li>
+</ul>
+<section id="id1">
+<h2>创建表格<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">mode</span><span class="o">.</span><span class="n">chained_assignment</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">l1</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">l2</span><span class="o">=</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span>
+<span class="n">l3</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;qw&#39;</span><span class="p">,</span><span class="s1">&#39;er&#39;</span><span class="p">,</span><span class="s1">&#39;tyui&#39;</span><span class="p">,</span><span class="s1">&#39;asdf&#39;</span><span class="p">]</span>
+
+<span class="n">dict3</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="n">l1</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">:</span><span class="n">l2</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">:</span><span class="n">l3</span><span class="p">}</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dict3</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>a</th>
+      <th>b</th>
+      <th>c</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>7</td>
+      <td>qw</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>8</td>
+      <td>er</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>9</td>
+      <td>tyui</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>10</td>
+      <td>asdf</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">,</span><span class="n">l3</span><span class="p">)),</span>
+               <span class="n">columns</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">])</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>a</th>
+      <th>b</th>
+      <th>c</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>7</td>
+      <td>qw</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>8</td>
+      <td>er</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>9</td>
+      <td>tyui</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>10</td>
+      <td>asdf</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="id2">
+<h2>表格读入读出<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hang</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;hang.csv&quot;</span><span class="p">,</span><span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">,</span> <span class="n">quotechar</span><span class="o">=</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
+<span class="n">hang</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>T</th>
+      <th>Po</th>
+      <th>P</th>
+      <th>Pa</th>
+      <th>U</th>
+      <th>DD</th>
+      <th>Ff</th>
+      <th>ff10</th>
+      <th>ff3</th>
+      <th>...</th>
+      <th>Ch</th>
+      <th>VV</th>
+      <th>Td</th>
+      <th>RRR</th>
+      <th>tR</th>
+      <th>E</th>
+      <th>Tg</th>
+      <th>E'</th>
+      <th>sss</th>
+      <th>Unnamed: 29</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>06.09.2022 20:00</td>
+      <td>27.8</td>
+      <td>756.4</td>
+      <td>760.2</td>
+      <td>0.8</td>
+      <td>62.0</td>
+      <td>从东南方吹来的风</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>5.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>12.0</td>
+      <td>19.9</td>
+      <td>无降水</td>
+      <td>12.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>06.09.2022 17:00</td>
+      <td>32.5</td>
+      <td>755.6</td>
+      <td>759.4</td>
+      <td>-0.2</td>
+      <td>46.0</td>
+      <td>从东南方吹来的风</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>5.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>17.0</td>
+      <td>19.4</td>
+      <td>无降水</td>
+      <td>12.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>06.09.2022 14:00</td>
+      <td>31.7</td>
+      <td>755.8</td>
+      <td>759.6</td>
+      <td>-0.7</td>
+      <td>49.0</td>
+      <td>从南方吹来的风</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>5.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>14.0</td>
+      <td>19.7</td>
+      <td>无降水</td>
+      <td>12.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>06.09.2022 11:00</td>
+      <td>29.0</td>
+      <td>756.5</td>
+      <td>760.3</td>
+      <td>0.7</td>
+      <td>61.0</td>
+      <td>从南方吹来的风</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>4.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>12.0</td>
+      <td>20.7</td>
+      <td>无降水</td>
+      <td>12.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>06.09.2022 08:00</td>
+      <td>23.7</td>
+      <td>755.8</td>
+      <td>759.6</td>
+      <td>2.1</td>
+      <td>82.0</td>
+      <td>从南方吹来的风</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>4.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>11.0</td>
+      <td>20.4</td>
+      <td>无降水</td>
+      <td>12.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>39856</th>
+      <td>02.02.2005 08:00</td>
+      <td>0.2</td>
+      <td>767.2</td>
+      <td>771.3</td>
+      <td>NaN</td>
+      <td>63.0</td>
+      <td>从南方吹来的风</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>浓密的卷云，呈散片状或扭曲的斜坡状，其数量通常不会增加，有时似乎只剩下积雨云的顶部；或塔状卷...</td>
+      <td>4.0</td>
+      <td>-6.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>39857</th>
+      <td>02.02.2005 02:00</td>
+      <td>-0.7</td>
+      <td>767.0</td>
+      <td>771.1</td>
+      <td>NaN</td>
+      <td>62.0</td>
+      <td>从北方吹来的风</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>10.0</td>
+      <td>-7.1</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>39858</th>
+      <td>01.02.2005 20:00</td>
+      <td>0.9</td>
+      <td>766.6</td>
+      <td>770.6</td>
+      <td>NaN</td>
+      <td>52.0</td>
+      <td>从西北偏西方向吹来的风</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>12.0</td>
+      <td>-7.8</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>39859</th>
+      <td>01.02.2005 14:00</td>
+      <td>5.8</td>
+      <td>764.8</td>
+      <td>768.8</td>
+      <td>NaN</td>
+      <td>29.0</td>
+      <td>从西北偏北方向吹来的风</td>
+      <td>3.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>14.0</td>
+      <td>-10.9</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>39860</th>
+      <td>01.02.2005 08:00</td>
+      <td>1.6</td>
+      <td>766.0</td>
+      <td>770.0</td>
+      <td>NaN</td>
+      <td>50.0</td>
+      <td>从西北方吹来的风</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>浓密的卷云，呈散片状或扭曲的斜坡状，其数量通常不会增加，有时似乎只剩下积雨云的顶部；或塔状卷...</td>
+      <td>11.0</td>
+      <td>-7.7</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>地表潮湿</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>39861 rows × 30 columns</p>
+</div></div></div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hang</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>T</th>
+      <th>Po</th>
+      <th>P</th>
+      <th>Pa</th>
+      <th>U</th>
+      <th>DD</th>
+      <th>Ff</th>
+      <th>ff10</th>
+      <th>ff3</th>
+      <th>...</th>
+      <th>Ch</th>
+      <th>VV</th>
+      <th>Td</th>
+      <th>RRR</th>
+      <th>tR</th>
+      <th>E</th>
+      <th>Tg</th>
+      <th>E'</th>
+      <th>sss</th>
+      <th>Unnamed: 29</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>06.09.2022 20:00</td>
+      <td>27.8</td>
+      <td>756.4</td>
+      <td>760.2</td>
+      <td>0.8</td>
+      <td>62.0</td>
+      <td>从东南方吹来的风</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>5.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>12.0</td>
+      <td>19.9</td>
+      <td>无降水</td>
+      <td>12.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>06.09.2022 17:00</td>
+      <td>32.5</td>
+      <td>755.6</td>
+      <td>759.4</td>
+      <td>-0.2</td>
+      <td>46.0</td>
+      <td>从东南方吹来的风</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>5.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>17.0</td>
+      <td>19.4</td>
+      <td>无降水</td>
+      <td>12.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>06.09.2022 14:00</td>
+      <td>31.7</td>
+      <td>755.8</td>
+      <td>759.6</td>
+      <td>-0.7</td>
+      <td>49.0</td>
+      <td>从南方吹来的风</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>5.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>14.0</td>
+      <td>19.7</td>
+      <td>无降水</td>
+      <td>12.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>06.09.2022 11:00</td>
+      <td>29.0</td>
+      <td>756.5</td>
+      <td>760.3</td>
+      <td>0.7</td>
+      <td>61.0</td>
+      <td>从南方吹来的风</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>4.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>12.0</td>
+      <td>20.7</td>
+      <td>无降水</td>
+      <td>12.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>06.09.2022 08:00</td>
+      <td>23.7</td>
+      <td>755.8</td>
+      <td>759.6</td>
+      <td>2.1</td>
+      <td>82.0</td>
+      <td>从南方吹来的风</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>4.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>11.0</td>
+      <td>20.4</td>
+      <td>无降水</td>
+      <td>12.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 30 columns</p>
+</div></div></div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hang</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>T</th>
+      <th>Po</th>
+      <th>P</th>
+      <th>Pa</th>
+      <th>U</th>
+      <th>DD</th>
+      <th>Ff</th>
+      <th>ff10</th>
+      <th>ff3</th>
+      <th>...</th>
+      <th>Ch</th>
+      <th>VV</th>
+      <th>Td</th>
+      <th>RRR</th>
+      <th>tR</th>
+      <th>E</th>
+      <th>Tg</th>
+      <th>E'</th>
+      <th>sss</th>
+      <th>Unnamed: 29</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>39856</th>
+      <td>02.02.2005 08:00</td>
+      <td>0.2</td>
+      <td>767.2</td>
+      <td>771.3</td>
+      <td>NaN</td>
+      <td>63.0</td>
+      <td>从南方吹来的风</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>浓密的卷云，呈散片状或扭曲的斜坡状，其数量通常不会增加，有时似乎只剩下积雨云的顶部；或塔状卷...</td>
+      <td>4.0</td>
+      <td>-6.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>39857</th>
+      <td>02.02.2005 02:00</td>
+      <td>-0.7</td>
+      <td>767.0</td>
+      <td>771.1</td>
+      <td>NaN</td>
+      <td>62.0</td>
+      <td>从北方吹来的风</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>10.0</td>
+      <td>-7.1</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>39858</th>
+      <td>01.02.2005 20:00</td>
+      <td>0.9</td>
+      <td>766.6</td>
+      <td>770.6</td>
+      <td>NaN</td>
+      <td>52.0</td>
+      <td>从西北偏西方向吹来的风</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>12.0</td>
+      <td>-7.8</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>39859</th>
+      <td>01.02.2005 14:00</td>
+      <td>5.8</td>
+      <td>764.8</td>
+      <td>768.8</td>
+      <td>NaN</td>
+      <td>29.0</td>
+      <td>从西北偏北方向吹来的风</td>
+      <td>3.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>14.0</td>
+      <td>-10.9</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>39860</th>
+      <td>01.02.2005 08:00</td>
+      <td>1.6</td>
+      <td>766.0</td>
+      <td>770.0</td>
+      <td>NaN</td>
+      <td>50.0</td>
+      <td>从西北方吹来的风</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>浓密的卷云，呈散片状或扭曲的斜坡状，其数量通常不会增加，有时似乎只剩下积雨云的顶部；或塔状卷...</td>
+      <td>11.0</td>
+      <td>-7.7</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>地表潮湿</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 30 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hang</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>time            object
+T              float64
+Po             float64
+P              float64
+Pa             float64
+U              float64
+DD              object
+Ff             float64
+ff10           float64
+ff3            float64
+N               object
+WW              object
+W1              object
+W2              object
+Tn             float64
+Tx             float64
+Cl              object
+Nh              object
+H               object
+Cm              object
+Ch              object
+VV              object
+Td             float64
+RRR             object
+tR             float64
+E               object
+Tg             float64
+E&#39;             float64
+sss            float64
+Unnamed: 29    float64
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hang</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s2">&quot;hang.xlsx&quot;</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;weather&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hang</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;hang.xlsx&quot;</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;weather&quot;</span><span class="p">)</span>
+<span class="n">hang</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>T</th>
+      <th>Po</th>
+      <th>P</th>
+      <th>Pa</th>
+      <th>U</th>
+      <th>DD</th>
+      <th>Ff</th>
+      <th>ff10</th>
+      <th>ff3</th>
+      <th>...</th>
+      <th>Ch</th>
+      <th>VV</th>
+      <th>Td</th>
+      <th>RRR</th>
+      <th>tR</th>
+      <th>E</th>
+      <th>Tg</th>
+      <th>E'</th>
+      <th>sss</th>
+      <th>Unnamed: 29</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>06.09.2022 20:00</td>
+      <td>27.8</td>
+      <td>756.4</td>
+      <td>760.2</td>
+      <td>0.8</td>
+      <td>62.0</td>
+      <td>从东南方吹来的风</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>5.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>12.0</td>
+      <td>19.9</td>
+      <td>无降水</td>
+      <td>12.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>06.09.2022 17:00</td>
+      <td>32.5</td>
+      <td>755.6</td>
+      <td>759.4</td>
+      <td>-0.2</td>
+      <td>46.0</td>
+      <td>从东南方吹来的风</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>5.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>17.0</td>
+      <td>19.4</td>
+      <td>无降水</td>
+      <td>12.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>06.09.2022 14:00</td>
+      <td>31.7</td>
+      <td>755.8</td>
+      <td>759.6</td>
+      <td>-0.7</td>
+      <td>49.0</td>
+      <td>从南方吹来的风</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>5.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>14.0</td>
+      <td>19.7</td>
+      <td>无降水</td>
+      <td>12.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>06.09.2022 11:00</td>
+      <td>29.0</td>
+      <td>756.5</td>
+      <td>760.3</td>
+      <td>0.7</td>
+      <td>61.0</td>
+      <td>从南方吹来的风</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>4.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>12.0</td>
+      <td>20.7</td>
+      <td>无降水</td>
+      <td>12.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>06.09.2022 08:00</td>
+      <td>23.7</td>
+      <td>755.8</td>
+      <td>759.6</td>
+      <td>2.1</td>
+      <td>82.0</td>
+      <td>从南方吹来的风</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>4.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>11.0</td>
+      <td>20.4</td>
+      <td>无降水</td>
+      <td>12.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>39856</th>
+      <td>02.02.2005 08:00</td>
+      <td>0.2</td>
+      <td>767.2</td>
+      <td>771.3</td>
+      <td>NaN</td>
+      <td>63.0</td>
+      <td>从南方吹来的风</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>浓密的卷云，呈散片状或扭曲的斜坡状，其数量通常不会增加，有时似乎只剩下积雨云的顶部；或塔状卷...</td>
+      <td>4.0</td>
+      <td>-6.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>39857</th>
+      <td>02.02.2005 02:00</td>
+      <td>-0.7</td>
+      <td>767.0</td>
+      <td>771.1</td>
+      <td>NaN</td>
+      <td>62.0</td>
+      <td>从北方吹来的风</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>10.0</td>
+      <td>-7.1</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>39858</th>
+      <td>01.02.2005 20:00</td>
+      <td>0.9</td>
+      <td>766.6</td>
+      <td>770.6</td>
+      <td>NaN</td>
+      <td>52.0</td>
+      <td>从西北偏西方向吹来的风</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>12.0</td>
+      <td>-7.8</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>39859</th>
+      <td>01.02.2005 14:00</td>
+      <td>5.8</td>
+      <td>764.8</td>
+      <td>768.8</td>
+      <td>NaN</td>
+      <td>29.0</td>
+      <td>从西北偏北方向吹来的风</td>
+      <td>3.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>14.0</td>
+      <td>-10.9</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>39860</th>
+      <td>01.02.2005 08:00</td>
+      <td>1.6</td>
+      <td>766.0</td>
+      <td>770.0</td>
+      <td>NaN</td>
+      <td>50.0</td>
+      <td>从西北方吹来的风</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>浓密的卷云，呈散片状或扭曲的斜坡状，其数量通常不会增加，有时似乎只剩下积雨云的顶部；或塔状卷...</td>
+      <td>11.0</td>
+      <td>-7.7</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>地表潮湿</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>39861 rows × 30 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hang</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 39861 entries, 0 to 39860
+Data columns (total 30 columns):
+ #   Column       Non-Null Count  Dtype  
+---  ------       --------------  -----  
+ 0   time         39861 non-null  object 
+ 1   T            39856 non-null  float64
+ 2   Po           39597 non-null  float64
+ 3   P            39622 non-null  float64
+ 4   Pa           26160 non-null  float64
+ 5   U            39855 non-null  float64
+ 6   DD           39854 non-null  object 
+ 7   Ff           39854 non-null  float64
+ 8   ff10         0 non-null      float64
+ 9   ff3          7339 non-null   float64
+ 10  N            32400 non-null  object 
+ 11  WW           39861 non-null  object 
+ 12  W1           21559 non-null  object 
+ 13  W2           21559 non-null  object 
+ 14  Tn           13276 non-null  float64
+ 15  Tx           12535 non-null  float64
+ 16  Cl           8374 non-null   object 
+ 17  Nh           19530 non-null  object 
+ 18  H            31997 non-null  object 
+ 19  Cm           6748 non-null   object 
+ 20  Ch           7194 non-null   object 
+ 21  VV           38439 non-null  object 
+ 22  Td           39858 non-null  float64
+ 23  RRR          14838 non-null  object 
+ 24  tR           14838 non-null  float64
+ 25  E            1150 non-null   object 
+ 26  Tg           0 non-null      float64
+ 27  E&#39;           0 non-null      float64
+ 28  sss          5 non-null      float64
+ 29  Unnamed: 29  0 non-null      float64
+dtypes: float64(16), object(14)
+memory usage: 9.1+ MB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hang</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>T</th>
+      <th>Po</th>
+      <th>P</th>
+      <th>Pa</th>
+      <th>U</th>
+      <th>Ff</th>
+      <th>ff10</th>
+      <th>ff3</th>
+      <th>Tn</th>
+      <th>Tx</th>
+      <th>Td</th>
+      <th>tR</th>
+      <th>Tg</th>
+      <th>E'</th>
+      <th>sss</th>
+      <th>Unnamed: 29</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>39856.000000</td>
+      <td>39597.000000</td>
+      <td>39622.000000</td>
+      <td>26160.000000</td>
+      <td>39855.000000</td>
+      <td>39854.000000</td>
+      <td>0.0</td>
+      <td>7339.000000</td>
+      <td>13276.000000</td>
+      <td>12535.000000</td>
+      <td>39858.000000</td>
+      <td>14838.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>5.000000</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>18.080753</td>
+      <td>758.385625</td>
+      <td>762.168651</td>
+      <td>0.002225</td>
+      <td>71.726383</td>
+      <td>2.184398</td>
+      <td>NaN</td>
+      <td>6.897534</td>
+      <td>15.026522</td>
+      <td>22.775947</td>
+      <td>12.239992</td>
+      <td>8.640922</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>10.800000</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>9.368838</td>
+      <td>6.920760</td>
+      <td>7.038640</td>
+      <td>1.125060</td>
+      <td>19.094371</td>
+      <td>1.208683</td>
+      <td>NaN</td>
+      <td>2.872814</td>
+      <td>8.756772</td>
+      <td>9.752929</td>
+      <td>9.485368</td>
+      <td>2.983417</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>5.630275</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>-7.500000</td>
+      <td>730.800000</td>
+      <td>734.400000</td>
+      <td>-6.700000</td>
+      <td>9.000000</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+      <td>2.000000</td>
+      <td>-8.200000</td>
+      <td>-3.100000</td>
+      <td>-24.800000</td>
+      <td>6.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>5.000000</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>10.200000</td>
+      <td>752.500000</td>
+      <td>756.100000</td>
+      <td>-0.600000</td>
+      <td>59.000000</td>
+      <td>1.000000</td>
+      <td>NaN</td>
+      <td>5.000000</td>
+      <td>7.600000</td>
+      <td>14.700000</td>
+      <td>5.000000</td>
+      <td>6.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>6.000000</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>18.900000</td>
+      <td>758.300000</td>
+      <td>762.100000</td>
+      <td>0.000000</td>
+      <td>75.000000</td>
+      <td>2.000000</td>
+      <td>NaN</td>
+      <td>6.000000</td>
+      <td>15.400000</td>
+      <td>23.400000</td>
+      <td>13.000000</td>
+      <td>6.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>10.000000</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>25.500000</td>
+      <td>763.800000</td>
+      <td>767.700000</td>
+      <td>0.700000</td>
+      <td>88.000000</td>
+      <td>3.000000</td>
+      <td>NaN</td>
+      <td>8.000000</td>
+      <td>22.800000</td>
+      <td>31.000000</td>
+      <td>20.800000</td>
+      <td>12.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>15.000000</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>41.200000</td>
+      <td>778.800000</td>
+      <td>783.100000</td>
+      <td>12.900000</td>
+      <td>100.000000</td>
+      <td>13.000000</td>
+      <td>NaN</td>
+      <td>25.000000</td>
+      <td>31.500000</td>
+      <td>41.800000</td>
+      <td>28.500000</td>
+      <td>24.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>18.000000</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="id3">
+<h2>表格的行列操作<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hang</span><span class="p">[</span><span class="s1">&#39;T&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0        27.8
+1        32.5
+2        31.7
+3        29.0
+4        23.7
+         ... 
+39856     0.2
+39857    -0.7
+39858     0.9
+39859     5.8
+39860     1.6
+Name: T, Length: 39861, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">hang</span><span class="p">[</span><span class="s1">&#39;T&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pandas.core.series.Series
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reduce</span><span class="o">=</span><span class="n">hang</span><span class="p">[[</span><span class="s1">&#39;time&#39;</span><span class="p">,</span><span class="s1">&#39;T&#39;</span><span class="p">]]</span>
+<span class="n">reduce</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>T</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>06.09.2022 20:00</td>
+      <td>27.8</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>06.09.2022 17:00</td>
+      <td>32.5</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>06.09.2022 14:00</td>
+      <td>31.7</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>06.09.2022 11:00</td>
+      <td>29.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>06.09.2022 08:00</td>
+      <td>23.7</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>39856</th>
+      <td>02.02.2005 08:00</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>39857</th>
+      <td>02.02.2005 02:00</td>
+      <td>-0.7</td>
+    </tr>
+    <tr>
+      <th>39858</th>
+      <td>01.02.2005 20:00</td>
+      <td>0.9</td>
+    </tr>
+    <tr>
+      <th>39859</th>
+      <td>01.02.2005 14:00</td>
+      <td>5.8</td>
+    </tr>
+    <tr>
+      <th>39860</th>
+      <td>01.02.2005 08:00</td>
+      <td>1.6</td>
+    </tr>
+  </tbody>
+</table>
+<p>39861 rows × 2 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reduce</span><span class="p">[</span><span class="n">reduce</span><span class="p">[</span><span class="s2">&quot;T&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">35</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>T</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>66</th>
+      <td>29.08.2022 14:00</td>
+      <td>35.5</td>
+    </tr>
+    <tr>
+      <th>98</th>
+      <td>25.08.2022 14:00</td>
+      <td>36.4</td>
+    </tr>
+    <tr>
+      <th>113</th>
+      <td>23.08.2022 17:00</td>
+      <td>39.0</td>
+    </tr>
+    <tr>
+      <th>114</th>
+      <td>23.08.2022 14:00</td>
+      <td>39.2</td>
+    </tr>
+    <tr>
+      <th>115</th>
+      <td>23.08.2022 11:00</td>
+      <td>38.3</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>39276</th>
+      <td>27.06.2005 14:00</td>
+      <td>36.2</td>
+    </tr>
+    <tr>
+      <th>39280</th>
+      <td>26.06.2005 14:00</td>
+      <td>35.8</td>
+    </tr>
+    <tr>
+      <th>39284</th>
+      <td>25.06.2005 14:00</td>
+      <td>35.8</td>
+    </tr>
+    <tr>
+      <th>39288</th>
+      <td>24.06.2005 14:00</td>
+      <td>36.4</td>
+    </tr>
+    <tr>
+      <th>39316</th>
+      <td>17.06.2005 14:00</td>
+      <td>35.2</td>
+    </tr>
+  </tbody>
+</table>
+<p>813 rows × 2 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reduce</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">9</span><span class="p">:</span><span class="mi">14</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>T</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>9</th>
+      <td>05.09.2022 17:00</td>
+      <td>29.4</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>05.09.2022 14:00</td>
+      <td>27.1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>05.09.2022 11:00</td>
+      <td>24.0</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>05.09.2022 08:00</td>
+      <td>22.4</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>05.09.2022 05:00</td>
+      <td>22.3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reduce</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">reduce</span><span class="p">[</span><span class="s2">&quot;T&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">35</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>66       29.08.2022 14:00
+98       25.08.2022 14:00
+113      23.08.2022 17:00
+114      23.08.2022 14:00
+115      23.08.2022 11:00
+               ...       
+39276    27.06.2005 14:00
+39280    26.06.2005 14:00
+39284    25.06.2005 14:00
+39288    24.06.2005 14:00
+39316    17.06.2005 14:00
+Name: time, Length: 813, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id4">
+<h2>合并表格<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sub3</span><span class="o">=</span><span class="n">hang</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">sub4</span><span class="o">=</span><span class="n">hang</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">,[</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sub3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sub4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>               time     T
+1  06.09.2022 17:00  32.5
+2  06.09.2022 14:00  31.7
+3  06.09.2022 11:00  29.0
+4  06.09.2022 08:00  23.7
+               time   Pa     U
+1  06.09.2022 17:00 -0.2  46.0
+2  06.09.2022 14:00 -0.7  49.0
+3  06.09.2022 11:00  0.7  61.0
+4  06.09.2022 08:00  2.1  82.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">sub3</span><span class="p">,</span> <span class="n">sub4</span><span class="p">,</span>
+        <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>T</th>
+      <th>Pa</th>
+      <th>U</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>06.09.2022 17:00</td>
+      <td>32.5</td>
+      <td>-0.2</td>
+      <td>46.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>06.09.2022 14:00</td>
+      <td>31.7</td>
+      <td>-0.7</td>
+      <td>49.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>06.09.2022 11:00</td>
+      <td>29.0</td>
+      <td>0.7</td>
+      <td>61.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>06.09.2022 08:00</td>
+      <td>23.7</td>
+      <td>2.1</td>
+      <td>82.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sub5</span><span class="o">=</span><span class="n">hang</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">6</span><span class="p">,[</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sub3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sub5</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">sub3</span><span class="p">,</span> <span class="n">sub5</span><span class="p">,</span>
+        <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>               time     T
+1  06.09.2022 17:00  32.5
+2  06.09.2022 14:00  31.7
+3  06.09.2022 11:00  29.0
+4  06.09.2022 08:00  23.7
+               time   Pa     U
+2  06.09.2022 14:00 -0.7  49.0
+3  06.09.2022 11:00  0.7  61.0
+4  06.09.2022 08:00  2.1  82.0
+5  06.09.2022 05:00  0.8  93.0
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>T</th>
+      <th>Pa</th>
+      <th>U</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>06.09.2022 17:00</td>
+      <td>32.5</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>06.09.2022 14:00</td>
+      <td>31.7</td>
+      <td>-0.7</td>
+      <td>49.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>06.09.2022 11:00</td>
+      <td>29.0</td>
+      <td>0.7</td>
+      <td>61.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>06.09.2022 08:00</td>
+      <td>23.7</td>
+      <td>2.1</td>
+      <td>82.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">sub3</span><span class="p">,</span> <span class="n">sub5</span><span class="p">,</span>
+        <span class="n">how</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>T</th>
+      <th>Pa</th>
+      <th>U</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>06.09.2022 14:00</td>
+      <td>31.7</td>
+      <td>-0.7</td>
+      <td>49.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>06.09.2022 11:00</td>
+      <td>29.0</td>
+      <td>0.7</td>
+      <td>61.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>06.09.2022 08:00</td>
+      <td>23.7</td>
+      <td>2.1</td>
+      <td>82.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>06.09.2022 05:00</td>
+      <td>NaN</td>
+      <td>0.8</td>
+      <td>93.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">sub3</span><span class="p">,</span> <span class="n">sub5</span><span class="p">,</span>
+        <span class="n">how</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>T</th>
+      <th>Pa</th>
+      <th>U</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>06.09.2022 17:00</td>
+      <td>32.5</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>06.09.2022 14:00</td>
+      <td>31.7</td>
+      <td>-0.7</td>
+      <td>49.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>06.09.2022 11:00</td>
+      <td>29.0</td>
+      <td>0.7</td>
+      <td>61.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>06.09.2022 08:00</td>
+      <td>23.7</td>
+      <td>2.1</td>
+      <td>82.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>06.09.2022 05:00</td>
+      <td>NaN</td>
+      <td>0.8</td>
+      <td>93.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sub1</span><span class="o">=</span><span class="n">hang</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">sub2</span><span class="o">=</span><span class="n">hang</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sub1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sub2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>               time     T
+1  06.09.2022 17:00  32.5
+2  06.09.2022 14:00  31.7
+3  06.09.2022 11:00  29.0
+4  06.09.2022 08:00  23.7
+               time     T
+6  06.09.2022 02:00  21.8
+7  05.09.2022 23:00  23.2
+8  05.09.2022 20:00  25.8
+9  05.09.2022 17:00  29.4
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">sub1</span><span class="p">,</span> <span class="n">sub2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>T</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>06.09.2022 17:00</td>
+      <td>32.5</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>06.09.2022 14:00</td>
+      <td>31.7</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>06.09.2022 11:00</td>
+      <td>29.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>06.09.2022 08:00</td>
+      <td>23.7</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>06.09.2022 02:00</td>
+      <td>21.8</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>05.09.2022 23:00</td>
+      <td>23.2</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>05.09.2022 20:00</td>
+      <td>25.8</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>05.09.2022 17:00</td>
+      <td>29.4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">sub3</span><span class="p">,</span> <span class="n">sub4</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>T</th>
+      <th>time</th>
+      <th>Pa</th>
+      <th>U</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>06.09.2022 17:00</td>
+      <td>32.5</td>
+      <td>06.09.2022 17:00</td>
+      <td>-0.2</td>
+      <td>46.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>06.09.2022 14:00</td>
+      <td>31.7</td>
+      <td>06.09.2022 14:00</td>
+      <td>-0.7</td>
+      <td>49.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>06.09.2022 11:00</td>
+      <td>29.0</td>
+      <td>06.09.2022 11:00</td>
+      <td>0.7</td>
+      <td>61.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>06.09.2022 08:00</td>
+      <td>23.7</td>
+      <td>06.09.2022 08:00</td>
+      <td>2.1</td>
+      <td>82.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="id5">
+<h2>简单画图<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hang</span><span class="p">[</span><span class="s1">&#39;P&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/L12_31_1.png" src="_images/L12_31_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">fig</span><span class="p">,</span><span class="n">axs</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span> <span class="mi">10</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="p">(</span><span class="n">hang</span><span class="p">[</span><span class="s1">&#39;Tx&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">hang</span><span class="p">[</span><span class="s1">&#39;Tn&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">hang</span><span class="p">[</span><span class="s1">&#39;Tx&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">hang</span><span class="p">[</span><span class="s1">&#39;Tn&#39;</span><span class="p">],</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">hang</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Tx&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;Tx&#39;, ylabel=&#39;Count&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/L12_32_1.png" src="_images/L12_32_1.png" />
+</div>
+</div>
+</section>
+<section id="id6">
+<h2>时间信息处理<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reduce</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">reduce</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">],</span><span class="n">dayfirst</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">reduce</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>T</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2022-09-06 20:00:00</td>
+      <td>27.8</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2022-09-06 17:00:00</td>
+      <td>32.5</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2022-09-06 14:00:00</td>
+      <td>31.7</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2022-09-06 11:00:00</td>
+      <td>29.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2022-09-06 08:00:00</td>
+      <td>23.7</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>39856</th>
+      <td>2005-02-02 08:00:00</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>39857</th>
+      <td>2005-02-02 02:00:00</td>
+      <td>-0.7</td>
+    </tr>
+    <tr>
+      <th>39858</th>
+      <td>2005-02-01 20:00:00</td>
+      <td>0.9</td>
+    </tr>
+    <tr>
+      <th>39859</th>
+      <td>2005-02-01 14:00:00</td>
+      <td>5.8</td>
+    </tr>
+    <tr>
+      <th>39860</th>
+      <td>2005-02-01 08:00:00</td>
+      <td>1.6</td>
+    </tr>
+  </tbody>
+</table>
+<p>39861 rows × 2 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reduce</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">reduce</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Timedelta(&#39;6426 days 12:00:00&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">reduce</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="n">reduce</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">weekday</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="n">reduce</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">day</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="n">reduce</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0        9
+1        9
+2        9
+3        9
+4        9
+        ..
+39856    2
+39857    2
+39858    2
+39859    2
+39860    2
+Name: time, Length: 39861, dtype: int64 
+ 0        1
+1        1
+2        1
+3        1
+4        1
+        ..
+39856    2
+39857    2
+39858    1
+39859    1
+39860    1
+Name: time, Length: 39861, dtype: int64 
+ 0        6
+1        6
+2        6
+3        6
+4        6
+        ..
+39856    2
+39857    2
+39858    1
+39859    1
+39860    1
+Name: time, Length: 39861, dtype: int64 
+ 0        2022
+1        2022
+2        2022
+3        2022
+4        2022
+         ... 
+39856    2005
+39857    2005
+39858    2005
+39859    2005
+39860    2005
+Name: time, Length: 39861, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reduce</span><span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">reduce</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span>
+<span class="n">reduce</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">reduce</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span>
+<span class="n">reduce</span><span class="p">[</span><span class="s1">&#39;hour&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">reduce</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">hour</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reduce</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;month&quot;</span><span class="p">,</span><span class="s2">&quot;year&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>T</th>
+      <th>hour</th>
+    </tr>
+    <tr>
+      <th>month</th>
+      <th>year</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="5" valign="top">1</th>
+      <th>2006</th>
+      <td>5.809677</td>
+      <td>11.000000</td>
+    </tr>
+    <tr>
+      <th>2007</th>
+      <td>5.254032</td>
+      <td>11.000000</td>
+    </tr>
+    <tr>
+      <th>2008</th>
+      <td>3.639837</td>
+      <td>10.975610</td>
+    </tr>
+    <tr>
+      <th>2009</th>
+      <td>4.326829</td>
+      <td>10.975610</td>
+    </tr>
+    <tr>
+      <th>2010</th>
+      <td>5.681538</td>
+      <td>11.323077</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th rowspan="5" valign="top">12</th>
+      <th>2017</th>
+      <td>7.411694</td>
+      <td>12.500000</td>
+    </tr>
+    <tr>
+      <th>2018</th>
+      <td>7.451210</td>
+      <td>12.500000</td>
+    </tr>
+    <tr>
+      <th>2019</th>
+      <td>9.061789</td>
+      <td>12.463415</td>
+    </tr>
+    <tr>
+      <th>2020</th>
+      <td>6.978862</td>
+      <td>12.548780</td>
+    </tr>
+    <tr>
+      <th>2021</th>
+      <td>8.517742</td>
+      <td>12.500000</td>
+    </tr>
+  </tbody>
+</table>
+<p>212 rows × 2 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="id7">
+<h2>分类画图<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">reduce</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s2">&quot;T&quot;</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;month&quot;</span><span class="p">,</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x10ec0f940&gt;
+</pre></div>
+</div>
+<img alt="_images/L12_40_1.png" src="_images/L12_40_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r</span><span class="o">=</span><span class="n">reduce</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+<span class="n">r2022</span><span class="o">=</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;2019-01-01&quot;</span><span class="p">:</span><span class="s2">&quot;2022-12-30&quot;</span><span class="p">]</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">r2022</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s2">&quot;T&quot;</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;month&quot;</span><span class="p">,</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">,</span><span class="n">hue</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/18/rhl4c2ws7zl5fh31v5274k600000gn/T/ipykernel_5079/710103485.py:2: FutureWarning: Value based partial slicing on non-monotonic DatetimeIndexes with non-existing keys is deprecated and will raise a KeyError in a future Version.
+  r2022=r[&quot;2019-01-01&quot;:&quot;2022-12-30&quot;]
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x10ecac5b0&gt;
+</pre></div>
+</div>
+<img alt="_images/L12_41_2.png" src="_images/L12_41_2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">r2022</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;month&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s2">&quot;T&quot;</span><span class="p">,</span><span class="n">hue</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span><span class="n">errorbar</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;ci&quot;</span><span class="p">,</span><span class="mi">95</span><span class="p">),</span><span class="n">capsize</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;month&#39;, ylabel=&#39;T&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/L12_42_1.png" src="_images/L12_42_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">reduce</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s2">&quot;T&quot;</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;hour&quot;</span><span class="p">,</span><span class="n">hue</span><span class="o">=</span><span class="s2">&quot;month&quot;</span><span class="p">,</span><span class="n">capsize</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.02</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">,</span> <span class="n">borderaxespad</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x16d5f9be0&gt;
+</pre></div>
+</div>
+<img alt="_images/L12_43_1.png" src="_images/L12_43_1.png" />
+</div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">m</span><span class="o">=</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;T&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span><span class="n">m</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>time
+2005-02-02 20:00:00    3.0
+2005-02-02 14:00:00    4.4
+2005-02-02 08:00:00    0.2
+2005-02-02 02:00:00   -0.7
+2005-02-01 20:00:00    0.9
+2005-02-01 14:00:00    5.8
+2005-02-01 08:00:00    1.6
+Name: T, dtype: float64 time
+2022-09-06 20:00:00    27.8
+2022-09-06 17:00:00    32.5
+2022-09-06 14:00:00    31.7
+2022-09-06 11:00:00    29.0
+2022-09-06 08:00:00    23.7
+Name: T, dtype: float64
+time
+2005-02-01    2.766667
+2005-02-02    1.725000
+2005-02-03    2.975000
+2005-02-04    5.650000
+2005-02-05    6.050000
+Freq: D, Name: T, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="p">[</span><span class="s2">&quot;2022-06-01&quot;</span><span class="p">:</span><span class="s2">&quot;2022-08-31&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">m</span><span class="p">[</span><span class="s2">&quot;2022-06-01&quot;</span><span class="p">:</span><span class="s2">&quot;2022-08-31&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;12H&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="n">fig</span><span class="p">,</span><span class="n">axs</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span> <span class="mi">10</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">m</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;M&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">)</span>
+<span class="n">h</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;12H&#39;</span><span class="p">)</span>
+
+<span class="nb">type</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/18/rhl4c2ws7zl5fh31v5274k600000gn/T/ipykernel_5079/1108742265.py:1: FutureWarning: Value based partial slicing on non-monotonic DatetimeIndexes with non-existing keys is deprecated and will raise a KeyError in a future Version.
+  m[&quot;2022-06-01&quot;:&quot;2022-08-31&quot;].resample(&#39;D&#39;).mean().plot()
+/var/folders/18/rhl4c2ws7zl5fh31v5274k600000gn/T/ipykernel_5079/1108742265.py:2: FutureWarning: Value based partial slicing on non-monotonic DatetimeIndexes with non-existing keys is deprecated and will raise a KeyError in a future Version.
+  m[&quot;2022-06-01&quot;:&quot;2022-08-31&quot;].resample(&#39;12H&#39;).mean().plot()
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pandas.core.resample.DatetimeIndexResampler
+</pre></div>
+</div>
+<img alt="_images/L12_45_2.png" src="_images/L12_45_2.png" />
+<img alt="_images/L12_45_3.png" src="_images/L12_45_3.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="sklearn">
+<h1>sklearn的数据<a class="headerlink" href="#sklearn" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>sklearn: 机器学习包，内置很多数据集</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<span class="n">iris</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;data&#39;, &#39;target&#39;, &#39;frame&#39;, &#39;target_names&#39;, &#39;DESCR&#39;, &#39;feature_names&#39;, &#39;filename&#39;, &#39;data_module&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span><span class="o">.</span><span class="n">target_names</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;setosa&#39;, &#39;versicolor&#39;, &#39;virginica&#39;], dtype=&#39;&lt;U10&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<img alt="_images/iris.png" class="align-center" src="_images/iris.png" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([50, 50, 50])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;sepal length (cm)&#39;,
+ &#39;sepal width (cm)&#39;,
+ &#39;petal length (cm)&#39;,
+ &#39;petal width (cm)&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<img alt="_images/sepals_and_petals_600w.webp" class="align-center" src="_images/sepals_and_petals_600w.webp" />
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span><span class="o">.</span><span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[5.1, 3.5, 1.4, 0.2],
+       [4.9, 3. , 1.4, 0.2],
+       [4.7, 3.2, 1.3, 0.2],
+       [4.6, 3.1, 1.5, 0.2],
+       [5. , 3.6, 1.4, 0.2],
+       [5.4, 3.9, 1.7, 0.4],
+       [4.6, 3.4, 1.4, 0.3],
+       [5. , 3.4, 1.5, 0.2],
+       [4.4, 2.9, 1.4, 0.2],
+       [4.9, 3.1, 1.5, 0.1],
+       [5.4, 3.7, 1.5, 0.2],
+       [4.8, 3.4, 1.6, 0.2],
+       [4.8, 3. , 1.4, 0.1],
+       [4.3, 3. , 1.1, 0.1],
+       [5.8, 4. , 1.2, 0.2],
+       [5.7, 4.4, 1.5, 0.4],
+       [5.4, 3.9, 1.3, 0.4],
+       [5.1, 3.5, 1.4, 0.3],
+       [5.7, 3.8, 1.7, 0.3],
+       [5.1, 3.8, 1.5, 0.3],
+       [5.4, 3.4, 1.7, 0.2],
+       [5.1, 3.7, 1.5, 0.4],
+       [4.6, 3.6, 1. , 0.2],
+       [5.1, 3.3, 1.7, 0.5],
+       [4.8, 3.4, 1.9, 0.2],
+       [5. , 3. , 1.6, 0.2],
+       [5. , 3.4, 1.6, 0.4],
+       [5.2, 3.5, 1.5, 0.2],
+       [5.2, 3.4, 1.4, 0.2],
+       [4.7, 3.2, 1.6, 0.2],
+       [4.8, 3.1, 1.6, 0.2],
+       [5.4, 3.4, 1.5, 0.4],
+       [5.2, 4.1, 1.5, 0.1],
+       [5.5, 4.2, 1.4, 0.2],
+       [4.9, 3.1, 1.5, 0.2],
+       [5. , 3.2, 1.2, 0.2],
+       [5.5, 3.5, 1.3, 0.2],
+       [4.9, 3.6, 1.4, 0.1],
+       [4.4, 3. , 1.3, 0.2],
+       [5.1, 3.4, 1.5, 0.2],
+       [5. , 3.5, 1.3, 0.3],
+       [4.5, 2.3, 1.3, 0.3],
+       [4.4, 3.2, 1.3, 0.2],
+       [5. , 3.5, 1.6, 0.6],
+       [5.1, 3.8, 1.9, 0.4],
+       [4.8, 3. , 1.4, 0.3],
+       [5.1, 3.8, 1.6, 0.2],
+       [4.6, 3.2, 1.4, 0.2],
+       [5.3, 3.7, 1.5, 0.2],
+       [5. , 3.3, 1.4, 0.2],
+       [7. , 3.2, 4.7, 1.4],
+       [6.4, 3.2, 4.5, 1.5],
+       [6.9, 3.1, 4.9, 1.5],
+       [5.5, 2.3, 4. , 1.3],
+       [6.5, 2.8, 4.6, 1.5],
+       [5.7, 2.8, 4.5, 1.3],
+       [6.3, 3.3, 4.7, 1.6],
+       [4.9, 2.4, 3.3, 1. ],
+       [6.6, 2.9, 4.6, 1.3],
+       [5.2, 2.7, 3.9, 1.4],
+       [5. , 2. , 3.5, 1. ],
+       [5.9, 3. , 4.2, 1.5],
+       [6. , 2.2, 4. , 1. ],
+       [6.1, 2.9, 4.7, 1.4],
+       [5.6, 2.9, 3.6, 1.3],
+       [6.7, 3.1, 4.4, 1.4],
+       [5.6, 3. , 4.5, 1.5],
+       [5.8, 2.7, 4.1, 1. ],
+       [6.2, 2.2, 4.5, 1.5],
+       [5.6, 2.5, 3.9, 1.1],
+       [5.9, 3.2, 4.8, 1.8],
+       [6.1, 2.8, 4. , 1.3],
+       [6.3, 2.5, 4.9, 1.5],
+       [6.1, 2.8, 4.7, 1.2],
+       [6.4, 2.9, 4.3, 1.3],
+       [6.6, 3. , 4.4, 1.4],
+       [6.8, 2.8, 4.8, 1.4],
+       [6.7, 3. , 5. , 1.7],
+       [6. , 2.9, 4.5, 1.5],
+       [5.7, 2.6, 3.5, 1. ],
+       [5.5, 2.4, 3.8, 1.1],
+       [5.5, 2.4, 3.7, 1. ],
+       [5.8, 2.7, 3.9, 1.2],
+       [6. , 2.7, 5.1, 1.6],
+       [5.4, 3. , 4.5, 1.5],
+       [6. , 3.4, 4.5, 1.6],
+       [6.7, 3.1, 4.7, 1.5],
+       [6.3, 2.3, 4.4, 1.3],
+       [5.6, 3. , 4.1, 1.3],
+       [5.5, 2.5, 4. , 1.3],
+       [5.5, 2.6, 4.4, 1.2],
+       [6.1, 3. , 4.6, 1.4],
+       [5.8, 2.6, 4. , 1.2],
+       [5. , 2.3, 3.3, 1. ],
+       [5.6, 2.7, 4.2, 1.3],
+       [5.7, 3. , 4.2, 1.2],
+       [5.7, 2.9, 4.2, 1.3],
+       [6.2, 2.9, 4.3, 1.3],
+       [5.1, 2.5, 3. , 1.1],
+       [5.7, 2.8, 4.1, 1.3],
+       [6.3, 3.3, 6. , 2.5],
+       [5.8, 2.7, 5.1, 1.9],
+       [7.1, 3. , 5.9, 2.1],
+       [6.3, 2.9, 5.6, 1.8],
+       [6.5, 3. , 5.8, 2.2],
+       [7.6, 3. , 6.6, 2.1],
+       [4.9, 2.5, 4.5, 1.7],
+       [7.3, 2.9, 6.3, 1.8],
+       [6.7, 2.5, 5.8, 1.8],
+       [7.2, 3.6, 6.1, 2.5],
+       [6.5, 3.2, 5.1, 2. ],
+       [6.4, 2.7, 5.3, 1.9],
+       [6.8, 3. , 5.5, 2.1],
+       [5.7, 2.5, 5. , 2. ],
+       [5.8, 2.8, 5.1, 2.4],
+       [6.4, 3.2, 5.3, 2.3],
+       [6.5, 3. , 5.5, 1.8],
+       [7.7, 3.8, 6.7, 2.2],
+       [7.7, 2.6, 6.9, 2.3],
+       [6. , 2.2, 5. , 1.5],
+       [6.9, 3.2, 5.7, 2.3],
+       [5.6, 2.8, 4.9, 2. ],
+       [7.7, 2.8, 6.7, 2. ],
+       [6.3, 2.7, 4.9, 1.8],
+       [6.7, 3.3, 5.7, 2.1],
+       [7.2, 3.2, 6. , 1.8],
+       [6.2, 2.8, 4.8, 1.8],
+       [6.1, 3. , 4.9, 1.8],
+       [6.4, 2.8, 5.6, 2.1],
+       [7.2, 3. , 5.8, 1.6],
+       [7.4, 2.8, 6.1, 1.9],
+       [7.9, 3.8, 6.4, 2. ],
+       [6.4, 2.8, 5.6, 2.2],
+       [6.3, 2.8, 5.1, 1.5],
+       [6.1, 2.6, 5.6, 1.4],
+       [7.7, 3. , 6.1, 2.3],
+       [6.3, 3.4, 5.6, 2.4],
+       [6.4, 3.1, 5.5, 1.8],
+       [6. , 3. , 4.8, 1.8],
+       [6.9, 3.1, 5.4, 2.1],
+       [6.7, 3.1, 5.6, 2.4],
+       [6.9, 3.1, 5.1, 2.3],
+       [5.8, 2.7, 5.1, 1.9],
+       [6.8, 3.2, 5.9, 2.3],
+       [6.7, 3.3, 5.7, 2.5],
+       [6.7, 3. , 5.2, 2.3],
+       [6.3, 2.5, 5. , 1.9],
+       [6.5, 3. , 5.2, 2. ],
+       [6.2, 3.4, 5.4, 2.3],
+       [5.9, 3. , 5.1, 1.8]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(150, 4)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">iris_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span><span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="o">+</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">])</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">iris_df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;sepal width (cm)&quot;</span><span class="p">,</span>  <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x16b9557f0&gt;
+</pre></div>
+</div>
+<img alt="_images/L12_56_1.png" src="_images/L12_56_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">fig</span><span class="p">,</span><span class="n">axs</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">iris_df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;sepal width (cm)&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">iris_df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;sepal width (cm)&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">,</span><span class="n">element</span><span class="o">=</span><span class="s2">&quot;step&quot;</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">iris_df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;sepal width (cm)&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/L12_57_0.png" src="_images/L12_57_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">iris_df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;sepal width (cm)&quot;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s2">&quot;sepal length (cm)&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.JointGrid at 0x163b046a0&gt;
+</pre></div>
+</div>
+<img alt="_images/L12_58_1.png" src="_images/L12_58_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">iris_df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;sepal width (cm)&quot;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s2">&quot;sepal length (cm)&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;sepal width (cm)&#39;, ylabel=&#39;sepal length (cm)&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/L12_59_1.png" src="_images/L12_59_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">iris_df</span><span class="p">,</span><span class="n">hue</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x163daa820&gt;
+</pre></div>
+</div>
+<img alt="_images/L12_60_1.png" src="_images/L12_60_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">scatter_matrix</span><span class="p">(</span> <span class="n">iris_df</span><span class="p">,</span>
+                                 <span class="n">c</span><span class="o">=</span><span class="n">iris_df</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">],</span> 
+                                 <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
+                                <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[&lt;AxesSubplot:xlabel=&#39;sepal length (cm)&#39;, ylabel=&#39;sepal length (cm)&#39;&gt;,
+        &lt;AxesSubplot:xlabel=&#39;sepal width (cm)&#39;, ylabel=&#39;sepal length (cm)&#39;&gt;,
+        &lt;AxesSubplot:xlabel=&#39;petal length (cm)&#39;, ylabel=&#39;sepal length (cm)&#39;&gt;,
+        &lt;AxesSubplot:xlabel=&#39;petal width (cm)&#39;, ylabel=&#39;sepal length (cm)&#39;&gt;,
+        &lt;AxesSubplot:xlabel=&#39;target&#39;, ylabel=&#39;sepal length (cm)&#39;&gt;],
+       [&lt;AxesSubplot:xlabel=&#39;sepal length (cm)&#39;, ylabel=&#39;sepal width (cm)&#39;&gt;,
+        &lt;AxesSubplot:xlabel=&#39;sepal width (cm)&#39;, ylabel=&#39;sepal width (cm)&#39;&gt;,
+        &lt;AxesSubplot:xlabel=&#39;petal length (cm)&#39;, ylabel=&#39;sepal width (cm)&#39;&gt;,
+        &lt;AxesSubplot:xlabel=&#39;petal width (cm)&#39;, ylabel=&#39;sepal width (cm)&#39;&gt;,
+        &lt;AxesSubplot:xlabel=&#39;target&#39;, ylabel=&#39;sepal width (cm)&#39;&gt;],
+       [&lt;AxesSubplot:xlabel=&#39;sepal length (cm)&#39;, ylabel=&#39;petal length (cm)&#39;&gt;,
+        &lt;AxesSubplot:xlabel=&#39;sepal width (cm)&#39;, ylabel=&#39;petal length (cm)&#39;&gt;,
+        &lt;AxesSubplot:xlabel=&#39;petal length (cm)&#39;, ylabel=&#39;petal length (cm)&#39;&gt;,
+        &lt;AxesSubplot:xlabel=&#39;petal width (cm)&#39;, ylabel=&#39;petal length (cm)&#39;&gt;,
+        &lt;AxesSubplot:xlabel=&#39;target&#39;, ylabel=&#39;petal length (cm)&#39;&gt;],
+       [&lt;AxesSubplot:xlabel=&#39;sepal length (cm)&#39;, ylabel=&#39;petal width (cm)&#39;&gt;,
+        &lt;AxesSubplot:xlabel=&#39;sepal width (cm)&#39;, ylabel=&#39;petal width (cm)&#39;&gt;,
+        &lt;AxesSubplot:xlabel=&#39;petal length (cm)&#39;, ylabel=&#39;petal width (cm)&#39;&gt;,
+        &lt;AxesSubplot:xlabel=&#39;petal width (cm)&#39;, ylabel=&#39;petal width (cm)&#39;&gt;,
+        &lt;AxesSubplot:xlabel=&#39;target&#39;, ylabel=&#39;petal width (cm)&#39;&gt;],
+       [&lt;AxesSubplot:xlabel=&#39;sepal length (cm)&#39;, ylabel=&#39;target&#39;&gt;,
+        &lt;AxesSubplot:xlabel=&#39;sepal width (cm)&#39;, ylabel=&#39;target&#39;&gt;,
+        &lt;AxesSubplot:xlabel=&#39;petal length (cm)&#39;, ylabel=&#39;target&#39;&gt;,
+        &lt;AxesSubplot:xlabel=&#39;petal width (cm)&#39;, ylabel=&#39;target&#39;&gt;,
+        &lt;AxesSubplot:xlabel=&#39;target&#39;, ylabel=&#39;target&#39;&gt;]], dtype=object)
+</pre></div>
+</div>
+<img alt="_images/L12_61_1.png" src="_images/L12_61_1.png" />
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 肖朦<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

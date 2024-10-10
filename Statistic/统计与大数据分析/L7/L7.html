@@ -1,0 +1,1503 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>参数估计 &#8212; 统计与大数据分析</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint single-page" id="site-navigation">
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/L7.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/L7.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   数理统计
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   点估计
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     矩估计法
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#maximum-likelihood-estimation">
+     极大似然法 (Maximum likelihood Estimation)
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id5">
+       正态分布
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     指数分布
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id7">
+       平均分布
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   点估计的优良性准则
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mvu">
+     均匀分布的MVU
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   区间估计
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id10">
+   期望值的区间估计
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#t">
+     t 函数
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id11">
+       单分布的期望值
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#chi-2">
+     <span class="math notranslate nohighlight">
+      \(\chi^2\)
+     </span>
+     分布
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id12">
+       单分布的方差
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id13">
+       两个分布平均值的差
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id14">
+       指数分布的参数估计
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#f">
+     F分布
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>参数估计</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   数理统计
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   点估计
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     矩估计法
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#maximum-likelihood-estimation">
+     极大似然法 (Maximum likelihood Estimation)
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id5">
+       正态分布
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     指数分布
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id7">
+       平均分布
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   点估计的优良性准则
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mvu">
+     均匀分布的MVU
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   区间估计
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id10">
+   期望值的区间估计
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#t">
+     t 函数
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id11">
+       单分布的期望值
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#chi-2">
+     <span class="math notranslate nohighlight">
+      \(\chi^2\)
+     </span>
+     分布
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id12">
+       单分布的方差
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id13">
+       两个分布平均值的差
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id14">
+       指数分布的参数估计
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#f">
+     F分布
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <center>
+<h1> 统计与大数据分析</h1>
+<h2>参数估计</h2>
+<h5>肖朦，2023 </h5>
+</center><section id="id1">
+<h1>参数估计<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
+<section id="id2">
+<h2>数理统计<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>用概率论的方法研究带有随机误差的数据，并在设定的模型下进行统计分析</p></li>
+</ul>
+<p>例子：有一批元件，寿命服从指数分布。</p>
+<ul class="simple">
+<li><p>元件的平均寿命是多少？</p></li>
+<li><p>若要求平均寿命达到某个指定的数值<span class="math notranslate nohighlight">\(l\)</span>，这批元件是否能被接受？</p></li>
+</ul>
+<p>抽样n测量元件的寿命，<span class="math notranslate nohighlight">\(x_1, \cdots, x_n\)</span>, 用<span class="math notranslate nohighlight">\(\bar{X}\)</span>估计平均寿命<span class="math notranslate nohighlight">\(1/\lambda\)</span>：参数估计</p>
+<ul class="simple">
+<li><p>样本的大小n应该达到多少？</p></li>
+<li><p>应该用什么样的变量估计<span class="math notranslate nohighlight">\(\lambda\)</span>? =&gt; 点估计</p></li>
+<li><p>若样本数量有限，如何估计参数<span class="math notranslate nohighlight">\(\lambda\)</span>的取值范围？=&gt; 区间估计</p></li>
+</ul>
+<p>若<span class="math notranslate nohighlight">\(\bar{x}\geq l\)</span>,就接受该批产品？： 假设检验，二选一</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\bar{x}\)</span>有随机性，即使真实平均寿命大于<span class="math notranslate nohighlight">\(l\)</span>,也有可能测出<span class="math notranslate nohighlight">\(\bar{x}\)</span>小于<span class="math notranslate nohighlight">\(l\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\bar{x}\geq l_1\)</span>, <span class="math notranslate nohighlight">\(l_1\)</span>如何选择？</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>点估计<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>估计统计参数<span class="math notranslate nohighlight">\(\theta\)</span></p></li>
+<li><p>样本：一系列的测量值</p></li>
+<li><p>统计量：基于样本建立的函数，应该只由样本决定</p></li>
+</ul>
+<p>例：<span class="math notranslate nohighlight">\(x_1,\cdots,x_n\)</span>是正态分布<span class="math notranslate nohighlight">\(N(\mu,\sigma^2)\)</span>中抽样的样本，则</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\bar{x}\)</span>是统计量，完全由样本得到</p></li>
+<li><p><span class="math notranslate nohighlight">\(\bar{x}-\mu\)</span>不是统计量，未知<span class="math notranslate nohighlight">\(\mu\)</span></p></li>
+</ul>
+<p>重要统计量：</p>
+<ul class="simple">
+<li><p>平均值：<span class="math notranslate nohighlight">\(\bar{X}= \sum_{i=1}^{n} X_i /n\)</span></p></li>
+<li><p>方差： <span class="math notranslate nohighlight">\(S^2 = \sum_{i=1}^{n} (X_i -\bar{X})^2/(n-1)\)</span></p></li>
+</ul>
+<p>表示方式：</p>
+<ul class="simple">
+<li><p>对参数<span class="math notranslate nohighlight">\(\theta\)</span>,它的估计统计量<span class="math notranslate nohighlight">\(\hat\theta\)</span>，是测量值的函数<span class="math notranslate nohighlight">\(g(\hat\theta)=g(x_1,\cdots,x_n)\)</span></p></li>
+</ul>
+<section id="id4">
+<h3>矩估计法<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
+<p>若被估计的参数<span class="math notranslate nohighlight">\(\theta\)</span>可用样本的矩表示，则可用矩来得到<span class="math notranslate nohighlight">\(\hat\theta\)</span></p>
+<p>例1：若<span class="math notranslate nohighlight">\(x_1,\cdots,x_n\)</span>是正态分布<span class="math notranslate nohighlight">\(N(\mu,\sigma^2)\)</span>中抽样的样本，<span class="math notranslate nohighlight">\(\mu\)</span>和<span class="math notranslate nohighlight">\(\sigma^2\)</span>可以用一阶矩（<span class="math notranslate nohighlight">\(\bar{X}\)</span>）和二阶中心矩的函数(<span class="math notranslate nohighlight">\(S^2\)</span>)得到</p>
+<p>例2：若<span class="math notranslate nohighlight">\(x_1,\cdots,x_n\)</span>是指数分布的抽样样本，估计参数<span class="math notranslate nohighlight">\(\lambda\)</span></p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\bar{x}=1/\lambda\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(S^2=1/\lambda^2\)</span></p>
+<p>故两者都可以用于估计<span class="math notranslate nohighlight">\(\lambda\)</span>,哪个更好？</p>
+</li>
+</ul>
+<p>例3：<span class="math notranslate nohighlight">\(x_1,\cdots,x_n\)</span>是区间[<span class="math notranslate nohighlight">\(\theta_1,\theta_2\)</span>]均匀分布抽样样本，估计<span class="math notranslate nohighlight">\(\theta_1\)</span>和<span class="math notranslate nohighlight">\(\theta_2\)</span></p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\bar{x}=(\theta_1+\theta_2)/2\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(S^2=(\theta_2-\theta_1)^2/12\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{\theta}_1 = \bar{x}-\sqrt{3}S\)</span>,  <span class="math notranslate nohighlight">\(\hat{\theta}_2 = \bar{x}+\sqrt{3}S\)</span></p></li>
+</ul>
+</section>
+<section id="maximum-likelihood-estimation">
+<h3>极大似然法 (Maximum likelihood Estimation)<a class="headerlink" href="#maximum-likelihood-estimation" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>若<span class="math notranslate nohighlight">\(x_1,\cdots,x_n\)</span>符合概率密度函数f(x,<span class="math notranslate nohighlight">\(\theta_1,\theta_2,\cdots\)</span>)，则整个样本的概率分布为</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ L(x_1,\cdots,x_n;\theta_1,\cdots) = f(x_1,\theta_1,\theta_2,\cdots)f(x_2,\theta_1,\theta_2,\cdots)\cdots f(x_n,\theta_1,\theta_2,\cdots)\]</div>
+<ul>
+<li><p>当观察到<span class="math notranslate nohighlight">\(x_1,\cdots x_n\)</span>时，若一组(<span class="math notranslate nohighlight">\(\theta_1\cdots\)</span>)比另一组(<span class="math notranslate nohighlight">\(\theta'_1\cdots\)</span>)得到的概率L大</p>
+<div class="math notranslate nohighlight">
+\[L(x_1,\cdots,x_n,\theta_1,\cdots)&gt; L(x_1,\cdots,x_n,\theta'_1,\cdots)\]</div>
+<p>则(<span class="math notranslate nohighlight">\(\theta_1\cdots\)</span>)接近真实值的概率要大</p>
+</li>
+<li><p>找到一组(<span class="math notranslate nohighlight">\(\hat\theta_1\cdots\)</span>)满足</p>
+<div class="math notranslate nohighlight">
+\[ L(x_1,\cdots,x_n,\hat\theta_1,\cdots)= \text{max}L(x_1,\cdots,x_n,\theta_1,\cdots)\]</div>
+<p>那么(<span class="math notranslate nohighlight">\(\hat\theta_1\cdots\)</span>)被称为（<span class="math notranslate nohighlight">\(\theta_1\cdots\)</span>）的最大似然估计</p>
+<p>因为<span class="math notranslate nohighlight">\(L&gt;0\)</span>，因此最大L对应最大<span class="math notranslate nohighlight">\(\ln L\)</span>,只要找出</p>
+<div class="math notranslate nohighlight">
+\[ \frac{\partial \ln L}{\partial \theta_i} =0 \]</div>
+<p>即可得到一组<span class="math notranslate nohighlight">\(\hat\theta\)</span>，使得L最大</p>
+</li>
+</ul>
+<section id="id5">
+<h4>正态分布<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h4>
+<p>例：若一组X满足正态分布，通过极大似然法估计<span class="math notranslate nohighlight">\(\mu,\sigma^2\)</span></p>
+<div class="amsmath math notranslate nohighlight" id="equation-d8c77a94-0310-44a0-9f0b-a426b302f827">
+<span class="eqno">(1)<a class="headerlink" href="#equation-d8c77a94-0310-44a0-9f0b-a426b302f827" title="Permalink to this equation">#</a></span>\[\begin{align}
+ &amp;L = \Pi_{i=1}^{n} \frac{1}{\sqrt{2\pi\sigma^2}} \exp (-\frac{(X_i-\mu)^2)}{2\sigma^2}) \\
+ &amp;\ln L = -\frac{n}{2}\ln{2\pi} - \frac{n}{2}\ln (\sigma^2) - \sum_{i=1}^{n}\frac{(x_i-\mu)^2}{2\sigma^2} \\
+ &amp;\frac{\partial \ln L}{\partial \mu}= \sum_{i=1}^{n}\frac{(x_i-\mu)}{\sigma^2}=0 \\
+ &amp;\frac{\partial \ln L}{\partial \sigma^2} = -\frac{n}{2\sigma^2} + \sum_{i=1}^{n}\frac{(x_i-\mu)^2}{2\sigma^4} =0 \\
+ &amp;\hat\mu = \sum_{i=1}^{n} x_i/n = \bar{x} \\
+ &amp;\hat{\sigma^2} = \sum_{i=1}^{n} (x-\bar{x})^2/n 
+\end{align}\]</div>
+<p>对<span class="math notranslate nohighlight">\(\sigma\)</span>的估计并不是无偏估计!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">##通过极大似然法对正态分布的平均值和方差进行估计</span>
+<span class="kn">import</span> <span class="nn">scipy.optimize</span> <span class="k">as</span> <span class="nn">opt</span>
+<span class="kn">import</span> <span class="nn">scipy.special</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+ 
+<span class="c1">###lnL=Sum(lnN())</span>
+<span class="k">def</span> <span class="nf">log_likelihood</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">narr</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="c1">###定义正态分布的参数和pdf，随机产生20个事件</span>
+<span class="n">mu</span><span class="o">=</span><span class="mi">5</span>
+<span class="n">sigma</span><span class="o">=</span><span class="mi">3</span>
+<span class="n">rv</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">sigma</span><span class="p">)</span>
+<span class="n">narr</span><span class="o">=</span><span class="n">rv</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="c1">###20个事件的分布</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">narr</span><span class="p">,</span><span class="n">stat</span><span class="o">=</span><span class="s1">&#39;density&#39;</span><span class="p">)</span>
+
+<span class="c1">###样本的平均值和标准差,注意，标准差未加ddof=1选项</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;样本平均值和标准差&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">narr</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">narr</span><span class="p">))</span>
+
+<span class="c1">###对20个事件的样本构建最大似然函数的负数，并求解最小值</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span>
+    <span class="n">log_likelihood</span><span class="p">,</span> <span class="c1">#求解最小值的函数</span>
+    <span class="n">x0</span><span class="o">=</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">sigma</span><span class="p">))</span> <span class="c1">#未知参数的初始值</span>
+
+<span class="c1">###求解结果</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;极大似然法数值解&quot;</span><span class="p">,</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1">###图形比较两种方法的结果</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1">###样本平均值和它的误差</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">narr</span><span class="p">,</span><span class="n">capsize</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">errorbar</span><span class="o">=</span><span class="s1">&#39;se&#39;</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="c1">###对mu可能的数值进行扫描，每个值对应的-lnL</span>
+<span class="n">mubins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">narr</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">st</span><span class="o">.</span><span class="n">sem</span><span class="p">(</span><span class="n">narr</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">narr</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">st</span><span class="o">.</span><span class="n">sem</span><span class="p">(</span><span class="n">narr</span><span class="p">),</span><span class="mi">200</span><span class="p">)</span> <span class="c1">#sem为平均值的标准差</span>
+<span class="n">xdim</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">log_likelihood</span><span class="p">([</span><span class="n">i</span><span class="p">,</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">mubins</span><span class="p">)</span> <span class="c1">#计算-lnL,mu扫描，sigma不变，为数值求解值</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mubins</span><span class="p">,</span><span class="n">xdim</span><span class="p">)</span> <span class="c1">#每个mu值对应的-lnL</span>
+<span class="c1">###-最大似然值</span>
+<span class="n">mll</span><span class="o">=</span><span class="n">log_likelihood</span><span class="p">([</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">mll</span><span class="p">,</span><span class="s2">&quot;+&quot;</span><span class="p">)</span>
+<span class="c1">### -lnL - 最小值=0.5 =&gt; mu的标准差</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">mubins</span><span class="p">,</span><span class="n">xdim</span><span class="p">,</span><span class="n">mll</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="p">((</span><span class="n">xdim</span><span class="o">-</span><span class="n">mll</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span><span class="o">&lt;</span><span class="mf">0.01</span><span class="p">),</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="c1">### 最大似然法得到的mu的标准差区间</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mu的标准差区间，极大似然法 &quot;</span><span class="p">,</span><span class="n">mubins</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">xdim</span><span class="o">-</span><span class="n">mll</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">)])</span>
+<span class="c1">### 平均值和误差</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mu的平均值+-误差 &quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">narr</span><span class="p">)</span><span class="o">-</span><span class="n">st</span><span class="o">.</span><span class="n">sem</span><span class="p">(</span><span class="n">narr</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">narr</span><span class="p">)</span><span class="o">+</span><span class="n">st</span><span class="o">.</span><span class="n">sem</span><span class="p">(</span><span class="n">narr</span><span class="p">))</span>
+<span class="c1">### 样本的标准差不等于平均值的标准差</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>样本平均值和标准差 5.920511473182722 3.528879107508975
+极大似然法数值解 [5.92051267 3.52887956]
+mu的标准差区间，极大似然法  [5.1312723  6.70975065]
+mu的平均值+-误差  5.110931082993057 6.730091863372387
+</pre></div>
+</div>
+<img alt="_images/L7_6_1.png" src="_images/L7_6_1.png" />
+<img alt="_images/L7_6_2.png" src="_images/L7_6_2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">###数据量n对结果的影响</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">narr</span><span class="p">,</span><span class="n">capsize</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">errorbar</span><span class="o">=</span><span class="s1">&#39;se&#39;</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">narr</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">narr</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">narr</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">narr</span><span class="p">,</span><span class="n">capsize</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">errorbar</span><span class="o">=</span><span class="s1">&#39;se&#39;</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">xdim2</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">log_likelihood</span><span class="p">([</span><span class="n">i</span><span class="p">,</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">mubins</span><span class="p">)</span> <span class="c1">#计算-lnL,mu扫描，sigma不变，为数值求解值</span>
+<span class="n">mll2</span><span class="o">=</span><span class="n">log_likelihood</span><span class="p">([</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mubins</span><span class="p">,</span><span class="n">xdim</span><span class="o">-</span><span class="n">mll</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mubins</span><span class="p">,</span><span class="n">xdim2</span><span class="o">-</span><span class="n">mll2</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mubins</span><span class="p">,</span><span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">200</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 6.70461484  6.70461484  6.70461484  6.70461484  3.20902849  3.20902849
+  3.20902849  3.20902849 10.9713007  10.9713007  10.9713007  10.9713007
+  7.24101642  7.24101642  7.24101642  7.24101642  7.9710569   7.9710569
+  7.9710569   7.9710569   4.6971364   4.6971364   4.6971364   4.6971364
+  2.47695099  2.47695099  2.47695099  2.47695099  2.08592585  2.08592585
+  2.08592585  2.08592585  4.41340881  4.41340881  4.41340881  4.41340881
+  9.47512093  9.47512093  9.47512093  9.47512093  8.97480845  8.97480845
+  8.97480845  8.97480845  6.05791328  6.05791328  6.05791328  6.05791328
+  3.33755115  3.33755115  3.33755115  3.33755115  4.03691508  4.03691508
+  4.03691508  4.03691508 13.19679057 13.19679057 13.19679057 13.19679057
+ -0.52472075 -0.52472075 -0.52472075 -0.52472075  5.51298126  5.51298126
+  5.51298126  5.51298126  4.920891    4.920891    4.920891    4.920891
+ 11.81634343 11.81634343 11.81634343 11.81634343  1.83519566  1.83519566
+  1.83519566  1.83519566]
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x161aa7b50&gt;]
+</pre></div>
+</div>
+<img alt="_images/L7_7_2.png" src="_images/L7_7_2.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="id6">
+<h3>指数分布<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h3>
+<p>例：若一组X满足指数分布，通过极大似然法估计<span class="math notranslate nohighlight">\(\lambda\)</span></p>
+<div class="amsmath math notranslate nohighlight" id="equation-95b72d54-a4d7-466e-959d-73aaee76fafc">
+<span class="eqno">(2)<a class="headerlink" href="#equation-95b72d54-a4d7-466e-959d-73aaee76fafc" title="Permalink to this equation">#</a></span>\[\begin{align}
+&amp; L =\Pi_{i=1}^{n}(\lambda e^{-\lambda x_i})\\
+&amp;\ln L=n\ln \lambda - \lambda \sum x_i\\
+&amp; \frac{\partial \ln L}{\partial \lambda} = \frac{n}{\lambda} - \sum x_i\\
+&amp;\hat\lambda=\frac{n}{\sum x_i} = \frac{1}{\bar{x}}
+\end{align}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.optimize</span> <span class="k">as</span> <span class="nn">opt</span>
+<span class="kn">import</span> <span class="nn">scipy.special</span> <span class="k">as</span> <span class="nn">sp</span>
+
+<span class="k">def</span> <span class="nf">log_likelihood</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">expon</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">p</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    
+<span class="n">mu</span><span class="o">=</span><span class="mi">5</span>
+<span class="n">rv</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">expon</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">mu</span><span class="p">)</span> <span class="c1">#注意这里的mu为1/lambda</span>
+<span class="n">xarr</span><span class="o">=</span><span class="n">rv</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="n">stat</span><span class="o">=</span><span class="s1">&#39;density&#39;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;样本平均值和标准差&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xarr</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span>
+    <span class="n">log_likelihood</span><span class="p">,</span>
+    <span class="n">x0</span><span class="o">=</span><span class="p">(</span><span class="n">mu</span><span class="p">))</span>
+
+<span class="n">mubins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xarr</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">st</span><span class="o">.</span><span class="n">sem</span><span class="p">(</span><span class="n">xarr</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xarr</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">st</span><span class="o">.</span><span class="n">sem</span><span class="p">(</span><span class="n">xarr</span><span class="p">),</span><span class="mi">200</span><span class="p">)</span>
+
+<span class="n">sigmabins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">xdim</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">log_likelihood</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">mubins</span><span class="p">)</span>
+<span class="n">mll</span><span class="o">=</span><span class="n">log_likelihood</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mubins</span><span class="p">,</span><span class="n">xdim</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">mll</span><span class="p">,</span><span class="s2">&quot;+&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;极大似然法数值解&quot;</span><span class="p">,</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">mubins</span><span class="p">,</span><span class="n">xdim</span><span class="p">,</span><span class="n">mll</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="p">((</span><span class="n">xdim</span><span class="o">-</span><span class="n">mll</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span><span class="o">&lt;</span><span class="mf">0.01</span><span class="p">),</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">xarr</span><span class="p">,</span><span class="n">capsize</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">errorbar</span><span class="o">=</span><span class="s1">&#39;se&#39;</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mu的标准差区间，极大似然法 &quot;</span><span class="p">,</span><span class="n">mubins</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">xdim</span><span class="o">-</span><span class="n">mll</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mu的平均值+-误差 &quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xarr</span><span class="p">)</span><span class="o">-</span><span class="n">st</span><span class="o">.</span><span class="n">sem</span><span class="p">(</span><span class="n">xarr</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xarr</span><span class="p">)</span><span class="o">+</span><span class="n">st</span><span class="o">.</span><span class="n">sem</span><span class="p">(</span><span class="n">xarr</span><span class="p">))</span>
+<span class="c1">#最大似然法求出的区间不对称</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>样本平均值和标准差 4.063748899767206 3.397687226065893
+极大似然法数值解 [4.06374725]
+mu的标准差区间，极大似然法  [3.27727821 5.12510255]
+mu的平均值+-误差  3.3040029393906027 4.823494860143809
+</pre></div>
+</div>
+<img alt="_images/L7_9_1.png" src="_images/L7_9_1.png" />
+<img alt="_images/L7_9_2.png" src="_images/L7_9_2.png" />
+</div>
+</div>
+<section id="id7">
+<h4>平均分布<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h4>
+<p>例：若一组X满足平均分布(0,<span class="math notranslate nohighlight">\(\theta\)</span>)，通过极大似然法估计<span class="math notranslate nohighlight">\(\theta\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}L=
+\begin{cases}
+1/\theta^{n}, &amp; 0&lt;x&lt;\theta\\
+0, &amp; 其他情况
+\end{cases}
+\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(\theta\)</span>越小，L越大。<span class="math notranslate nohighlight">\(\theta\)</span>能取的最小值应大于max(<span class="math notranslate nohighlight">\(x_1\cdots,x_n\)</span>)，所以<span class="math notranslate nohighlight">\(\hat\theta=\text{max}(x_1\cdots,x_n)\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.optimize</span> <span class="k">as</span> <span class="nn">opt</span>
+<span class="kn">import</span> <span class="nn">scipy.special</span> <span class="k">as</span> <span class="nn">sp</span>
+
+<span class="k">def</span> <span class="nf">log_likelihood</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">uniform</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">p</span><span class="p">))</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">y</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">50</span>
+    
+<span class="n">mu</span><span class="o">=</span><span class="mi">5</span>
+<span class="n">rv</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">mu</span><span class="p">)</span>
+<span class="n">xarr</span><span class="o">=</span><span class="n">rv</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="n">stat</span><span class="o">=</span><span class="s1">&#39;density&#39;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">res</span><span class="o">=</span><span class="n">opt</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span>
+    <span class="n">log_likelihood</span><span class="p">,</span>
+    <span class="n">x0</span><span class="o">=</span><span class="p">(</span><span class="n">mu</span><span class="p">),</span>
+    <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nelder-mead&#39;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">success</span><span class="p">)</span>
+
+<span class="n">mubins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">3.8</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span>
+
+<span class="n">xdim</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">log_likelihood</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">mubins</span><span class="p">)</span>
+<span class="n">mll</span><span class="o">=</span><span class="n">log_likelihood</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mubins</span><span class="p">,</span><span class="n">xdim</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">mll</span><span class="p">,</span><span class="s2">&quot;+&quot;</span><span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">mubins</span><span class="p">,</span><span class="n">xdim</span><span class="p">,</span><span class="n">mll</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="p">((</span><span class="n">xdim</span><span class="o">-</span><span class="n">mll</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span><span class="o">&lt;</span><span class="mf">0.01</span><span class="p">),</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="n">xarr</span><span class="p">,</span><span class="n">capsize</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">errorbar</span><span class="o">=</span><span class="s1">&#39;se&#39;</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#矩估计法，x平均值=mu/2</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Max likelihood theta=&quot;</span><span class="p">,</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">xarr</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean value theta=&quot;</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xarr</span><span class="p">))</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+Max likelihood theta= [4.9586792] 4.95866648171876
+Mean value theta= 5.257687799496132
+</pre></div>
+</div>
+<img alt="_images/L7_11_1.png" src="_images/L7_11_1.png" />
+<img alt="_images/L7_11_2.png" src="_images/L7_11_2.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="id8">
+<h2>点估计的优良性准则<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>无偏性：<span class="math notranslate nohighlight">\(E[\hat g(x_1\cdots,x_n)]=g(\theta_1\cdots\theta_n)\)</span></p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\hat g\)</span>称作对g的无偏估计</p></li>
+<li><p>平均值<span class="math notranslate nohighlight">\(\bar{x}\)</span>和样本方差<span class="math notranslate nohighlight">\(S^2\)</span>是期望值<span class="math notranslate nohighlight">\(\mu\)</span>和方差<span class="math notranslate nohighlight">\(\sigma^2\)</span>的无偏估计</p></li>
+<li><p>极大似然值估计不一定是无偏的</p></li>
+</ul>
+</li>
+<li><p>例：均匀分布的无偏估计</p>
+<ul>
+<li><p>极大似然法，<span class="math notranslate nohighlight">\(\hat\theta=\text{max}(x_1\cdots,x_n)\)</span></p></li>
+</ul>
+</li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ E(\hat\theta)=?\]</div>
+<ul>
+<li><p>需要求<span class="math notranslate nohighlight">\(\hat\theta\)</span>的概率密度函数</p></li>
+<li><p>先求<span class="math notranslate nohighlight">\(\hat\theta\)</span>的累积分布函数，再求导</p></li>
+<li><p>求<span class="math notranslate nohighlight">\(\hat\theta &lt; x\)</span>的积分概率</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\hat\theta &lt;x\)</span>，故每个 <span class="math notranslate nohighlight">\(x_i&lt;x\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(x_i&lt;x\)</span>的累积分布函数为 <span class="math notranslate nohighlight">\(x/\theta\)</span>, n个<span class="math notranslate nohighlight">\(x_i\)</span>都满足条件的总概率G=<span class="math notranslate nohighlight">\((x/\theta)^n\)</span></p></li>
+</ul>
+</li>
+<li><p>对<span class="math notranslate nohighlight">\(x\)</span>求导,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} f(x)=
+    \begin{cases}
+    nx^{n-1}/\theta^n, &amp; 0&lt;x&lt;\theta\\
+    0, &amp;其他
+    \end{cases}
+    \end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[ E(\hat\theta)= \int_0^{\theta} x \cdot nx^{n-1}/\theta^n dx = \frac{n}{n+1}\theta\]</div>
+<p>故<span class="math notranslate nohighlight">\(\frac{n+1}{n}\hat\theta\)</span>为<span class="math notranslate nohighlight">\(\theta\)</span>的无偏估计</p>
+</li>
+</ul>
+<ul>
+<li><p>最小方差无偏估计（MVU）</p>
+<div class="math notranslate nohighlight">
+\[ M(\theta) = E[\hat\theta-\theta]^2\]</div>
+<div class="math notranslate nohighlight">
+\[ M= \text{Var}(\hat\theta)+[E(\hat\theta-\theta)]^2\]</div>
+<ul class="simple">
+<li><p>M取最小所对应的估计最佳</p></li>
+<li><p>无偏估计<span class="math notranslate nohighlight">\(E(\hat\theta-\theta)=0\)</span>,<span class="math notranslate nohighlight">\(\text{Var}(\hat\theta)\)</span>最小</p></li>
+</ul>
+</li>
+</ul>
+<section id="mvu">
+<h3>均匀分布的MVU<a class="headerlink" href="#mvu" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>若x符合(0,<span class="math notranslate nohighlight">\(\theta\)</span>)的均匀分布，两种估计</p>
+<ul>
+<li><p>矩估计，<span class="math notranslate nohighlight">\(\theta_1=2\bar{x}\)</span></p></li>
+<li><p>最大似然，<span class="math notranslate nohighlight">\(\theta_2=\frac{n+1}{n}\text{max}(x_1\cdots,x_n)\)</span></p></li>
+</ul>
+</li>
+<li><p>各自的<span class="math notranslate nohighlight">\(M(\theta)\)</span>为</p>
+<ul>
+<li><p>矩估计, <span class="math notranslate nohighlight">\(\theta^2/3n\)</span></p></li>
+<li><p>最大似然，<span class="math notranslate nohighlight">\(\frac{1}{n(n+2)}\theta^2\)</span></p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.optimize</span> <span class="k">as</span> <span class="nn">opt</span>
+<span class="kn">import</span> <span class="nn">scipy.special</span> <span class="k">as</span> <span class="nn">sp</span>
+
+<span class="k">def</span> <span class="nf">log_likelihood</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">uniform</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">p</span><span class="p">))</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">y</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">50</span>
+<span class="n">xmin</span><span class="o">=</span><span class="p">[]</span>
+<span class="n">xmean</span><span class="o">=</span><span class="p">[]</span>
+<span class="n">mubins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">3.8</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">loop</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+   
+    <span class="n">mu</span><span class="o">=</span><span class="mi">5</span>
+    <span class="n">rv</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">mu</span><span class="p">)</span>
+    <span class="n">xarr</span><span class="o">=</span><span class="n">rv</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+    <span class="n">res</span><span class="o">=</span><span class="n">opt</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span>
+        <span class="n">log_likelihood</span><span class="p">,</span>
+        <span class="n">x0</span><span class="o">=</span><span class="p">(</span><span class="n">mu</span><span class="p">),</span>
+        <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nelder-mead&#39;</span>
+    <span class="p">)</span>
+
+    <span class="n">xmin</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">xmean</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">xarr</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+    
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">xmin</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">xmean</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Max likelihood theta=&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xmin</span><span class="p">)</span><span class="o">*</span><span class="mi">21</span><span class="o">/</span><span class="mf">20.</span><span class="p">,</span><span class="s2">&quot;Sigma= &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">21</span><span class="o">/</span><span class="mf">20.</span><span class="p">,</span> <span class="s2">&quot;Cal =&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">20</span><span class="o">/</span><span class="mi">22</span><span class="p">)</span><span class="o">*</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean value theta=&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xmean</span><span class="p">),</span><span class="s2">&quot; ,Sigma= &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">xmean</span><span class="p">,</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="s2">&quot;Cal =&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">60</span><span class="p">)</span><span class="o">*</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Max likelihood theta= 4.990079498291015 Sigma=  0.23075800075461084 Cal = 0.2383656473113981
+Mean value theta= 5.011179759462485  ,Sigma=  0.6716533097747388 Cal = 0.6454972243679027
+</pre></div>
+</div>
+<img alt="_images/L7_15_1.png" src="_images/L7_15_1.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="id9">
+<h2>区间估计<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\hat\theta\)</span>: 样本估计出的参数<span class="math notranslate nohighlight">\(\theta\)</span></p></li>
+<li><p>真实的<span class="math notranslate nohighlight">\(\theta\)</span>落在一个区间范围：<span class="math notranslate nohighlight">\(\hat\theta_1(X) \leq \theta \leq  \hat\theta_2(X)\)</span>
+的概率</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ P_\theta (\hat\theta_1(X) \leq \theta \leq  \hat\theta_2(X))\]</div>
+<ul class="simple">
+<li><p>给定一个很小的数<span class="math notranslate nohighlight">\(\alpha\)</span>,如果对参数<span class="math notranslate nohighlight">\(\theta\)</span>，有上述概率等于<span class="math notranslate nohighlight">\(1-\alpha\)</span>,则称 [<span class="math notranslate nohighlight">\(\hat\theta_1,\hat\theta_2\)</span>] 的置信系数为<span class="math notranslate nohighlight">\(1-\alpha\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\alpha\)</span>一般取0.05,0.01,0.1</p></li>
+</ul>
+</section>
+<section id="id10">
+<h2>期望值的区间估计<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h2>
+<section id="t">
+<h3>t 函数<a class="headerlink" href="#t" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>t分布：当<span class="math notranslate nohighlight">\(X_2\propto N(0,1)\)</span>, <span class="math notranslate nohighlight">\(X_1\propto \chi^2_{n}\)</span>，则<span class="math notranslate nohighlight">\(X_2/\sqrt{(X_1/n)}\propto t_n\)</span></p></li>
+<li><p>对正态分布的随机变量，<span class="math notranslate nohighlight">\(\bar{x}\)</span>和<span class="math notranslate nohighlight">\(S^2\)</span>是测量n次得到的结果，则<span class="math notranslate nohighlight">\((\bar{x}-\mu)/(S/\sqrt{n})\)</span>符合<span class="math notranslate nohighlight">\(t_{n-1}\)</span>分布</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">ndf</span><span class="o">=</span><span class="mi">10</span>
+<span class="n">rv</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">t</span><span class="p">(</span><span class="n">ndf</span><span class="p">)</span>
+<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.001</span><span class="p">),</span><span class="n">rv</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.999</span><span class="p">),</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="c1">## t分布的68%置信区间</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;</span><span class="n">rv</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="mf">0.68</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span><span class="o">&amp;</span><span class="p">(</span><span class="n">x</span><span class="o">&lt;</span><span class="n">rv</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="mf">0.68</span><span class="p">)[</span><span class="mi">1</span><span class="p">]),</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="c1">## t分布的95%置信区间</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;</span><span class="n">rv</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="mf">0.95</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span><span class="o">&amp;</span><span class="p">(</span><span class="n">x</span><span class="o">&lt;</span><span class="n">rv</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="mf">0.95</span><span class="p">)[</span><span class="mi">1</span><span class="p">]),</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="mf">0.68</span><span class="p">),</span><span class="n">rv</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.84</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="mf">0.95</span><span class="p">),</span><span class="n">rv</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.975</span><span class="p">))</span>
+<span class="c1">#比正态分布更宽！</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-1.0464226104979553, 1.0464226104979557) 1.046422610497955
+(-2.2281388519649385, 2.2281388519649385) 2.2281388519649385
+</pre></div>
+</div>
+<img alt="_images/L7_18_1.png" src="_images/L7_18_1.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\beta\)</span>分位点：累积分布函数<span class="math notranslate nohighlight">\(\Phi (u_\beta) = 1-\beta\)</span>, <span class="math notranslate nohighlight">\(u_\beta\)</span>为函数的<span class="math notranslate nohighlight">\(\beta\)</span>分位点</p></li>
+<li><p>自由度为n的t分布的0.025分位点，<span class="math notranslate nohighlight">\(\Phi (x)=97.5\%\)</span>，记为 <span class="math notranslate nohighlight">\(t_n (0.025)\)</span></p></li>
+<li><p>对于统计学三大分布，<span class="math notranslate nohighlight">\(\beta\)</span>分位点分别记为 <span class="math notranslate nohighlight">\(t_n (\beta)\)</span>, <span class="math notranslate nohighlight">\(\chi^2_n (\beta)\)</span>,<span class="math notranslate nohighlight">\(F_{m,n} (\beta)\)</span></p></li>
+<li><p>分位点与置信区间的关系</p>
+<ul>
+<li><p>对于t分布这样的对称函数，<span class="math notranslate nohighlight">\(1-\alpha\)</span>置信区间可以由<span class="math notranslate nohighlight">\(\pm t_n (\alpha/2)\)</span>得到</p></li>
+</ul>
+</li>
+</ul>
+<section id="id11">
+<h4>单分布的期望值<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h4>
+<p>例：一个物件称了5次，结果为(5.52,5.48,5.64,5.51,5.43)。问其真实值的0.95置信区间。</p>
+<ul>
+<li><p>对正态分布的随机变量，<span class="math notranslate nohighlight">\(\bar{x}\)</span>和<span class="math notranslate nohighlight">\(S^2\)</span>是测量n次得到的结果，则<span class="math notranslate nohighlight">\((\bar{x}-\mu)/(S/\sqrt{n})\)</span>符合<span class="math notranslate nohighlight">\(t_{n-1}\)</span>分布</p>
+<div class="math notranslate nohighlight">
+\[t_4(0.975)\leq  (\bar{x}-\mu)/(S/\sqrt{n}) \leq t_4(0.025)\]</div>
+<div class="math notranslate nohighlight">
+\[ \mu = [\bar{x} - t_4(0.025)S/\sqrt{n} ,\bar{x} + t_4(0.025)S/\sqrt{n}]\]</div>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="p">(</span><span class="mf">5.52</span><span class="p">,</span><span class="mf">5.48</span><span class="p">,</span><span class="mf">5.64</span><span class="p">,</span><span class="mf">5.51</span><span class="p">,</span><span class="mf">5.43</span><span class="p">)</span>
+<span class="c1">## s^2</span>
+<span class="n">ssqua</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ssqua_m</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">x</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span>
+<span class="c1">#验证S^2的计算是否正确</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ssqua</span><span class="p">,</span><span class="n">ssqua_m</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.006029999999999984 0.006029999999999984
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ssqua</span><span class="p">)</span>
+<span class="n">s_np</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">s_m</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ssqua_m</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">s_np</span><span class="p">,</span><span class="n">s_m</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0776530746332686 0.0776530746332686 0.0776530746332686
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mean val=&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2.5% 分位点=&quot;</span><span class="p">,</span> <span class="n">st</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.975</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;95</span><span class="si">% i</span><span class="s2">nterval:(&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">s</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">*</span><span class="n">st</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.975</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">s</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">*</span><span class="n">st</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.975</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="s2">&quot;)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mean val= 5.516
+2.5% 分位点= 2.7764451051977987
+95% interval:( 5.41958097287804 5.61241902712196 )
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="chi-2">
+<h3><span class="math notranslate nohighlight">\(\chi^2\)</span> 分布<a class="headerlink" href="#chi-2" title="Permalink to this headline">#</a></h3>
+<p>对于符合正态分布的随机变量,有</p>
+<div class="math notranslate nohighlight">
+\[\frac{(n-1)S^2}{\sigma^2} \propto \chi_{n-1}^2\]</div>
+<section id="id12">
+<h4>单分布的方差<a class="headerlink" href="#id12" title="Permalink to this headline">#</a></h4>
+<ul class="simple">
+<li><p>n个符合正态分布的x的平方和<span class="math notranslate nohighlight">\(\sum x^2\)</span>为<span class="math notranslate nohighlight">\(\chi_n^2\)</span>分布</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ \frac{(x_i-\mu)}{\sigma} \propto N(0,1) \]</div>
+<div class="math notranslate nohighlight">
+\[ \sum \frac{(x_i-\mu)^2}{\sigma^2} \propto \chi_{n}^2\]</div>
+<ul class="simple">
+<li><p>方差估计</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ \frac{(n-1)S^2}{\sigma^2} = \frac{\sum (x_i-\bar{x})^2}{\sigma^2} \]</div>
+<div class="math notranslate nohighlight">
+\[\frac{(n-1)S^2}{\sigma^2} \propto \chi_{n-1}^2\]</div>
+<ul class="simple">
+<li><p>对<span class="math notranslate nohighlight">\(\sigma\)</span>的68%区间估计</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ \chi_{n-1}^2(0.84) &lt; \frac{(n-1)S^2}{\sigma^2} &lt; \chi_{n-1}^2(0.16)\]</div>
+<div class="math notranslate nohighlight">
+\[ \frac{S}{\sqrt{\chi_{n-1}^2(0.16)/(n-1)}} &lt; \sigma &lt; \frac{S} {\sqrt{\chi_{n-1}^2(0.84)/(n-1)}}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## chi2函数</span>
+<span class="n">ndf</span><span class="o">=</span><span class="mi">19</span>
+<span class="n">rv</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">chi2</span><span class="p">(</span><span class="n">ndf</span><span class="p">)</span>
+<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.001</span><span class="p">),</span><span class="n">rv</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.999</span><span class="p">),</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="n">ndf</span><span class="p">,</span><span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="n">ndf</span><span class="p">,</span><span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;</span><span class="n">rv</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="mf">0.68</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span><span class="o">&amp;</span><span class="p">(</span><span class="n">x</span><span class="o">&lt;</span><span class="n">rv</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="mf">0.68</span><span class="p">)[</span><span class="mi">1</span><span class="p">]),</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="n">ndf</span><span class="p">,</span><span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;</span><span class="n">rv</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="mf">0.95</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span><span class="o">&amp;</span><span class="p">(</span><span class="n">x</span><span class="o">&lt;</span><span class="n">rv</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="mf">0.95</span><span class="p">)[</span><span class="mi">1</span><span class="p">]),</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="mf">0.68</span><span class="p">))</span><span class="o">/</span><span class="n">ndf</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1.21024386 0.87149234]
+</pre></div>
+</div>
+<img alt="_images/L7_25_1.png" src="_images/L7_25_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">##通过极大似然法对正态分布的平均值和方差进行估计</span>
+
+<span class="c1">###lnL=Sum(lnN())</span>
+<span class="k">def</span> <span class="nf">log_likelihood</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">narr</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="c1">###定义正态分布的参数和pdf，随机产生20个事件</span>
+<span class="n">mu</span><span class="o">=</span><span class="mi">5</span>
+<span class="n">sigma</span><span class="o">=</span><span class="mi">3</span>
+<span class="n">rv</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">sigma</span><span class="p">)</span>
+<span class="n">narr</span><span class="o">=</span><span class="n">rv</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="c1">###样本的平均值和标准差,注意，标准差未加ddof=1选项</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;样本平均值和标准差&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">narr</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">narr</span><span class="p">))</span>
+
+<span class="c1">###对20个事件的样本构建最大似然函数的负数，并求解最小值</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span>
+    <span class="n">log_likelihood</span><span class="p">,</span>
+    <span class="n">x0</span><span class="o">=</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">sigma</span><span class="p">))</span>
+
+<span class="c1">###求解结果</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;极大似然法数值解&quot;</span><span class="p">,</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="c1">###对mu可能的数值进行扫描，每个值对应的-lnL</span>
+<span class="n">mubins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">narr</span><span class="p">)</span><span class="o">*</span><span class="mf">0.7</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">narr</span><span class="p">)</span><span class="o">*</span><span class="mf">1.3</span><span class="p">,</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">xdim</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">log_likelihood</span><span class="p">([</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">mubins</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mubins</span><span class="p">,</span><span class="n">xdim</span><span class="p">)</span>
+<span class="c1">###-最大似然值</span>
+<span class="n">mll</span><span class="o">=</span><span class="n">log_likelihood</span><span class="p">([</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">mll</span><span class="p">,</span><span class="s2">&quot;+&quot;</span><span class="p">)</span>
+<span class="c1">### -lnL - 最小值=0.5 =&gt; sigma的标准差</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">mubins</span><span class="p">,</span><span class="n">xdim</span><span class="p">,</span><span class="n">mll</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="p">((</span><span class="n">xdim</span><span class="o">-</span><span class="n">mll</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span><span class="o">&lt;</span><span class="mf">0.01</span><span class="p">),</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1">### 最大似然法得到的sigma的标准差区间</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;sigma的标准差区间，极大似然法 &quot;</span><span class="p">,</span><span class="n">mubins</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">xdim</span><span class="o">-</span><span class="n">mll</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;sigma的标准差区间，极大似然法，无偏修正 &quot;</span><span class="p">,</span><span class="mi">20</span><span class="o">/</span><span class="mi">19</span><span class="o">*</span><span class="n">mubins</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">xdim</span><span class="o">-</span><span class="n">mll</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">)])</span>
+
+<span class="n">s2</span><span class="o">=</span><span class="nb">sum</span><span class="p">((</span><span class="n">narr</span><span class="o">-</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sigma_interval</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">s2</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">chi2</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="mf">0.68</span><span class="p">,</span><span class="mi">19</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;sigma的标准差区间，计算 &quot;</span><span class="p">,</span><span class="n">sigma_interval</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">sigma_interval</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>样本平均值和标准差 5.4807769556791985 2.3331081104535216
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>极大似然法数值解
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> [5.48077921 2.33310715]
+sigma的标准差区间，极大似然法  [2.00600401 2.75869517]
+sigma的标准差区间，极大似然法，无偏修正  [2.11158317 2.90388965]
+sigma的标准差区间，计算  2.0861072617224905 2.8969830117873605
+</pre></div>
+</div>
+<img alt="_images/L7_26_3.png" src="_images/L7_26_3.png" />
+</div>
+</div>
+</section>
+<section id="id13">
+<h4>两个分布平均值的差<a class="headerlink" href="#id13" title="Permalink to this headline">#</a></h4>
+<ul>
+<li><p>X符合正态分布<span class="math notranslate nohighlight">\(N(\mu_1,\sigma^2)\)</span>, Y符合<span class="math notranslate nohighlight">\(N(\mu_1,\sigma^2)\)</span></p>
+<p>通过两组测量<span class="math notranslate nohighlight">\(X_1\cdots,X_n\)</span>和<span class="math notranslate nohighlight">\(Y_1\cdots,Y_m\)</span>估计<span class="math notranslate nohighlight">\(\mu_1-\mu_2\)</span>的区间</p>
+</li>
+<li><p>能够构建怎样的统计量?</p>
+<ul class="simple">
+<li><p>平均值：</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ \bar{x}-\bar{y} - (\mu_1-\mu_2)\]</div>
+<ul class="simple">
+<li><p>方差：</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ S^2_z= S^2_x + S^2_y =\frac{\sum_{i=1}^{n} (x_i-\bar{x})^2}{n-1} + \frac{\sum_{i=1}^{m} (y_i-\bar{y})^2}{m-1} \]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(S^2_x + S^2_y\)</span>符合什么分布？</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[(n-1)S^2_x/\sigma^2 \propto \chi_{n-1}^2\ ,(m-1)S^2_y/\sigma^2 \propto \chi_{m-1}^2\]</div>
+<div class="math notranslate nohighlight">
+\[ (n-1)S^2_x/\sigma^2 + (m-1)S^2_y/\sigma^2 = (\sum_{i=1}^{n} (x_i-\bar{x})^2+\sum_{i=1}^{m} (y_i-\bar{y})^2)/\sigma^2 \propto \chi_{n-1+m-1}^2 \]</div>
+<ul class="simple">
+<li><p>中心极限定理：</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\frac{\bar{x}- \mu_1}{\sigma/\sqrt{n}} \propto N(0,1), \frac{\bar{y}- \mu_2}{\sigma/\sqrt{m}} \propto N(0,1)\]</div>
+<p>即<span class="math notranslate nohighlight">\(\bar{x}\propto N(\mu_1,\sigma/\sqrt{n})\)</span>，<span class="math notranslate nohighlight">\(\bar{y}\propto N(\mu_2,\sigma/\sqrt{n})\)</span>，那么</p>
+<div class="math notranslate nohighlight">
+\[ \bar{x}-\bar{y} \propto N(\mu_1-\mu_2, \sqrt{\sigma^2/n+\sigma^2/m}) \]</div>
+<ul class="simple">
+<li><p>t分布：当<span class="math notranslate nohighlight">\(X_2\propto N(0,1)\)</span>, <span class="math notranslate nohighlight">\(X_1\propto \chi^2_{n}\)</span>，则<span class="math notranslate nohighlight">\(X_2/\sqrt{(X_1/n)}\propto t_n\)</span></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ \sqrt\frac{nm(n+m-2)}{n+m}\frac{\bar{x}-\bar{y} - (\mu_1-\mu_2)}{\sqrt{\sum_{i=1}^{n} (x_i-\bar{x})^2 + \sum_{i=1}^{m} (y_i-\bar{y})^2)}} \propto t_{n+m-2}\]</div>
+</li>
+</ul>
+<p>工厂A、B各生产一批货物，经抽检样本，质量指标测量值为</p>
+<p>A：2.74,2.75,2.72,2.69</p>
+<p>B：2.75,2.78,2.74,2.76,2.72</p>
+<p>A-B的95%区间？</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="mf">2.74</span><span class="p">,</span><span class="mf">2.75</span><span class="p">,</span><span class="mf">2.72</span><span class="p">,</span><span class="mf">2.69</span><span class="p">]</span>
+<span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="mf">2.75</span><span class="p">,</span><span class="mf">2.78</span><span class="p">,</span><span class="mf">2.74</span><span class="p">,</span><span class="mf">2.76</span><span class="p">,</span><span class="mf">2.72</span><span class="p">]</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">jitter</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">jitter</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>  <span class="n">capsize</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">errorbar</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;se&quot;</span><span class="p">),</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>  <span class="n">capsize</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">errorbar</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;se&quot;</span><span class="p">))</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/L7_29_1.png" src="_images/L7_29_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">z</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">m</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">n</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">varall</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="nb">sum</span><span class="p">((</span><span class="n">x</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="nb">sum</span><span class="p">((</span><span class="n">y</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">factor</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">m</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="n">m</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="n">m</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;xbar-ybar &quot;</span><span class="p">,</span><span class="n">z</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;sigma &quot;</span><span class="p">,</span><span class="n">varall</span><span class="o">/</span><span class="n">factor</span><span class="p">)</span>
+<span class="n">edges</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span><span class="n">n</span><span class="o">+</span><span class="n">m</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;95</span><span class="si">% i</span><span class="s2">s &quot;</span><span class="p">,</span><span class="n">edges</span><span class="p">,</span><span class="s2">&quot;sigma</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;95</span><span class="si">% i</span><span class="s2">nterval on x-y&quot;</span><span class="p">,</span><span class="n">edges</span><span class="o">*</span><span class="n">varall</span><span class="o">/</span><span class="n">factor</span><span class="o">+</span><span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>xbar-ybar  -0.02499999999999991
+sigma  0.016234883078464935
+95% is  [-2.36462425  2.36462425] sigma
+ 95% interval on x-y [-0.0633894  0.0133894]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id14">
+<h4>指数分布的参数估计<a class="headerlink" href="#id14" title="Permalink to this headline">#</a></h4>
+<ul>
+<li><p>中心极限定理：</p>
+<div class="math notranslate nohighlight">
+\[ \frac{(\bar{x}-\mu)}{\sigma/\sqrt{n}}=\frac{(\bar{x}-1/\lambda)}{(1/\lambda)/\sqrt{n}} \propto N(0,1)\]</div>
+<div class="math notranslate nohighlight">
+\[ \lambda\bar{x} \propto \sqrt{n} N(0,1)+1\]</div>
+</li>
+<li><p>指数分布 <span class="math notranslate nohighlight">\(f(x)=\lambda e^{-\lambda x}\)</span></p>
+<ul class="simple">
+<li><p>令 <span class="math notranslate nohighlight">\(2\lambda x = y\)</span> ,则y的概率密度函数为</p></li>
+</ul>
+</li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ g(y) = e^{-y/2}/2\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\chi^2\)</span>分布</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ k_n(x) = \frac{1}{\Gamma(\frac{n}{2})2^{\frac{n}{2}}}e^{-x/2}x^{(n-2)/2}\]</div>
+<ul>
+<li><p>当n=2, <span class="math notranslate nohighlight">\(k_2 = e^{-x/2}/2\)</span></p></li>
+<li><p>所以 <span class="math notranslate nohighlight">\(2\lambda x\)</span>符合<span class="math notranslate nohighlight">\(\chi_2^2\)</span>分布, <span class="math notranslate nohighlight">\(\sum_i^n 2\lambda x_i\)</span>符合 <span class="math notranslate nohighlight">\(\chi_{2n}^2\)</span>分布,即</p>
+<div class="math notranslate nohighlight">
+\[2n\lambda\bar{x}\propto \chi_{2n}^2\]</div>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1">## 用chi2分布</span>
+<span class="n">yerr_chi2</span><span class="o">=</span><span class="p">[]</span>
+<span class="c1">## 用中心极限定理</span>
+<span class="n">yerr_norm</span><span class="o">=</span><span class="p">[]</span>
+<span class="n">dim</span><span class="o">=</span><span class="mi">40</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">dim</span><span class="p">):</span>
+    <span class="n">edge</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">chi2</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="mf">0.68</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="n">n</span>
+    <span class="n">yerr_chi2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+    <span class="n">edge_n</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="mf">0.68</span><span class="p">))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
+    <span class="n">yerr_norm</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge_n</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">dim</span><span class="p">),</span><span class="n">yerr</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">yerr_chi2</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">dim</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span><span class="n">capsize</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">dim</span><span class="p">),</span><span class="n">yerr</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">yerr_norm</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">dim</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span><span class="n">capsize</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ErrorbarContainer object of 3 artists&gt;
+</pre></div>
+</div>
+<img alt="_images/L7_32_1.png" src="_images/L7_32_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.optimize</span> <span class="k">as</span> <span class="nn">opt</span>
+<span class="kn">import</span> <span class="nn">scipy.special</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">log_likelihood</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">expon</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">p</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    
+<span class="n">mu</span><span class="o">=</span><span class="mi">5</span>
+<span class="n">rv</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">expon</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">mu</span><span class="p">)</span>
+<span class="n">n</span><span class="o">=</span><span class="mi">20</span>
+<span class="n">xarr</span><span class="o">=</span><span class="n">rv</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="n">stat</span><span class="o">=</span><span class="s1">&#39;density&#39;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xarr</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span>
+    <span class="n">log_likelihood</span><span class="p">,</span>
+    <span class="n">x0</span><span class="o">=</span><span class="p">(</span><span class="n">mu</span><span class="p">))</span>
+
+<span class="n">mubins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xarr</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">st</span><span class="o">.</span><span class="n">sem</span><span class="p">(</span><span class="n">xarr</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xarr</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">st</span><span class="o">.</span><span class="n">sem</span><span class="p">(</span><span class="n">xarr</span><span class="p">),</span><span class="mi">300</span><span class="p">)</span>
+
+<span class="n">xdim</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">log_likelihood</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">mubins</span><span class="p">)</span>
+<span class="n">mll</span><span class="o">=</span><span class="n">log_likelihood</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mubins</span><span class="p">,</span><span class="n">xdim</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">mll</span><span class="p">,</span><span class="s2">&quot;+&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">mubins</span><span class="p">,</span><span class="n">xdim</span><span class="p">,</span><span class="n">mll</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="p">((</span><span class="n">xdim</span><span class="o">-</span><span class="n">mll</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span><span class="o">&lt;</span><span class="mf">0.01</span><span class="p">),</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">xarr</span><span class="p">,</span><span class="n">capsize</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">errorbar</span><span class="o">=</span><span class="s1">&#39;se&#39;</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="c1">### chi2 method</span>
+<span class="n">err</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xarr</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">chi2</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="mf">0.68</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="n">n</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xarr</span><span class="p">)</span>
+<span class="c1">### norm method</span>
+<span class="n">err_norm</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xarr</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="mf">0.68</span><span class="p">))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xarr</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;chi2  &quot;</span><span class="p">,</span><span class="n">err</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">norm  &quot;</span><span class="p">,</span><span class="n">err_norm</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MLE &quot;</span><span class="p">,</span> <span class="n">mubins</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">xdim</span><span class="o">-</span><span class="n">mll</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">)]</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xarr</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Moments &quot;</span><span class="p">,</span><span class="n">st</span><span class="o">.</span><span class="n">sem</span><span class="p">(</span><span class="n">xarr</span><span class="p">))</span>
+<span class="n">xerr_l</span><span class="o">=-</span><span class="n">err</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">xerr_h</span><span class="o">=</span><span class="n">err</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xarr</span><span class="p">),</span><span class="n">y</span><span class="o">=</span><span class="n">mll</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">xerr</span><span class="o">=</span><span class="p">[[</span><span class="n">xerr_l</span><span class="p">],[</span><span class="n">xerr_h</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.552121937775453 3.496260920706013
+[4.55212726]
+chi2   [ 1.28897764 -0.82192521] 
+norm   [ 1.3017     -0.82810132]
+MLE  [-0.88376002  1.17660357  1.18706227  1.19752097]
+Moments  0.7817877085774647
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ErrorbarContainer object of 3 artists&gt;
+</pre></div>
+</div>
+<img alt="_images/L7_33_2.png" src="_images/L7_33_2.png" />
+<img alt="_images/L7_33_3.png" src="_images/L7_33_3.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### \lambda的置信区间是否不对称？</span>
+<span class="kn">import</span> <span class="nn">scipy.optimize</span> <span class="k">as</span> <span class="nn">opt</span>
+<span class="kn">import</span> <span class="nn">scipy.special</span> <span class="k">as</span> <span class="nn">sp</span>
+
+<span class="k">def</span> <span class="nf">log_likelihood</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">expon</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">p</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="n">xmin</span><span class="o">=</span><span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">loop</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">400</span><span class="p">):</span>  
+    <span class="n">mu</span><span class="o">=</span><span class="mi">5</span>
+    <span class="n">rv</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">expon</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">mu</span><span class="p">)</span>
+    <span class="n">xarr</span><span class="o">=</span><span class="n">rv</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+    <span class="n">res</span><span class="o">=</span><span class="n">opt</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span>
+        <span class="n">log_likelihood</span><span class="p">,</span>
+        <span class="n">x0</span><span class="o">=</span><span class="p">(</span><span class="n">mu</span><span class="p">),</span>
+        <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nelder-mead&#39;</span>
+    <span class="p">)</span>
+    <span class="n">xmin</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([ 4., 17., 20., 24., 38., 64., 55., 49., 37., 31., 25., 13., 11.,
+         7.,  2.,  3.]),
+ array([2.46051025, 2.82246017, 3.1844101 , 3.54636002, 3.90830994,
+        4.27025986, 4.63220978, 4.9941597 , 5.35610962, 5.71805954,
+        6.08000946, 6.44195938, 6.8039093 , 7.16585922, 7.52780914,
+        7.88975906, 8.25170898]),
+ &lt;BarContainer object of 16 artists&gt;)
+</pre></div>
+</div>
+<img alt="_images/L7_34_1.png" src="_images/L7_34_1.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="f">
+<h3>F分布<a class="headerlink" href="#f" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>若<span class="math notranslate nohighlight">\(X_1,X_2\)</span>独立，<span class="math notranslate nohighlight">\(X_1\propto \chi_n^2\)</span>, <span class="math notranslate nohighlight">\(X_2\propto \chi_m^2\)</span>,而 <span class="math notranslate nohighlight">\(Y=(X_2/m) / (X_1/n) \)</span>, 则Y满足F(m,n)分布</p></li>
+</ul>
+<div class="amsmath math notranslate nohighlight" id="equation-984963f3-170f-43dc-956f-2815156926fc">
+<span class="eqno">(3)<a class="headerlink" href="#equation-984963f3-170f-43dc-956f-2815156926fc" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\left[ \sum_{i=1}^{m} (Y_i-\bar{Y})^2/\sigma_2^2(m-1)\right] / \left[ \sum_{i=1}^{n} (X_i-\bar{X})^2/\sigma_1^2(n-1)\right] \propto F_{m-1,n-1}
+\end{equation}\]</div>
+<ul class="simple">
+<li><p>用于估计两个正态分布的<span class="math notranslate nohighlight">\(\sigma_2/\sigma_1\)</span>的区间</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ndf</span><span class="o">=</span><span class="mi">10</span>
+<span class="n">rv</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">ndf</span><span class="p">,</span><span class="n">ndf</span><span class="o">+</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.001</span><span class="p">),</span><span class="n">rv</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.999</span><span class="p">),</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;</span><span class="n">rv</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="mf">0.68</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span><span class="o">&amp;</span><span class="p">(</span><span class="n">x</span><span class="o">&lt;</span><span class="n">rv</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="mf">0.68</span><span class="p">)[</span><span class="mi">1</span><span class="p">]),</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;</span><span class="n">rv</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="mf">0.95</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span><span class="o">&amp;</span><span class="p">(</span><span class="n">x</span><span class="o">&lt;</span><span class="n">rv</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="mf">0.95</span><span class="p">)[</span><span class="mi">1</span><span class="p">]),</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.1538461538461537
+</pre></div>
+</div>
+<img alt="_images/L7_36_1.png" src="_images/L7_36_1.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 肖朦<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

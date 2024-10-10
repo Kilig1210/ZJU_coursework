@@ -1,0 +1,900 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>假设检验 &#8212; 统计与大数据分析</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint single-page" id="site-navigation">
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/L8.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/L8.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   假设检验
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   功效函数
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   检验错误
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   重要参数检验
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#theta-theta-0-sigma-2">
+   <span class="math notranslate nohighlight">
+    \(\theta &gt; \theta_0, \sigma^2\)
+   </span>
+   已知的检验
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#theta-leq-theta-0-sigma-2">
+   <span class="math notranslate nohighlight">
+    \(\theta \leq \theta_0, \sigma^2\)
+   </span>
+   已知的检验
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   假设检验的矛盾
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   <span class="math notranslate nohighlight">
+    \(\theta = \theta_0, \sigma^2\)
+   </span>
+   已知的检验
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sigma">
+   <span class="math notranslate nohighlight">
+    \(\sigma\)
+   </span>
+   未知
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   其他情况的假设检验
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   符号检验
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   作业
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>假设检验</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   假设检验
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   功效函数
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   检验错误
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   重要参数检验
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#theta-theta-0-sigma-2">
+   <span class="math notranslate nohighlight">
+    \(\theta &gt; \theta_0, \sigma^2\)
+   </span>
+   已知的检验
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#theta-leq-theta-0-sigma-2">
+   <span class="math notranslate nohighlight">
+    \(\theta \leq \theta_0, \sigma^2\)
+   </span>
+   已知的检验
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   假设检验的矛盾
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   <span class="math notranslate nohighlight">
+    \(\theta = \theta_0, \sigma^2\)
+   </span>
+   已知的检验
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sigma">
+   <span class="math notranslate nohighlight">
+    \(\sigma\)
+   </span>
+   未知
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   其他情况的假设检验
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   符号检验
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   作业
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <center>
+<h1> 统计与大数据分析</h1>
+<h2> 假设检验</h2>
+<h5>肖朦</h5>
+</center><section id="id1">
+<h1>假设检验<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>对一个假设的验证:<span class="math notranslate nohighlight">\(H_0\)</span>,<span class="math notranslate nohighlight">\(H_1\)</span></p></li>
+<li><p>问题的提法：</p></li>
+</ul>
+<p>工厂生产了一批货物，A和B，声称B的质量比A好。检验是否为真</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(H_0: Q_B &gt; Q_A\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(H_1: Q_B \leq Q_A\)</span></p></li>
+</ul>
+<p>也可以检验A的质量是否比B差</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(H_0: Q_A \leq Q_B\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(H_1: Q_A &gt; Q_B\)</span></p></li>
+</ul>
+<p>结论相同吗？</p>
+</section>
+<section id="id2">
+<h1>功效函数<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>同一个假设可以有很多种检验方法，如何判断优劣？</p>
+<ul>
+<li><p>要验证<span class="math notranslate nohighlight">\(Q_B &gt; Q_A\)</span>的假设，可以用</p></li>
+<li><p>检验<span class="math notranslate nohighlight">\(\Phi_1\)</span>: <span class="math notranslate nohighlight">\(\bar{Q}_B - \bar{Q}_A&gt;0\)</span>,</p></li>
+<li><p>检验<span class="math notranslate nohighlight">\(\Phi_2\)</span>:<span class="math notranslate nohighlight">\(\bar{Q}_B - \bar{Q}_A&gt; S_B+S_A\)</span></p></li>
+</ul>
+</li>
+<li><p>功效函数：总体分布包含若干未知参数<span class="math notranslate nohighlight">\(\theta\)</span>,</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(H_0\)</span>是关于他们的假设，现有样本X，而<span class="math notranslate nohighlight">\(\Phi\)</span>是基于样本对<span class="math notranslate nohighlight">\(H_0\)</span>的检验，功效函数为被否定的概率</p>
+<div class="math notranslate nohighlight">
+\[ \beta(\theta) = P_\theta(检验\Phi之下，H_0被否定)\]</div>
+<ul class="simple">
+<li><p>当<span class="math notranslate nohighlight">\(\theta\)</span>的取值使得<span class="math notranslate nohighlight">\(H_0\)</span>成立时，P应该尽量小</p></li>
+<li><p>当<span class="math notranslate nohighlight">\(\theta\)</span>使得<span class="math notranslate nohighlight">\(H_0\)</span>不成立时，P应尽量大</p></li>
+</ul>
+</section>
+<section id="id3">
+<h1>检验错误<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h1>
+<ul>
+<li><p>一类错误：<span class="math notranslate nohighlight">\(H_0\)</span>为真，但检验<span class="math notranslate nohighlight">\(\Phi\)</span>下被否，概率为<span class="math notranslate nohighlight">\(\beta_\theta\)</span></p></li>
+<li><p>二类错误：<span class="math notranslate nohighlight">\(H_0\)</span>为假，但检验<span class="math notranslate nohighlight">\(\Phi\)</span>下通过，概率为<span class="math notranslate nohighlight">\(1-\beta_\theta\)</span></p></li>
+<li><p>一类错误和二类错误无法同时变小</p></li>
+<li><p>通常要求一类错误的概率小，当<span class="math notranslate nohighlight">\(H_0\)</span>为真</p>
+<div class="math notranslate nohighlight">
+\[ \beta &lt; \alpha \]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\Phi\)</span>被称为<span class="math notranslate nohighlight">\(H_0\)</span>的水平为<span class="math notranslate nohighlight">\(\alpha\)</span>的检验</p></li>
+</ul>
+</li>
+</ul>
+<p>例：</p>
+<ul class="simple">
+<li><p>假设<span class="math notranslate nohighlight">\(H_0\)</span>:样本的<span class="math notranslate nohighlight">\(\mu\)</span>是否小于0</p></li>
+<li><p>检验<span class="math notranslate nohighlight">\(\Phi: \bar{x} &lt; 0\)</span>, 若通过该检验，认为假设为真</p></li>
+<li><p>一类错误：<span class="math notranslate nohighlight">\(\mu&lt;0, \bar{x} &gt; 0\)</span></p></li>
+<li><p>二类错误：<span class="math notranslate nohighlight">\(\mu&gt;0, \bar{x} &lt; 0\)</span></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">pdfa</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="n">pdfb</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">pdfa</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">pdfb</span><span class="p">)</span>
+<span class="c1">### 一类错误, 功效函数beta</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">pdfa</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="n">x</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="c1">### 二类错误, 1-beta</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">pdfb</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="n">x</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="c1">### 两类错误同时变小不可兼得</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PolyCollection at 0x16b8ce700&gt;
+</pre></div>
+</div>
+<img alt="_images/L8_5_1.png" src="_images/L8_5_1.png" />
+</div>
+</div>
+</section>
+<section id="id4">
+<h1>重要参数检验<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>正态分布的均值检验
+若<span class="math notranslate nohighlight">\(X_1,\cdots X_n\)</span>为一组对X的测量，检验其期望值<span class="math notranslate nohighlight">\(\theta\)</span>与<span class="math notranslate nohighlight">\(\theta_0\)</span>的比较。</p></li>
+</ul>
+<ol class="simple">
+<li><p><span class="math notranslate nohighlight">\(H_0: \theta \geq \theta_0, H_1: \theta &lt; \theta_0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(H_0: \theta \leq \theta_0, H_1: \theta &gt; \theta_0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(H_0: \theta = \theta_0, H_1: \theta \neq \theta_0\)</span></p></li>
+</ol>
+<p>如何选择检验？</p>
+</section>
+<section id="theta-theta-0-sigma-2">
+<h1><span class="math notranslate nohighlight">\(\theta &gt; \theta_0, \sigma^2\)</span>已知的检验<a class="headerlink" href="#theta-theta-0-sigma-2" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>要求<span class="math notranslate nohighlight">\(\bar{\theta} &gt; C\)</span></p></li>
+<li><p>得到水平为<span class="math notranslate nohighlight">\(\alpha\)</span>的检验，常数C取值需要满足，对于任意真实的<span class="math notranslate nohighlight">\(\theta &gt; \theta_0\)</span>有</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ P(\bar{\theta} \leq C) \leq \alpha \]</div>
+<ul class="simple">
+<li><p>对于任意的<span class="math notranslate nohighlight">\(\theta\)</span>，根据中心极限定理，<span class="math notranslate nohighlight">\((\bar{\theta}-\theta)/(\sigma/\sqrt{n})\)</span>为N<span class="math notranslate nohighlight">\((0,1)\)</span>的正态分布</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">pdfa</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">pdfb</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">pdfc</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">pdfa</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">pdfb</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">pdfc</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.05</span><span class="p">))</span>
+
+<span class="c1">#画出一类错误</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">pdfc</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="n">x</span><span class="o">&lt;-</span><span class="mf">1.64</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">pdfb</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="n">x</span><span class="o">&lt;-</span><span class="mf">1.64</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-1.6448536269514729
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PolyCollection at 0x16b9e1ca0&gt;
+</pre></div>
+</div>
+<img alt="_images/L8_8_2.png" src="_images/L8_8_2.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(H_0: \theta &gt; \theta_0\)</span></p></li>
+<li><p>一类错误<span class="math notranslate nohighlight">\(\beta\)</span>随<span class="math notranslate nohighlight">\(\theta\)</span>真实值的减小而变大</p></li>
+<li><p>需要所有满足<span class="math notranslate nohighlight">\(H_0\)</span>的<span class="math notranslate nohighlight">\(\beta_\theta&lt;\alpha\)</span>, 其中最大的<span class="math notranslate nohighlight">\(\beta_{\theta_0}&lt;\alpha\)</span>即可</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ P_{\theta_0}(\bar{\theta} \leq C) = \alpha \]</div>
+<div class="math notranslate nohighlight">
+\[\Phi((C-\theta_0)/(\sigma/\sqrt{n}))=\alpha\]</div>
+<p>一般取<span class="math notranslate nohighlight">\(\alpha=0.05\)</span></p>
+<div class="math notranslate nohighlight">
+\[C=\theta_0-1.64\sigma/\sqrt{n}\]</div>
+</section>
+<section id="theta-leq-theta-0-sigma-2">
+<h1><span class="math notranslate nohighlight">\(\theta \leq \theta_0, \sigma^2\)</span>已知的检验<a class="headerlink" href="#theta-leq-theta-0-sigma-2" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>要求<span class="math notranslate nohighlight">\(\bar{\theta} \leq C\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(C=\theta_0+1.64\sigma/\sqrt{n}\)</span></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">pdfa</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">pdfb</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">pdfc</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">pdfa</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">pdfb</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">pdfc</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.95</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">pdfa</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="n">x</span><span class="o">&gt;</span><span class="mf">1.64</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">pdfb</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="n">x</span><span class="o">&gt;</span><span class="mf">1.64</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.6448536269514722
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PolyCollection at 0x16ba69ac0&gt;
+</pre></div>
+</div>
+<img alt="_images/L8_11_2.png" src="_images/L8_11_2.png" />
+</div>
+</div>
+</section>
+<section id="id5">
+<h1>假设检验的矛盾<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h1>
+<p>当<span class="math notranslate nohighlight">\( \theta_0-1.64\sigma/\sqrt{n} \leq \bar{\theta} \leq \theta_0+1.64\sigma/\sqrt{n}\)</span>时，两个假设</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( \theta \geq \theta_0 \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( \theta \leq \theta_0 \)</span></p></li>
+</ul>
+<p>都成立</p>
+<ul class="simple">
+<li><p>第一类错误小的要求导致，要推翻假设的条件更严格</p></li>
+<li><p>当我们想要证实某个颠覆的结论时，常常用假设检验，<span class="math notranslate nohighlight">\(H_0\)</span>为”正常“，<span class="math notranslate nohighlight">\(H_1\)</span>为颠覆结论，要推翻<span class="math notranslate nohighlight">\(H_0\)</span>需要数据产生显著性的效果，不是由统计涨落引起的</p></li>
+</ul>
+</section>
+<section id="id6">
+<h1><span class="math notranslate nohighlight">\(\theta = \theta_0, \sigma^2\)</span>已知的检验<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>要求 <span class="math notranslate nohighlight">\( |\bar{\theta} - \theta_0|\leq C\)</span></p></li>
+<li><p>达到水平为<span class="math notranslate nohighlight">\(\alpha\)</span>的检验，要求</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ P_{\theta_0} (|\bar{\theta}-\theta_0| &gt; C) \leq \alpha\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\((\bar{\theta}-\theta_0)/(\sigma/\sqrt{n})\propto N(0,1)\)</span></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">pdfb</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">pdfb</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.025</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">pdfb</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;</span><span class="mf">1.96</span><span class="p">)</span><span class="o">|</span><span class="p">(</span><span class="n">x</span><span class="o">&lt;-</span><span class="mf">1.96</span><span class="p">),</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-1.9599639845400545
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PolyCollection at 0x16bae1400&gt;
+</pre></div>
+</div>
+<img alt="_images/L8_14_2.png" src="_images/L8_14_2.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\Phi(C/(\sigma/\sqrt{n})) = \alpha/2\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(C = 1.96 \sigma/\sqrt{n}\)</span></p></li>
+</ul>
+</section>
+<section id="sigma">
+<h1><span class="math notranslate nohighlight">\(\sigma\)</span>未知<a class="headerlink" href="#sigma" title="Permalink to this headline">#</a></h1>
+<ol class="simple">
+<li><p><span class="math notranslate nohighlight">\(H_0: \theta \geq \theta_0, H_1: \theta &lt; \theta_0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(H_0: \theta \leq \theta_0, H_1: \theta &gt; \theta_0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(H_0: \theta = \theta_0, H_1: \theta \neq \theta_0\)</span></p></li>
+</ol>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\((\bar{\theta}-\theta)/(S/\sqrt{n})\)</span>符合<span class="math notranslate nohighlight">\(t_{n-1}\)</span>分布</p></li>
+<li><p><span class="math notranslate nohighlight">\(t_{n-1}(\alpha)\)</span>为<span class="math notranslate nohighlight">\(t_{n-1}\)</span>分布的尾部（右边）面积为<span class="math notranslate nohighlight">\(\alpha\)</span>时对应的x值</p></li>
+</ul>
+<ol class="simple">
+<li><p><span class="math notranslate nohighlight">\((\bar{\theta}-\theta_0)/(S/\sqrt{n}) \geq - t_{n-1}(\alpha)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\bar{\theta}-\theta_0)/(S/\sqrt{n}) \leq t_{n-1}(\alpha)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(|(\bar{\theta}-\theta_0)/(S/\sqrt{n})| \leq t_{n-1}(\alpha/2)\)</span></p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">pdfb</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">t</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.025</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">pdfb</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">t</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">pdfb</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;</span><span class="mf">1.96</span><span class="p">)</span><span class="o">|</span><span class="p">(</span><span class="n">x</span><span class="o">&lt;-</span><span class="mf">1.96</span><span class="p">),</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;</span><span class="mf">2.57</span><span class="p">)</span><span class="o">|</span><span class="p">(</span><span class="n">x</span><span class="o">&lt;-</span><span class="mf">2.57</span><span class="p">),</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-2.57058183661474
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PolyCollection at 0x16bac6250&gt;
+</pre></div>
+</div>
+<img alt="_images/L8_17_2.png" src="_images/L8_17_2.png" />
+</div>
+</div>
+<p>两个工厂生产同一批产品，各抽检5件，测得指标分别为</p>
+<p>A=[119, 120, 119.2, 119.7, 119.6]</p>
+<p>B=[110.5, 106.3, 122.2, 113.8, 117.2]</p>
+<p>AB两厂的产品符合规格指标120？</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">A</span><span class="o">=</span><span class="p">[</span><span class="mi">119</span><span class="p">,</span><span class="mi">120</span><span class="p">,</span><span class="mf">119.2</span><span class="p">,</span><span class="mf">119.7</span><span class="p">,</span><span class="mf">119.6</span><span class="p">]</span>
+<span class="n">B</span><span class="o">=</span><span class="p">[</span><span class="mf">110.5</span><span class="p">,</span><span class="mf">106.3</span><span class="p">,</span><span class="mf">122.2</span><span class="p">,</span><span class="mf">113.8</span><span class="p">,</span><span class="mf">117.2</span><span class="p">]</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">A</span><span class="p">,</span><span class="n">jitter</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">B</span><span class="p">,</span><span class="n">jitter</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">A</span><span class="p">,</span><span class="n">capsize</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">errorbar</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;se&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">B</span><span class="p">,</span><span class="n">capsize</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">errorbar</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;se&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/L8_19_1.png" src="_images/L8_19_1.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>此时A,B的方差未知，假设检验为<span class="math notranslate nohighlight">\(H_0: \bar{A}=120\)</span></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ |(\bar{A}-120)/(S/\sqrt{5})| \leq t_{4}(0.025)\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">]:</span>
+    <span class="n">meanx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">sx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">nsigma</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">meanx</span><span class="o">-</span><span class="mi">120</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">sx</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">nsigma</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.025</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span>
+<span class="c1">#A未通过假设，B通过</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.795084971874741
+2.1977874533397657
+2.7764451051977996
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">A</span><span class="o">=</span><span class="p">[</span><span class="mi">119</span><span class="p">,</span><span class="mi">120</span><span class="p">,</span><span class="mf">119.2</span><span class="p">,</span><span class="mf">119.7</span><span class="p">,</span><span class="mf">119.6</span><span class="p">]</span>
+<span class="n">B</span><span class="o">=</span><span class="p">[</span><span class="mf">110.5</span><span class="p">,</span><span class="mf">106.3</span><span class="p">,</span><span class="mf">122.2</span><span class="p">,</span><span class="mf">113.8</span><span class="p">,</span><span class="mf">117.2</span><span class="p">]</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">A</span><span class="p">,</span><span class="n">jitter</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">B</span><span class="p">,</span><span class="n">jitter</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">A</span><span class="p">,</span><span class="n">capsize</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">errorbar</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;se&#39;</span><span class="p">,</span><span class="mf">2.776</span><span class="p">),</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">B</span><span class="p">,</span><span class="n">capsize</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">errorbar</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;se&#39;</span><span class="p">,</span><span class="mf">2.776</span><span class="p">),</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/L8_22_1.png" src="_images/L8_22_1.png" />
+</div>
+</div>
+</section>
+<section id="id7">
+<h1>其他情况的假设检验<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h1>
+<ul>
+<li><p>两个正态分布的均值之差的检验，利用上节课的<span class="math notranslate nohighlight">\(t_{n+m-2}\)</span>分布来检验</p>
+<div class="math notranslate nohighlight">
+\[ \sqrt\frac{nm(n+m-2)}{n+m}\frac{\bar{x}-\bar{y} - (\mu_1-\mu_2)}{\sqrt{\sum_{i=1}^{n} (x_i-\bar{x})^2 + \sum_{i=1}^{m} (y_i-\bar{y})^2)}} \propto t_{n+m-2}\]</div>
+</li>
+<li><p>分布的<span class="math notranslate nohighlight">\(\sigma^2\)</span>与<span class="math notranslate nohighlight">\(\sigma_0^2\)</span>的比较, 利用<span class="math notranslate nohighlight">\(\chi^2\)</span>分布来检验</p>
+<div class="math notranslate nohighlight">
+\[\frac{(n-1)S^2}{\sigma^2} \propto \chi_{n-1}^2\]</div>
+</li>
+<li><p>指数分布的均值假设检验,利用上节课的<span class="math notranslate nohighlight">\(\chi^2_{2n}\)</span>分布检验
+$<span class="math notranslate nohighlight">\(2n\lambda\bar{x}\propto \chi_{2n}^2\)</span>$</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\bar{x}&lt; C\)</span>, <span class="math notranslate nohighlight">\(\lambda&gt;\lambda_0\)</span></p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rv</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">chi2</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.001</span><span class="p">),</span><span class="n">rv</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.999</span><span class="p">),</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">chi</span><span class="o">=</span><span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">l_alpha</span><span class="o">=</span><span class="n">rv</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span><span class="o">/</span><span class="mi">20</span>
+<span class="n">r_alpha</span><span class="o">=</span><span class="n">rv</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.95</span><span class="p">)</span><span class="o">/</span><span class="mi">20</span>
+<span class="n">l_alpha_2</span> <span class="o">=</span> <span class="n">rv</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span><span class="o">/</span><span class="mi">20</span>
+<span class="n">r_alpha_2</span> <span class="o">=</span> <span class="n">rv</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.975</span><span class="p">)</span><span class="o">/</span><span class="mi">20</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">l_alpha</span><span class="p">,</span><span class="n">r_alpha</span><span class="p">,</span><span class="n">l_alpha_2</span><span class="p">,</span><span class="n">r_alpha_2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">l_alpha</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="n">r_alpha</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="n">l_alpha_2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="n">r_alpha_2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="mi">20</span><span class="p">,</span><span class="n">chi</span><span class="p">)</span>
+<span class="c1">### x*lambda0&lt;1.57, 1/x&gt;0.64*lambda_0 lambda &gt; lambda_0</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="mi">20</span><span class="p">,</span><span class="n">chi</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="mi">20</span><span class="o">&gt;</span><span class="n">r_alpha</span><span class="p">),</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="c1">### x*lambda0&gt;0.54, 1/x&lt;1.84*lambda_0 ,lambda &lt; lambda_0</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="mi">20</span><span class="p">,</span><span class="n">chi</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="mi">20</span><span class="o">&lt;</span><span class="n">l_alpha</span><span class="p">),</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="c1">### 0.47&lt;x*lambda0&lt;1.7, 0.58*lambda_0&lt;1/x&lt;2.08*lambda_0 ,lambda = lambda_0</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="mi">20</span><span class="p">,</span><span class="n">chi</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="mi">20</span><span class="o">&gt;</span><span class="n">r_alpha_2</span><span class="p">)</span><span class="o">|</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="mi">20</span><span class="o">&lt;</span><span class="n">l_alpha_2</span><span class="p">),</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5425405697091296 1.570521642211546 0.4795388696132433 1.7084803451419166
+1.8431801340425595 0.636731117306884 2.085336691906785 0.5853154839290434
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PolyCollection at 0x16e1f01f0&gt;
+</pre></div>
+</div>
+<img alt="_images/L8_24_2.png" src="_images/L8_24_2.png" />
+</div>
+</div>
+</section>
+<section id="id8">
+<h1>符号检验<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>两个相反的假设可能都被认证为正确</p></li>
+<li><p>有时需要确切的真假结论，根据<span class="math notranslate nohighlight">\(\theta=\theta_0\)</span>的假设确定边界C1,C2,若<span class="math notranslate nohighlight">\(\theta&lt;C_1\)</span>,认为结论A正确，<span class="math notranslate nohighlight">\(\theta&gt;C_2\)</span>,则结论B正确</p></li>
+<li><p>民调：AB候选人，民意测验n个人，得到人群中选A的人数m，以计算选A的比例p</p></li>
+</ul>
+<ol class="simple">
+<li><p>p&gt;0.5，A赢</p></li>
+<li><p>p&lt;0.5, B赢</p></li>
+<li><p>p=0.5, 不能确认</p></li>
+</ol>
+<p>按照之前的计算，1.2之间有重合</p>
+<p>根据3确定人数m的边界<span class="math notranslate nohighlight">\(C_1,C_2\)</span></p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(C_1&lt;m&lt;C_2\)</span>时支持3，<span class="math notranslate nohighlight">\(m&gt;C_2\)</span>支持1，<span class="math notranslate nohighlight">\(m&lt;C_1\)</span>支持2</p></li>
+<li><p>m服从B(n,p)的二项分布</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">=</span><span class="mi">10000</span>
+<span class="n">rv</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.001</span><span class="p">),</span><span class="n">rv</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.999</span><span class="p">))</span>
+<span class="n">chi</span><span class="o">=</span><span class="n">rv</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">chi</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.025</span><span class="p">),</span><span class="n">rv</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.975</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">chi</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;</span><span class="n">rv</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.025</span><span class="p">))</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">x</span><span class="o">&lt;</span><span class="n">rv</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.975</span><span class="p">)),</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="c1">#binominal variance p*(1-p)*N</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="mf">0.5</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="mf">1.96</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4902.0 5098.0
+98.0
+</pre></div>
+</div>
+<img alt="_images/L8_26_1.png" src="_images/L8_26_1.png" />
+</div>
+</div>
+</section>
+<section id="id9">
+<h1>作业<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h1>
+<p>A和B测量同一批样品，A声称自己的仪器精度更高(误差更小)，问该声明是否为真？在什么情况下该假设为假？</p>
+<p>A=[118.5, 120.5, 120.4, 121.8, 121.1]</p>
+<p>B=[117.2, 119.3, 122.2, 118.3, 120.7]</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 肖朦<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

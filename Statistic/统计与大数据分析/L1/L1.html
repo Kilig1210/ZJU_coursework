@@ -1,0 +1,2932 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>绪论 &#8212; My Jupyter Book</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint single-page" id="site-navigation">
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/L1.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/L1.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   课程考核方式
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   课程主要内容
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     实例1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     实例2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     实例3
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     实例4
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id8">
+     实例5
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     实例6
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     实例7
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id11">
+   数据分析1
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     数据可视化
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id13">
+     统计的数字特征
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id14">
+     参数估计
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id15">
+     概率分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id16">
+     假设检验
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id17">
+     假设检验统计量
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id18">
+     检验标准
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id19">
+     区间估计
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id20">
+   数据分析2
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>绪论</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   课程考核方式
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   课程主要内容
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     实例1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     实例2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     实例3
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     实例4
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id8">
+     实例5
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     实例6
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     实例7
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id11">
+   数据分析1
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     数据可视化
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id13">
+     统计的数字特征
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id14">
+     参数估计
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id15">
+     概率分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id16">
+     假设检验
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id17">
+     假设检验统计量
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id18">
+     检验标准
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id19">
+     区间估计
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id20">
+   数据分析2
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <center>
+<h1>统计与大数据分析</h1>
+<h2>绪论</h2>
+<h5>肖朦，2023 </h5>
+</center>
+<section id="id1">
+<h1>绪论<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>教材：</p>
+<ul>
+<li><p>概率导论，Dimitri P.Bertsekas，John N.Tsitsiklis 著，郑忠国，童行伟 译，图灵出品 (概率论部分)</p></li>
+<li><p>概率论与数理统计, 陈希孺, 中科大出版社 （数理统计部分）</p></li>
+</ul>
+</li>
+<li><p>参考:</p>
+<ul>
+<li><p>机器学习教程</p>
+<ul>
+<li><p><a class="reference external" href="http://scipy-lectures.org/packages/scikit-learn/index.html">Scipy lectures</a></p></li>
+<li><p><a class="reference external" href="https://python-course.eu/machine-learning">Python Course</a></p></li>
+<li><p><a class="reference external" href="http://www.datasciencecourse.org/notes/">Machine Learning</a></p></li>
+</ul>
+</li>
+<li><p>G. Cowan, Statistical Data Analysis, Clarendon Press, Oxford, 1998</p></li>
+<li><p>Practical Data Science, <a class="reference external" href="https://www.datasciencecourse.org/lectures/">https://www.datasciencecourse.org/lectures/</a></p></li>
+</ul>
+</li>
+<li><p>课程形式：理论知识+编程实践</p></li>
+<li><p>工具：Python,Jupyter notebook</p>
+<ul>
+<li><p>安装 python: 版本&gt;3.9：<a class="reference external" href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></p></li>
+<li><p>安装 Jupyter notebook: pip install notebook</p></li>
+</ul>
+</li>
+<li><p>助教：朱馨雨</p></li>
+</ul>
+<section id="id2">
+<h2>课程考核方式<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<p>用Jupyter notebook写，上传学在浙大</p>
+<ul class="simple">
+<li><p>作业, ~6次作业，占比50%</p></li>
+<li><p>期末大作业, 占比50%</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>课程主要内容<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>数据处理和可视化</p></li>
+<li><p>随机变量，常见分布，数字化特征</p></li>
+<li><p>参数估计，假设检验</p></li>
+<li><p>形状拟合，相关性分析，回归</p></li>
+<li><p>机器学习：线性分类，非线性分类</p></li>
+</ul>
+<section id="id4">
+<h3>实例1<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
+<p>假设尺子的最小刻度间距是0.1 cm, 由此导致的误差大小是？</p>
+<div class="dropdown admonition">
+<p class="admonition-title">点击显示!</p>
+<p>0.03 cm</p>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">点击显示!</p>
+<p><span class="math notranslate nohighlight">\(0.1/\sqrt{12}\)</span></p>
+</div>
+</section>
+<section id="id5">
+<h3>实例2<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h3>
+<p>做100次实验，95次通过筛选，筛选效率<span class="math notranslate nohighlight">\(\epsilon\)</span>？效率的误差是?</p>
+<div class="dropdown admonition">
+<p class="admonition-title">点击显示!</p>
+<p><span class="math notranslate nohighlight">\(0.95 \pm 0.02\)</span></p>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">点击显示!</p>
+<p><span class="math notranslate nohighlight">\(\sqrt{p(1-p)/N}\)</span></p>
+</div>
+</section>
+<section id="id6">
+<h3>实例3<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h3>
+<p>对一批样品进行测量，得到测量值为</p>
+<p>2.74,2.75,2.72,2.69</p>
+<p>样本的平均值<span class="math notranslate nohighlight">\(\mu\)</span>? 样本的标准差<span class="math notranslate nohighlight">\(\sigma\)</span>？ 平均值的误差<span class="math notranslate nohighlight">\(\sigma_\mu\)</span>?</p>
+<p><span class="math notranslate nohighlight">\(\mu \pm \sigma_\mu\)</span>的含义？</p>
+</section>
+<section id="id7">
+<h3>实例4<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h3>
+<p>将一枚硬币投掷25次，正面朝上的次数为16次。</p>
+<p>假设1：正面朝上的概率为1/2</p>
+<p>假设2：正面朝上的概率为2/3</p>
+<p>是否能排除假设1？</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">x</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">25</span><span class="p">)</span>
+<span class="n">pdfa</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">binom</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">pdfb</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">binom</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mf">2.</span><span class="o">/</span><span class="mf">3.</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">pdfa</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">pdfb</span><span class="p">)</span>
+
+<span class="c1">### 一类错误</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">pdfa</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="n">x</span><span class="o">&gt;=</span><span class="mi">16</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="c1">### 二类错误</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">pdfb</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="n">x</span><span class="o">&lt;=</span><span class="mi">16</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PolyCollection at 0x165fda6d0&gt;
+</pre></div>
+</div>
+<img alt="_images/L1_12_1.png" src="_images/L1_12_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">y</span><span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">binom</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+<span class="n">z</span><span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">binom</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span><span class="mf">2.</span><span class="o">/</span><span class="mf">3.</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+<span class="n">pdfa</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">binom</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mf">2.</span><span class="o">/</span><span class="mf">3.</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">binom</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mf">0.5</span><span class="p">)</span><span class="o">+</span><span class="n">st</span><span class="o">.</span><span class="n">binom</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mf">2.</span><span class="o">/</span><span class="mf">3.</span><span class="p">))</span>
+<span class="n">pdfb</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">binom</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mf">2.</span><span class="o">/</span><span class="mf">3.</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">binom</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mf">0.5</span><span class="p">)</span><span class="o">+</span><span class="n">st</span><span class="o">.</span><span class="n">binom</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mf">2.</span><span class="o">/</span><span class="mf">3.</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">pdfa</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">pdfb</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:ylabel=&#39;Count&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/L1_13_1.png" src="_images/L1_13_1.png" />
+</div>
+</div>
+</section>
+<section id="id8">
+<h3>实例5<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h3>
+<p>以下图中x和y轴代表的数据是否正相关？</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">x3</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">expon</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">x1</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">x3</span><span class="o">*</span><span class="mf">0.4</span><span class="o">+</span><span class="mi">30</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">x2</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">x3</span><span class="o">-</span><span class="n">x1</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/L1_15_0.png" src="_images/L1_15_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pingouin</span> <span class="kn">import</span> <span class="n">partial_corr</span>
+
+<span class="n">xyz</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">,</span><span class="n">x3</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">xyz</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">])</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Correlation</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">df</span><span class="o">.</span><span class="n">corr</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Partial Correlation</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">df</span><span class="o">.</span><span class="n">pcorr</span><span class="p">())</span>
+
+<span class="n">cor</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">xyz</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Correlation
+           x         y         z
+x  1.000000  0.892351  0.963438
+y  0.892351  1.000000  0.980544
+z  0.963438  0.980544  1.000000
+Partial Correlation
+          x         y         z
+x  1.00000 -0.995170  0.998300
+y -0.99517  1.000000  0.999088
+z  0.99830  0.999088  1.000000
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id9">
+<h3>实例6<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h3>
+<p>对以下数据进行函数拟合，并给出</p>
+<ul class="simple">
+<li><p>函数中参数大小和误差</p></li>
+<li><p>整体函数的误差</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">linregress</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">a</span><span class="o">=</span><span class="mi">3</span>
+<span class="n">b</span><span class="o">=</span><span class="mi">4</span>
+<span class="n">x</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="n">b</span><span class="p">,</span><span class="mf">0.5</span><span class="o">*</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x1689fe850&gt;
+</pre></div>
+</div>
+<img alt="_images/L1_18_1.png" src="_images/L1_18_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="mi">95</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="mi">68</span><span class="p">)</span>
+<span class="n">result</span><span class="o">=</span><span class="n">linregress</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LinregressResult(slope=3.155750017590672, intercept=3.6329706338778056, rvalue=0.981475171638325, pvalue=2.2816929725483544e-14, stderr=0.145197265329828, intercept_stderr=0.7259675895057137)
+</pre></div>
+</div>
+<img alt="_images/L1_19_1.png" src="_images/L1_19_1.png" />
+</div>
+</div>
+<p>如何判断最佳函数？</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="mi">68</span><span class="p">,</span><span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/L1_21_1.png" src="_images/L1_21_1.png" />
+</div>
+</div>
+</section>
+<section id="id10">
+<h3>实例7<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h3>
+<p>机器学习，数据分类</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_digits</span>
+
+<span class="n">digits</span> <span class="o">=</span> <span class="n">load_digits</span><span class="p">()</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="mi">4</span><span class="p">)][</span><span class="n">i</span><span class="o">%</span><span class="k">4</span>].set_axis_off()
+    <span class="n">axes</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="mi">4</span><span class="p">)][</span><span class="n">i</span><span class="o">%</span><span class="k">4</span>].imshow(digits.images[i], cmap=plt.cm.gray_r,interpolation=&quot;nearest&quot;)
+    <span class="n">axes</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="mi">4</span><span class="p">)][</span><span class="n">i</span><span class="o">%</span><span class="k">4</span>].set_title(&quot;Training: %i&quot; % digits.target[i])
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/L1_23_0.png" src="_images/L1_23_0.png" />
+</div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.neural_network</span> <span class="kn">import</span> <span class="n">MLPClassifier</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">digits</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> 
+    <span class="n">digits</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">mlp</span> <span class="o">=</span> <span class="n">MLPClassifier</span><span class="p">(</span><span class="n">hidden_layer_sizes</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,),</span> <span class="n">learning_rate_init</span><span class="o">=</span><span class="mf">.01</span><span class="p">,</span>  <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">mlp</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration 1, loss = 7.76162376
+Iteration 2, loss = 2.76537756
+Iteration 3, loss = 1.83962481
+Iteration 4, loss = 1.67718251
+Iteration 5, loss = 1.48328166
+Iteration 6, loss = 1.24617309
+Iteration 7, loss = 1.05765483
+Iteration 8, loss = 0.92558770
+Iteration 9, loss = 0.81526151
+Iteration 10, loss = 0.68260939
+Iteration 11, loss = 0.57771770
+Iteration 12, loss = 0.49652520
+Iteration 13, loss = 0.43701180
+Iteration 14, loss = 0.37960204
+Iteration 15, loss = 0.33127680
+Iteration 16, loss = 0.29886252
+Iteration 17, loss = 0.26779583
+Iteration 18, loss = 0.24843796
+Iteration 19, loss = 0.22694277
+Iteration 20, loss = 0.20308898
+Iteration 21, loss = 0.18503891
+Iteration 22, loss = 0.17698794
+Iteration 23, loss = 0.16338616
+Iteration 24, loss = 0.15344404
+Iteration 25, loss = 0.14253073
+Iteration 26, loss = 0.13294828
+Iteration 27, loss = 0.13489606
+Iteration 28, loss = 0.12701294
+Iteration 29, loss = 0.11202820
+Iteration 30, loss = 0.10654180
+Iteration 31, loss = 0.09984377
+Iteration 32, loss = 0.09636731
+Iteration 33, loss = 0.08797504
+Iteration 34, loss = 0.08232968
+Iteration 35, loss = 0.07604096
+Iteration 36, loss = 0.07217008
+Iteration 37, loss = 0.06774199
+Iteration 38, loss = 0.06361987
+Iteration 39, loss = 0.05782923
+Iteration 40, loss = 0.05532631
+Iteration 41, loss = 0.05174802
+Iteration 42, loss = 0.04910770
+Iteration 43, loss = 0.04532405
+Iteration 44, loss = 0.04195831
+Iteration 45, loss = 0.03905308
+Iteration 46, loss = 0.03605224
+Iteration 47, loss = 0.03421479
+Iteration 48, loss = 0.03369407
+Iteration 49, loss = 0.03157743
+Iteration 50, loss = 0.02872128
+Iteration 51, loss = 0.02640380
+Iteration 52, loss = 0.02658939
+Iteration 53, loss = 0.02591159
+Iteration 54, loss = 0.02385785
+Iteration 55, loss = 0.02077336
+Iteration 56, loss = 0.02154981
+Iteration 57, loss = 0.02046625
+Iteration 58, loss = 0.01916416
+Iteration 59, loss = 0.01833561
+Iteration 60, loss = 0.01730052
+Iteration 61, loss = 0.01685155
+Iteration 62, loss = 0.01565222
+Iteration 63, loss = 0.01590254
+Iteration 64, loss = 0.01475378
+Iteration 65, loss = 0.01416040
+Iteration 66, loss = 0.01350847
+Iteration 67, loss = 0.01395689
+Iteration 68, loss = 0.01290994
+Iteration 69, loss = 0.01282043
+Iteration 70, loss = 0.01196025
+Iteration 71, loss = 0.01186314
+Iteration 72, loss = 0.01122397
+Iteration 73, loss = 0.01039881
+Iteration 74, loss = 0.01040090
+Iteration 75, loss = 0.00977216
+Iteration 76, loss = 0.00983129
+Iteration 77, loss = 0.00968496
+Iteration 78, loss = 0.00933343
+Iteration 79, loss = 0.00886430
+Iteration 80, loss = 0.00859873
+Iteration 81, loss = 0.00852238
+Iteration 82, loss = 0.00799783
+Iteration 83, loss = 0.00769990
+Iteration 84, loss = 0.00755025
+Iteration 85, loss = 0.00747015
+Iteration 86, loss = 0.00721107
+Iteration 87, loss = 0.00715722
+Iteration 88, loss = 0.00694485
+Iteration 89, loss = 0.00665482
+Iteration 90, loss = 0.00652973
+Iteration 91, loss = 0.00631982
+Iteration 92, loss = 0.00615965
+Iteration 93, loss = 0.00615404
+Iteration 94, loss = 0.00593388
+Iteration 95, loss = 0.00602305
+Iteration 96, loss = 0.00588342
+Iteration 97, loss = 0.00562168
+Iteration 98, loss = 0.00537792
+Iteration 99, loss = 0.00516895
+Iteration 100, loss = 0.00511610
+Iteration 101, loss = 0.00497003
+Iteration 102, loss = 0.00492258
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration 103, loss = 0.00487557
+Iteration 104, loss = 0.00468725
+Iteration 105, loss = 0.00460795
+Iteration 106, loss = 0.00457400
+Iteration 107, loss = 0.00439122
+Iteration 108, loss = 0.00436263
+Iteration 109, loss = 0.00425917
+Iteration 110, loss = 0.00420187
+Iteration 111, loss = 0.00407107
+Iteration 112, loss = 0.00398011
+Iteration 113, loss = 0.00387495
+Iteration 114, loss = 0.00383003
+Iteration 115, loss = 0.00380723
+Iteration 116, loss = 0.00370708
+Iteration 117, loss = 0.00367437
+Iteration 118, loss = 0.00356199
+Iteration 119, loss = 0.00358612
+Iteration 120, loss = 0.00344124
+Iteration 121, loss = 0.00340547
+Iteration 122, loss = 0.00336158
+Iteration 123, loss = 0.00330341
+Iteration 124, loss = 0.00329153
+Iteration 125, loss = 0.00318570
+Iteration 126, loss = 0.00311037
+Iteration 127, loss = 0.00307166
+Iteration 128, loss = 0.00301694
+Iteration 129, loss = 0.00294922
+Iteration 130, loss = 0.00294059
+Iteration 131, loss = 0.00282708
+Iteration 132, loss = 0.00284358
+Iteration 133, loss = 0.00277252
+Iteration 134, loss = 0.00276149
+Iteration 135, loss = 0.00269983
+Iteration 136, loss = 0.00269508
+Iteration 137, loss = 0.00261835
+Iteration 138, loss = 0.00256081
+Iteration 139, loss = 0.00252797
+Iteration 140, loss = 0.00251794
+Iteration 141, loss = 0.00246572
+Iteration 142, loss = 0.00242898
+Training loss did not improve more than tol=0.000100 for 10 consecutive epochs. Stopping.
+</pre></div>
+</div>
+<div class="output text_html"><style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>MLPClassifier(hidden_layer_sizes=(15,), learning_rate_init=0.01, verbose=True)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">MLPClassifier</label><div class="sk-toggleable__content"><pre>MLPClassifier(hidden_layer_sizes=(15,), learning_rate_init=0.01, verbose=True)</pre></div></div></div></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predictions</span> <span class="o">=</span> <span class="n">mlp</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="mi">4</span><span class="p">)][</span><span class="n">i</span><span class="o">%</span><span class="k">4</span>].set_axis_off()
+    <span class="n">axes</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="mi">4</span><span class="p">)][</span><span class="n">i</span><span class="o">%</span><span class="k">4</span>].imshow(X_test[i].reshape(8,8), cmap=plt.cm.gray_r,interpolation=&quot;nearest&quot;)
+    <span class="n">axes</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="mi">4</span><span class="p">)][</span><span class="n">i</span><span class="o">%</span><span class="k">4</span>].set_title(&quot;Test: %i&quot; % predictions[i])
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/L1_25_0.png" src="_images/L1_25_0.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="id11">
+<h2>数据分析1<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h2>
+<p>工厂A、B各生产一批货物，经抽检样本，质量指标测量值为</p>
+<p>A：2.74,2.75,2.72,2.69</p>
+<p>B：2.75,2.78,2.74,2.76,2.72</p>
+<p>B是否优于A?</p>
+<section id="id12">
+<h3>数据可视化<a class="headerlink" href="#id12" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="mf">2.74</span><span class="p">,</span><span class="mf">2.75</span><span class="p">,</span><span class="mf">2.72</span><span class="p">,</span><span class="mf">2.69</span><span class="p">]</span>
+<span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="mf">2.75</span><span class="p">,</span><span class="mf">2.78</span><span class="p">,</span><span class="mf">2.74</span><span class="p">,</span><span class="mf">2.76</span><span class="p">,</span><span class="mf">2.72</span><span class="p">]</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">y</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/L1_28_1.png" src="_images/L1_28_1.png" />
+</div>
+</div>
+</section>
+<section id="id13">
+<h3>统计的数字特征<a class="headerlink" href="#id13" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">jitter</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">jitter</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>  <span class="n">capsize</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>  <span class="n">capsize</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/L1_30_1.png" src="_images/L1_30_1.png" />
+</div>
+</div>
+</section>
+<section id="id14">
+<h3>参数估计<a class="headerlink" href="#id14" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>样本的平均值：$<span class="math notranslate nohighlight">\(\bar{x} = \sum_{i=1}^{n} x_i / n\)</span>$</p></li>
+<li><p>样本的方差：$<span class="math notranslate nohighlight">\( S^2 = \sum_{i=1}^{n} \frac{(x_i - \bar{x} )^2}{(n-1)}\)</span>$</p></li>
+<li><p>样本的标准差：<span class="math notranslate nohighlight">\(\sigma = S\)</span></p></li>
+<li><p>平均值，方差是分布期望值，分布方差的无偏估计</p></li>
+<li><p>复杂参数估计的方法：最大似然法…</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">xbar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;x count=&quot;</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="s2">&quot;,mean=&quot;</span><span class="p">,</span><span class="n">xbar</span><span class="p">,</span> <span class="s2">&quot;std=&quot;</span><span class="p">,</span><span class="n">s</span><span class="p">)</span> 
+
+<span class="n">s2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">xbar</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">m</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;sqrt (s^2 over n-1) = &quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">s2</span><span class="p">))</span>
+
+<span class="n">s2_m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">xbar</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">m</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;sqrt (s^2 over n) = &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">s2_m</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x count= 4 ,mean= 2.725 std= 0.022912878474779245
+sqrt (s^2 over n-1) =  0.026457513110645956
+sqrt (s^2 over n) =  0.022912878474779245
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">jitter</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">jitter</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>  <span class="n">capsize</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">errorbar</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;se&quot;</span><span class="p">),</span> 
+              <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>  <span class="n">capsize</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">errorbar</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;se&quot;</span><span class="p">),</span> 
+              <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/L1_33_1.png" src="_images/L1_33_1.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>“se”: “sd”/sqrt(n), 样本平均值的误差大小</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">jitter</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">jitter</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>  <span class="n">capsize</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">errorbar</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;se&quot;</span><span class="p">),</span> 
+              <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>  <span class="n">capsize</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">errorbar</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;se&quot;</span><span class="p">),</span> 
+              <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> 
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>  <span class="n">capsize</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">errorbar</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;pi&quot;</span><span class="p">,</span><span class="mi">95</span><span class="p">),</span> 
+              <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/L1_35_1.png" src="_images/L1_35_1.png" />
+</div>
+</div>
+</section>
+<section id="id15">
+<h3>概率分布<a class="headerlink" href="#id15" title="Permalink to this headline">#</a></h3>
+<p>正态分布：<span class="math notranslate nohighlight">\(f(\mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">f</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+                      <span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;height_ratios&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+                                   <span class="s1">&#39;hspace&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">})</span>
+
+<span class="n">count</span><span class="p">,</span><span class="n">bins</span><span class="p">,</span><span class="n">ignored</span><span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span><span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bins</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span> <span class="o">*</span>
+               <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span> <span class="o">-</span> <span class="p">(</span><span class="n">bins</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="p">),</span>
+         <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+
+<span class="n">pdf</span> <span class="o">=</span> <span class="n">count</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+<span class="n">cdf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">bins</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">bins</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],[</span><span class="mf">0.025</span><span class="p">,</span><span class="mf">0.025</span><span class="p">])</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">bins</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">bins</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],[</span><span class="mf">0.17</span><span class="p">,</span><span class="mf">0.17</span><span class="p">])</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bins</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">cdf</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">errorbar</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;pi&quot;</span><span class="p">,</span><span class="mi">95</span><span class="p">),</span> <span class="n">capsize</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">errorbar</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;pi&quot;</span><span class="p">,</span><span class="mi">68</span><span class="p">),</span> <span class="n">capsize</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+              <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">errorbar</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;sd&quot;</span><span class="p">),</span> <span class="n">capsize</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+              <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">)</span> 
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">errorbar</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;se&quot;</span><span class="p">),</span> <span class="n">capsize</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+              <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span> 
+
+<span class="n">sns</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">jitter</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/L1_37_1.png" src="_images/L1_37_1.png" />
+</div>
+</div>
+</section>
+<section id="id16">
+<h3>假设检验<a class="headerlink" href="#id16" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>检验统计量：用于检验假设的变量, 该变量服从</p>
+<ul>
+<li><p>自由度 &gt; 30: 正态分布</p></li>
+<li><p>自由度 &lt; 30：Student’s t-test</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">st</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+       <span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">st</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+       <span class="s1">&#39;g-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">st</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span>
+       <span class="s1">&#39;b-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
+       <span class="s1">&#39;orange&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;n=2&quot;</span><span class="p">,</span><span class="s2">&quot;n=4&quot;</span><span class="p">,</span><span class="s2">&quot;n=30&quot;</span><span class="p">,</span><span class="s2">&quot;normal&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x16a0bddc0&gt;
+</pre></div>
+</div>
+<img alt="_images/L1_39_1.png" src="_images/L1_39_1.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>p-value: 比x更不符合既定分布的概率,<span class="math notranslate nohighlight">\(\alpha=5\%\)</span>,95% CL
+<img alt="hypo.jpeg" src="attachment:hypo.jpeg" /></p></li>
+</ul>
+</section>
+<section id="id17">
+<h3>假设检验统计量<a class="headerlink" href="#id17" title="Permalink to this headline">#</a></h3>
+<p>在X,Y两个样本所在的分布方差一致时，</p>
+<p>T = <span class="math notranslate nohighlight">\(\sqrt{\frac{nm}{n+m}}(\bar{X}-\bar{Y}-\theta_0)/S\)</span></p>
+<p><span class="math notranslate nohighlight">\(S^2= \frac{1}{n+m-2} (\sum (X_i-\bar{X})^2 +\sum (Y_i-\bar{Y})^2 )\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="mf">2.74</span><span class="p">,</span><span class="mf">2.75</span><span class="p">,</span><span class="mf">2.72</span><span class="p">,</span><span class="mf">2.69</span><span class="p">]</span>
+<span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="mf">2.75</span><span class="p">,</span><span class="mf">2.78</span><span class="p">,</span><span class="mf">2.74</span><span class="p">,</span><span class="mf">2.76</span><span class="p">,</span><span class="mf">2.72</span><span class="p">]</span>
+
+<span class="n">xbar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">ybar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">n</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">m</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">sall</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">xbar</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="n">ybar</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="n">m</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">T</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">m</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="n">m</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">xbar</span><span class="o">-</span><span class="n">ybar</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sall</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;xbar - ybar =&quot;</span><span class="p">,</span><span class="n">xbar</span><span class="o">-</span><span class="n">ybar</span><span class="p">,</span> 
+      <span class="s2">&quot;S=&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sall</span><span class="p">),</span>
+      <span class="s2">&quot;T=&quot;</span><span class="p">,</span><span class="n">T</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;one side 95% = &quot;</span><span class="p">,</span><span class="n">st</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;two side 95% = &quot;</span><span class="p">,</span><span class="n">st</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.025</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>xbar - ybar = -0.02499999999999991 S= 0.024201534780139096 T= -1.539894058932992
+Ttest_indResult(statistic=-1.5398940589329917, pvalue=0.167481577018105)
+one side 95% =  -1.8945786050613054
+two side 95% =  -2.3646242510103
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id18">
+<h3>检验标准<a class="headerlink" href="#id18" title="Permalink to this headline">#</a></h3>
+<ul>
+<li><div class="math notranslate nohighlight">
+\[H_0：X &gt; Y, H_1： X&lt;=Y, T = -1.54 &gt; -1.89, H_0 成立\]</div>
+</li>
+<li><div class="math notranslate nohighlight">
+\[H_0: X &lt; Y,H_1： X&gt;=Y, T = -1.54 &lt; 1.89,  H_0 成立\]</div>
+</li>
+<li><div class="math notranslate nohighlight">
+\[H_0: X=Y, H_1: H_0 \neq H_1, |T| &lt; 2.36, H_0 成立\]</div>
+</li>
+</ul>
+</section>
+<section id="id19">
+<h3>区间估计<a class="headerlink" href="#id19" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>X-Y 的95%置信区间：
+$<span class="math notranslate nohighlight">\( \bar{x}- \bar{y} \pm 2.36 S/\sqrt{n*m/(n+m)} = -0.025 \pm 2.36\times 0.024 \times \sqrt(9/20) = [-0.063, 0.013]\)</span>$</p></li>
+</ul>
+</section>
+</section>
+<section id="id20">
+<h2>数据分析2<a class="headerlink" href="#id20" title="Permalink to this headline">#</a></h2>
+<p>2022年的杭州夏天是否比往年热?</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+
+<span class="n">dataframea</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;hang.csv&quot;</span><span class="p">,</span><span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">,</span> <span class="n">quotechar</span><span class="o">=</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
+
+<span class="n">dataframea</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>T</th>
+      <th>Po</th>
+      <th>P</th>
+      <th>Pa</th>
+      <th>U</th>
+      <th>DD</th>
+      <th>Ff</th>
+      <th>ff10</th>
+      <th>ff3</th>
+      <th>...</th>
+      <th>Ch</th>
+      <th>VV</th>
+      <th>Td</th>
+      <th>RRR</th>
+      <th>tR</th>
+      <th>E</th>
+      <th>Tg</th>
+      <th>E'</th>
+      <th>sss</th>
+      <th>Unnamed: 29</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>06.09.2022 20:00</td>
+      <td>27.8</td>
+      <td>756.4</td>
+      <td>760.2</td>
+      <td>0.8</td>
+      <td>62.0</td>
+      <td>从东南方吹来的风</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>5.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>12.0</td>
+      <td>19.9</td>
+      <td>无降水</td>
+      <td>12.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>06.09.2022 17:00</td>
+      <td>32.5</td>
+      <td>755.6</td>
+      <td>759.4</td>
+      <td>-0.2</td>
+      <td>46.0</td>
+      <td>从东南方吹来的风</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>5.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>17.0</td>
+      <td>19.4</td>
+      <td>无降水</td>
+      <td>12.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>06.09.2022 14:00</td>
+      <td>31.7</td>
+      <td>755.8</td>
+      <td>759.6</td>
+      <td>-0.7</td>
+      <td>49.0</td>
+      <td>从南方吹来的风</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>5.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>14.0</td>
+      <td>19.7</td>
+      <td>无降水</td>
+      <td>12.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>06.09.2022 11:00</td>
+      <td>29.0</td>
+      <td>756.5</td>
+      <td>760.3</td>
+      <td>0.7</td>
+      <td>61.0</td>
+      <td>从南方吹来的风</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>4.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>12.0</td>
+      <td>20.7</td>
+      <td>无降水</td>
+      <td>12.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>06.09.2022 08:00</td>
+      <td>23.7</td>
+      <td>755.8</td>
+      <td>759.6</td>
+      <td>2.1</td>
+      <td>82.0</td>
+      <td>从南方吹来的风</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>4.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>11.0</td>
+      <td>20.4</td>
+      <td>无降水</td>
+      <td>12.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>39856</th>
+      <td>02.02.2005 08:00</td>
+      <td>0.2</td>
+      <td>767.2</td>
+      <td>771.3</td>
+      <td>NaN</td>
+      <td>63.0</td>
+      <td>从南方吹来的风</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>浓密的卷云，呈散片状或扭曲的斜坡状，其数量通常不会增加，有时似乎只剩下积雨云的顶部；或塔状卷...</td>
+      <td>4.0</td>
+      <td>-6.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>39857</th>
+      <td>02.02.2005 02:00</td>
+      <td>-0.7</td>
+      <td>767.0</td>
+      <td>771.1</td>
+      <td>NaN</td>
+      <td>62.0</td>
+      <td>从北方吹来的风</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>10.0</td>
+      <td>-7.1</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>39858</th>
+      <td>01.02.2005 20:00</td>
+      <td>0.9</td>
+      <td>766.6</td>
+      <td>770.6</td>
+      <td>NaN</td>
+      <td>52.0</td>
+      <td>从西北偏西方向吹来的风</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>12.0</td>
+      <td>-7.8</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>39859</th>
+      <td>01.02.2005 14:00</td>
+      <td>5.8</td>
+      <td>764.8</td>
+      <td>768.8</td>
+      <td>NaN</td>
+      <td>29.0</td>
+      <td>从西北偏北方向吹来的风</td>
+      <td>3.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>14.0</td>
+      <td>-10.9</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>39860</th>
+      <td>01.02.2005 08:00</td>
+      <td>1.6</td>
+      <td>766.0</td>
+      <td>770.0</td>
+      <td>NaN</td>
+      <td>50.0</td>
+      <td>从西北方吹来的风</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>浓密的卷云，呈散片状或扭曲的斜坡状，其数量通常不会增加，有时似乎只剩下积雨云的顶部；或塔状卷...</td>
+      <td>11.0</td>
+      <td>-7.7</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>地表潮湿</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>39861 rows × 30 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataframea</span><span class="p">[</span><span class="s2">&quot;day&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataframea</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)[:</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">dataframea</span><span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataframea</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">3</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
+<span class="n">dataframea</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataframea</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">6</span><span class="p">:</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">dataframea</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataframea</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)[:</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">dataframea</span><span class="p">[</span><span class="s2">&quot;hour&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataframea</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">11</span><span class="p">:])</span>
+<span class="n">dataframea</span><span class="p">[</span><span class="s2">&quot;is2022&quot;</span><span class="p">]</span><span class="o">=</span> <span class="n">dataframea</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;2022&#39;</span>
+
+<span class="n">dataframea</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">200</span><span class="p">,[</span><span class="s2">&quot;time&quot;</span><span class="p">,</span><span class="s2">&quot;T&quot;</span><span class="p">,</span><span class="s2">&quot;Tn&quot;</span><span class="p">,</span><span class="s2">&quot;Tx&quot;</span><span class="p">,</span><span class="s2">&quot;day&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;month&quot;</span><span class="p">,</span><span class="s2">&quot;year&quot;</span><span class="p">,</span><span class="s2">&quot;date&quot;</span><span class="p">,</span><span class="s2">&quot;hour&quot;</span><span class="p">,</span><span class="s2">&quot;is2022&quot;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>T</th>
+      <th>Tn</th>
+      <th>Tx</th>
+      <th>day</th>
+      <th>month</th>
+      <th>year</th>
+      <th>date</th>
+      <th>hour</th>
+      <th>is2022</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>100</th>
+      <td>25.08.2022 08:00</td>
+      <td>29.9</td>
+      <td>28.0</td>
+      <td>31.8</td>
+      <td>25</td>
+      <td>08</td>
+      <td>2022</td>
+      <td>25.08.2022</td>
+      <td>08:00</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>101</th>
+      <td>25.08.2022 05:00</td>
+      <td>28.3</td>
+      <td>27.3</td>
+      <td>31.8</td>
+      <td>25</td>
+      <td>08</td>
+      <td>2022</td>
+      <td>25.08.2022</td>
+      <td>05:00</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>102</th>
+      <td>25.08.2022 02:00</td>
+      <td>28.8</td>
+      <td>26.6</td>
+      <td>31.8</td>
+      <td>25</td>
+      <td>08</td>
+      <td>2022</td>
+      <td>25.08.2022</td>
+      <td>02:00</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>103</th>
+      <td>24.08.2022 23:00</td>
+      <td>29.1</td>
+      <td>26.6</td>
+      <td>31.8</td>
+      <td>24</td>
+      <td>08</td>
+      <td>2022</td>
+      <td>24.08.2022</td>
+      <td>23:00</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>104</th>
+      <td>24.08.2022 20:00</td>
+      <td>29.6</td>
+      <td>26.6</td>
+      <td>33.6</td>
+      <td>24</td>
+      <td>08</td>
+      <td>2022</td>
+      <td>24.08.2022</td>
+      <td>20:00</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>196</th>
+      <td>13.08.2022 08:00</td>
+      <td>32.7</td>
+      <td>29.4</td>
+      <td>NaN</td>
+      <td>13</td>
+      <td>08</td>
+      <td>2022</td>
+      <td>13.08.2022</td>
+      <td>08:00</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>197</th>
+      <td>13.08.2022 05:00</td>
+      <td>29.6</td>
+      <td>29.3</td>
+      <td>40.9</td>
+      <td>13</td>
+      <td>08</td>
+      <td>2022</td>
+      <td>13.08.2022</td>
+      <td>05:00</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>198</th>
+      <td>13.08.2022 02:00</td>
+      <td>30.4</td>
+      <td>29.3</td>
+      <td>40.9</td>
+      <td>13</td>
+      <td>08</td>
+      <td>2022</td>
+      <td>13.08.2022</td>
+      <td>02:00</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>199</th>
+      <td>12.08.2022 23:00</td>
+      <td>32.1</td>
+      <td>29.3</td>
+      <td>40.9</td>
+      <td>12</td>
+      <td>08</td>
+      <td>2022</td>
+      <td>12.08.2022</td>
+      <td>23:00</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>200</th>
+      <td>12.08.2022 20:00</td>
+      <td>33.0</td>
+      <td>29.3</td>
+      <td>40.9</td>
+      <td>12</td>
+      <td>08</td>
+      <td>2022</td>
+      <td>12.08.2022</td>
+      <td>20:00</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+<p>101 rows × 10 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gb</span> <span class="o">=</span> <span class="n">dataframea</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;date&#39;</span><span class="p">])</span>
+<span class="n">g1</span><span class="o">=</span> <span class="n">gb</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;Tx&#39;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span><span class="s1">&#39;Tn&#39;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">,</span>
+            <span class="s1">&#39;is2022&#39;</span><span class="p">:</span><span class="s1">&#39;first&#39;</span><span class="p">,</span><span class="s1">&#39;month&#39;</span><span class="p">:</span><span class="s1">&#39;first&#39;</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>              Tx   Tn  is2022 month
+date                               
+01.01.2006  10.4  8.2   False    01
+01.01.2007  11.8  7.9   False    01
+01.01.2008   8.1  0.2   False    01
+01.01.2009   8.2 -1.7   False    01
+01.01.2010   6.8 -0.6   False    01
+...          ...  ...     ...   ...
+31.12.2017  10.8  2.8   False    12
+31.12.2018   2.3 -0.4   False    12
+31.12.2019  12.0  1.5   False    12
+31.12.2020   2.9 -5.8   False    12
+31.12.2021  11.9  0.5   False    12
+
+[6426 rows x 4 columns]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n1</span> <span class="o">=</span><span class="n">g1</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;month&#39;</span><span class="p">])</span>
+<span class="n">n1</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">print</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>              Tx   Tn  is2022 month
+date                               
+01.01.2006  10.4  8.2   False    01
+01.01.2007  11.8  7.9   False    01
+01.01.2008   8.1  0.2   False    01
+01.01.2009   8.2 -1.7   False    01
+01.01.2010   6.8 -0.6   False    01
+...          ...  ...     ...   ...
+31.01.2018   2.9 -1.5   False    01
+31.01.2019  17.3  4.7   False    01
+31.01.2020  11.4  0.8   False    01
+31.01.2021  19.8  2.2   False    01
+31.01.2022   8.0 -0.6    True    01
+
+[527 rows x 4 columns]
+              Tx   Tn  is2022 month
+date                               
+01.02.2005   NaN  0.3   False    02
+01.02.2006  10.2  5.7   False    02
+01.02.2007  16.2  2.8   False    02
+01.02.2008   1.4 -1.6   False    02
+01.02.2009  11.5  3.8   False    02
+...          ...  ...     ...   ...
+28.02.2022  24.4  5.8    True    02
+29.02.2008  15.2  5.7   False    02
+29.02.2012   4.3  3.1   False    02
+29.02.2016  23.8  6.7   False    02
+29.02.2020  14.2  8.2   False    02
+
+[508 rows x 4 columns]
+              Tx    Tn  is2022 month
+date                                
+01.03.2005   9.6   0.9   False    03
+01.03.2006   4.6   1.1   False    03
+01.03.2007  17.3  12.9   False    03
+01.03.2008  19.7   5.8   False    03
+01.03.2009   4.7   3.3   False    03
+...          ...   ...     ...   ...
+31.03.2018  25.3  15.3   False    03
+31.03.2019  22.5  10.0   False    03
+31.03.2020  12.0   8.9   False    03
+31.03.2021  20.4  12.9   False    03
+31.03.2022  25.6  10.6    True    03
+
+[558 rows x 4 columns]
+              Tx    Tn  is2022 month
+date                                
+01.04.2005  19.2  10.2   False    04
+01.04.2006  22.3  15.4   False    04
+01.04.2007  32.8  13.2   False    04
+01.04.2008  14.8   8.9   False    04
+01.04.2009  17.5   7.8   False    04
+...          ...   ...     ...   ...
+30.04.2018  28.5  20.9   False    04
+30.04.2019  20.7  14.9   False    04
+30.04.2020  32.9  12.4   False    04
+30.04.2021  31.8  16.1   False    04
+30.04.2022  15.7  12.3    True    04
+
+[540 rows x 4 columns]
+              Tx    Tn  is2022 month
+date                                
+01.05.2005  32.1  21.8   False    05
+01.05.2006  32.4  23.2   False    05
+01.05.2007  24.1  17.8   False    05
+01.05.2008  27.4  18.0   False    05
+01.05.2009  27.9  17.9   False    05
+...          ...   ...     ...   ...
+31.05.2018  29.9  18.7   False    05
+31.05.2019  28.2  18.0   False    05
+31.05.2020  31.3  18.5   False    05
+31.05.2021  32.0  21.5   False    05
+31.05.2022  29.7  21.5    True    05
+
+[557 rows x 4 columns]
+              Tx    Tn  is2022 month
+date                                
+01.06.2005  33.2  21.7   False    06
+01.06.2006  29.8  19.4   False    06
+01.06.2007  25.2  21.8   False    06
+01.06.2008  29.0  17.4   False    06
+01.06.2009  31.7  19.9   False    06
+...          ...   ...     ...   ...
+30.06.2018  33.1  23.9   False    06
+30.06.2019   NaN  23.7   False    06
+30.06.2020  30.8  22.1   False    06
+30.06.2021  32.8  24.6   False    06
+30.06.2022  37.2  22.4    True    06
+
+[540 rows x 4 columns]
+              Tx    Tn  is2022 month
+date                                
+01.07.2005  36.9  29.0   False    07
+01.07.2006  37.2  28.2   False    07
+01.07.2007  35.9  27.4   False    07
+01.07.2008  32.0  25.4   False    07
+01.07.2009  34.0  21.5   False    07
+...          ...   ...     ...   ...
+31.07.2018  37.8  25.6   False    07
+31.07.2019  38.9  29.5   False    07
+31.07.2020  36.0  26.1   False    07
+31.07.2021  35.0  24.0   False    07
+31.07.2022  36.7  26.7    True    07
+
+[558 rows x 4 columns]
+              Tx    Tn  is2022 month
+date                                
+01.08.2005  35.7  27.8   False    08
+01.08.2006  37.5  28.0   False    08
+01.08.2007  38.9  27.3   False    08
+01.08.2008  31.3  27.2   False    08
+01.08.2009   NaN  24.8   False    08
+...          ...   ...     ...   ...
+31.08.2018  34.4  26.9   False    08
+31.08.2019  30.5  21.9   False    08
+31.08.2020  35.4  24.8   False    08
+31.08.2021  36.9  25.2   False    08
+31.08.2022  33.5  23.6    True    08
+
+[558 rows x 4 columns]
+              Tx    Tn  is2022 month
+date                                
+01.09.2005  30.6  25.8   False    09
+01.09.2006  37.9  25.7   False    09
+01.09.2007  35.5  25.1   False    09
+01.09.2008  26.0  19.8   False    09
+01.09.2009  23.7  21.6   False    09
+...          ...   ...     ...   ...
+30.09.2017  22.1  19.9   False    09
+30.09.2018  27.6  17.8   False    09
+30.09.2019  29.7  20.6   False    09
+30.09.2020  27.2  17.7   False    09
+30.09.2021  34.1  22.6   False    09
+
+[516 rows x 4 columns]
+              Tx    Tn  is2022 month
+date                                
+01.10.2005  35.6  25.0   False    10
+01.10.2006  23.9  19.6   False    10
+01.10.2007  26.9  22.4   False    10
+01.10.2008  25.1  17.8   False    10
+01.10.2009  23.0  21.0   False    10
+...          ...   ...     ...   ...
+31.10.2017  17.3   7.8   False    10
+31.10.2018  24.7  16.4   False    10
+31.10.2019  23.6  10.9   False    10
+31.10.2020  22.8  13.9   False    10
+31.10.2021  23.4  12.2   False    10
+
+[527 rows x 4 columns]
+              Tx    Tn  is2022 month
+date                                
+01.11.2005  19.2   8.3   False    11
+01.11.2006  23.6  14.3   False    11
+01.11.2007  18.3  12.4   False    11
+01.11.2008  18.7  16.0   False    11
+01.11.2009  29.1  14.8   False    11
+...          ...   ...     ...   ...
+30.11.2017  14.1   7.9   False    11
+30.11.2018  21.3   9.9   False    11
+30.11.2019  10.6   8.7   False    11
+30.11.2020  13.4   6.3   False    11
+30.11.2021  16.0   8.4   False    11
+
+[510 rows x 4 columns]
+              Tx   Tn  is2022 month
+date                               
+01.12.2005  17.1  8.0   False    12
+01.12.2006  10.9  8.4   False    12
+01.12.2007  14.6  5.4   False    12
+01.12.2008  14.6  4.2   False    12
+01.12.2009  10.3  3.0   False    12
+...          ...  ...     ...   ...
+31.12.2017  10.8  2.8   False    12
+31.12.2018   2.3 -0.4   False    12
+31.12.2019  12.0  1.5   False    12
+31.12.2020   2.9 -5.8   False    12
+31.12.2021  11.9  0.5   False    12
+
+[527 rows x 4 columns]
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n1</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="8" halign="left">Tx</th>
+      <th colspan="8" halign="left">Tn</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+    <tr>
+      <th>month</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>01</th>
+      <td>523.0</td>
+      <td>8.937094</td>
+      <td>4.558748</td>
+      <td>-3.1</td>
+      <td>5.900</td>
+      <td>8.4</td>
+      <td>11.65</td>
+      <td>25.4</td>
+      <td>522.0</td>
+      <td>2.646360</td>
+      <td>3.446498</td>
+      <td>-8.2</td>
+      <td>0.2</td>
+      <td>2.70</td>
+      <td>5.300</td>
+      <td>11.8</td>
+    </tr>
+    <tr>
+      <th>02</th>
+      <td>493.0</td>
+      <td>10.917444</td>
+      <td>5.829894</td>
+      <td>-0.9</td>
+      <td>6.500</td>
+      <td>10.1</td>
+      <td>14.30</td>
+      <td>28.5</td>
+      <td>505.0</td>
+      <td>4.122970</td>
+      <td>3.821948</td>
+      <td>-4.0</td>
+      <td>1.2</td>
+      <td>4.20</td>
+      <td>6.900</td>
+      <td>19.1</td>
+    </tr>
+    <tr>
+      <th>03</th>
+      <td>553.0</td>
+      <td>16.753345</td>
+      <td>5.961437</td>
+      <td>1.8</td>
+      <td>12.200</td>
+      <td>16.2</td>
+      <td>21.30</td>
+      <td>31.4</td>
+      <td>557.0</td>
+      <td>8.191562</td>
+      <td>3.722069</td>
+      <td>-2.5</td>
+      <td>5.7</td>
+      <td>7.90</td>
+      <td>10.700</td>
+      <td>19.1</td>
+    </tr>
+    <tr>
+      <th>04</th>
+      <td>534.0</td>
+      <td>22.689326</td>
+      <td>5.148899</td>
+      <td>7.7</td>
+      <td>19.100</td>
+      <td>22.6</td>
+      <td>26.25</td>
+      <td>34.8</td>
+      <td>538.0</td>
+      <td>13.274349</td>
+      <td>3.553881</td>
+      <td>4.4</td>
+      <td>10.6</td>
+      <td>13.40</td>
+      <td>15.675</td>
+      <td>24.0</td>
+    </tr>
+    <tr>
+      <th>05</th>
+      <td>547.0</td>
+      <td>27.425046</td>
+      <td>4.217751</td>
+      <td>15.1</td>
+      <td>24.500</td>
+      <td>27.7</td>
+      <td>30.65</td>
+      <td>37.6</td>
+      <td>555.0</td>
+      <td>18.430090</td>
+      <td>2.806943</td>
+      <td>10.9</td>
+      <td>16.6</td>
+      <td>18.50</td>
+      <td>20.300</td>
+      <td>27.1</td>
+    </tr>
+    <tr>
+      <th>06</th>
+      <td>528.0</td>
+      <td>29.831629</td>
+      <td>4.076061</td>
+      <td>20.1</td>
+      <td>26.600</td>
+      <td>30.0</td>
+      <td>33.00</td>
+      <td>37.5</td>
+      <td>539.0</td>
+      <td>22.277551</td>
+      <td>2.411974</td>
+      <td>16.0</td>
+      <td>20.6</td>
+      <td>22.10</td>
+      <td>24.000</td>
+      <td>29.7</td>
+    </tr>
+    <tr>
+      <th>07</th>
+      <td>548.0</td>
+      <td>34.564781</td>
+      <td>3.785750</td>
+      <td>18.8</td>
+      <td>32.400</td>
+      <td>35.5</td>
+      <td>37.20</td>
+      <td>41.3</td>
+      <td>553.0</td>
+      <td>26.157866</td>
+      <td>2.223519</td>
+      <td>17.3</td>
+      <td>24.7</td>
+      <td>26.40</td>
+      <td>27.700</td>
+      <td>30.7</td>
+    </tr>
+    <tr>
+      <th>08</th>
+      <td>550.0</td>
+      <td>34.476364</td>
+      <td>3.533481</td>
+      <td>22.9</td>
+      <td>32.525</td>
+      <td>35.0</td>
+      <td>36.80</td>
+      <td>41.8</td>
+      <td>554.0</td>
+      <td>25.958664</td>
+      <td>1.994914</td>
+      <td>18.4</td>
+      <td>24.7</td>
+      <td>26.20</td>
+      <td>27.300</td>
+      <td>30.6</td>
+    </tr>
+    <tr>
+      <th>09</th>
+      <td>511.0</td>
+      <td>29.259100</td>
+      <td>3.960025</td>
+      <td>18.4</td>
+      <td>26.500</td>
+      <td>29.5</td>
+      <td>32.40</td>
+      <td>37.9</td>
+      <td>513.0</td>
+      <td>21.878752</td>
+      <td>2.604593</td>
+      <td>13.8</td>
+      <td>20.0</td>
+      <td>22.00</td>
+      <td>23.900</td>
+      <td>27.4</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>521.0</td>
+      <td>24.046257</td>
+      <td>3.630050</td>
+      <td>14.8</td>
+      <td>21.600</td>
+      <td>24.1</td>
+      <td>26.20</td>
+      <td>35.6</td>
+      <td>526.0</td>
+      <td>16.331559</td>
+      <td>3.398273</td>
+      <td>-2.1</td>
+      <td>14.1</td>
+      <td>16.40</td>
+      <td>18.675</td>
+      <td>25.0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>507.0</td>
+      <td>18.010454</td>
+      <td>4.529162</td>
+      <td>1.8</td>
+      <td>15.200</td>
+      <td>18.2</td>
+      <td>21.20</td>
+      <td>29.8</td>
+      <td>510.0</td>
+      <td>10.643137</td>
+      <td>3.980150</td>
+      <td>-1.7</td>
+      <td>8.2</td>
+      <td>10.65</td>
+      <td>13.300</td>
+      <td>20.7</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>519.0</td>
+      <td>11.656455</td>
+      <td>3.963257</td>
+      <td>1.4</td>
+      <td>9.000</td>
+      <td>11.5</td>
+      <td>14.10</td>
+      <td>24.2</td>
+      <td>524.0</td>
+      <td>4.300382</td>
+      <td>3.737521</td>
+      <td>-5.8</td>
+      <td>1.5</td>
+      <td>4.40</td>
+      <td>7.200</td>
+      <td>14.3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n2</span> <span class="o">=</span><span class="n">g1</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;month&#39;</span><span class="p">,</span><span class="s1">&#39;is2022&#39;</span><span class="p">])</span>
+<span class="n">n2</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th colspan="8" halign="left">Tx</th>
+      <th colspan="8" halign="left">Tn</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+    <tr>
+      <th>month</th>
+      <th>is2022</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="2" valign="top">01</th>
+      <th>False</th>
+      <td>492.0</td>
+      <td>8.849593</td>
+      <td>4.634096</td>
+      <td>-3.1</td>
+      <td>5.775</td>
+      <td>8.2</td>
+      <td>11.600</td>
+      <td>25.4</td>
+      <td>491.0</td>
+      <td>2.608350</td>
+      <td>3.478316</td>
+      <td>-8.2</td>
+      <td>0.150</td>
+      <td>2.70</td>
+      <td>5.150</td>
+      <td>11.8</td>
+    </tr>
+    <tr>
+      <th>True</th>
+      <td>31.0</td>
+      <td>10.325806</td>
+      <td>2.831957</td>
+      <td>4.3</td>
+      <td>8.750</td>
+      <td>9.7</td>
+      <td>12.200</td>
+      <td>15.8</td>
+      <td>31.0</td>
+      <td>3.248387</td>
+      <td>2.877021</td>
+      <td>-1.4</td>
+      <td>0.700</td>
+      <td>3.90</td>
+      <td>5.600</td>
+      <td>8.2</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">02</th>
+      <th>False</th>
+      <td>465.0</td>
+      <td>11.052688</td>
+      <td>5.865489</td>
+      <td>-0.9</td>
+      <td>6.500</td>
+      <td>10.3</td>
+      <td>14.500</td>
+      <td>28.5</td>
+      <td>477.0</td>
+      <td>4.264361</td>
+      <td>3.856854</td>
+      <td>-4.0</td>
+      <td>1.400</td>
+      <td>4.30</td>
+      <td>7.000</td>
+      <td>19.1</td>
+    </tr>
+    <tr>
+      <th>True</th>
+      <td>28.0</td>
+      <td>8.671429</td>
+      <td>4.748244</td>
+      <td>3.2</td>
+      <td>5.875</td>
+      <td>7.2</td>
+      <td>9.175</td>
+      <td>24.4</td>
+      <td>28.0</td>
+      <td>1.714286</td>
+      <td>2.013237</td>
+      <td>-0.6</td>
+      <td>0.275</td>
+      <td>0.75</td>
+      <td>3.275</td>
+      <td>5.8</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">03</th>
+      <th>False</th>
+      <td>522.0</td>
+      <td>16.447701</td>
+      <td>5.825024</td>
+      <td>1.8</td>
+      <td>12.000</td>
+      <td>16.1</td>
+      <td>20.800</td>
+      <td>31.4</td>
+      <td>526.0</td>
+      <td>8.133080</td>
+      <td>3.747539</td>
+      <td>-2.5</td>
+      <td>5.600</td>
+      <td>7.90</td>
+      <td>10.700</td>
+      <td>19.1</td>
+    </tr>
+    <tr>
+      <th>True</th>
+      <td>31.0</td>
+      <td>21.900000</td>
+      <td>5.970706</td>
+      <td>10.1</td>
+      <td>18.600</td>
+      <td>22.2</td>
+      <td>25.600</td>
+      <td>31.3</td>
+      <td>31.0</td>
+      <td>9.183871</td>
+      <td>3.147814</td>
+      <td>5.1</td>
+      <td>6.900</td>
+      <td>8.10</td>
+      <td>10.650</td>
+      <td>17.1</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">04</th>
+      <th>False</th>
+      <td>504.0</td>
+      <td>22.585317</td>
+      <td>5.091636</td>
+      <td>7.7</td>
+      <td>19.075</td>
+      <td>22.5</td>
+      <td>26.100</td>
+      <td>34.8</td>
+      <td>508.0</td>
+      <td>13.301772</td>
+      <td>3.557249</td>
+      <td>4.4</td>
+      <td>10.600</td>
+      <td>13.45</td>
+      <td>15.625</td>
+      <td>24.0</td>
+    </tr>
+    <tr>
+      <th>True</th>
+      <td>30.0</td>
+      <td>24.436667</td>
+      <td>5.852349</td>
+      <td>14.7</td>
+      <td>20.300</td>
+      <td>24.7</td>
+      <td>29.575</td>
+      <td>33.9</td>
+      <td>30.0</td>
+      <td>12.810000</td>
+      <td>3.522866</td>
+      <td>6.6</td>
+      <td>10.300</td>
+      <td>12.45</td>
+      <td>16.075</td>
+      <td>18.6</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">05</th>
+      <th>False</th>
+      <td>516.0</td>
+      <td>27.476163</td>
+      <td>4.237172</td>
+      <td>15.1</td>
+      <td>24.500</td>
+      <td>27.7</td>
+      <td>30.725</td>
+      <td>37.6</td>
+      <td>524.0</td>
+      <td>18.560687</td>
+      <td>2.752968</td>
+      <td>10.9</td>
+      <td>16.800</td>
+      <td>18.60</td>
+      <td>20.400</td>
+      <td>27.1</td>
+    </tr>
+    <tr>
+      <th>True</th>
+      <td>31.0</td>
+      <td>26.574194</td>
+      <td>3.843260</td>
+      <td>18.4</td>
+      <td>24.450</td>
+      <td>28.1</td>
+      <td>29.200</td>
+      <td>31.8</td>
+      <td>31.0</td>
+      <td>16.222581</td>
+      <td>2.835455</td>
+      <td>12.2</td>
+      <td>14.100</td>
+      <td>16.20</td>
+      <td>18.900</td>
+      <td>21.5</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">06</th>
+      <th>False</th>
+      <td>498.0</td>
+      <td>29.650000</td>
+      <td>4.046337</td>
+      <td>20.1</td>
+      <td>26.600</td>
+      <td>29.8</td>
+      <td>32.800</td>
+      <td>37.5</td>
+      <td>509.0</td>
+      <td>22.261493</td>
+      <td>2.414566</td>
+      <td>16.0</td>
+      <td>20.600</td>
+      <td>22.10</td>
+      <td>23.900</td>
+      <td>28.9</td>
+    </tr>
+    <tr>
+      <th>True</th>
+      <td>30.0</td>
+      <td>32.846667</td>
+      <td>3.369614</td>
+      <td>24.1</td>
+      <td>31.625</td>
+      <td>32.8</td>
+      <td>34.775</td>
+      <td>37.2</td>
+      <td>30.0</td>
+      <td>22.550000</td>
+      <td>2.391184</td>
+      <td>19.1</td>
+      <td>21.175</td>
+      <td>22.30</td>
+      <td>24.100</td>
+      <td>29.7</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">07</th>
+      <th>False</th>
+      <td>517.0</td>
+      <td>34.372534</td>
+      <td>3.783074</td>
+      <td>18.8</td>
+      <td>32.200</td>
+      <td>35.4</td>
+      <td>37.000</td>
+      <td>41.3</td>
+      <td>522.0</td>
+      <td>26.130077</td>
+      <td>2.227553</td>
+      <td>17.3</td>
+      <td>24.600</td>
+      <td>26.40</td>
+      <td>27.700</td>
+      <td>30.7</td>
+    </tr>
+    <tr>
+      <th>True</th>
+      <td>31.0</td>
+      <td>37.770968</td>
+      <td>1.974537</td>
+      <td>33.7</td>
+      <td>36.450</td>
+      <td>38.1</td>
+      <td>39.350</td>
+      <td>40.3</td>
+      <td>31.0</td>
+      <td>26.625806</td>
+      <td>2.134786</td>
+      <td>22.4</td>
+      <td>25.300</td>
+      <td>26.30</td>
+      <td>28.100</td>
+      <td>30.1</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">08</th>
+      <th>False</th>
+      <td>519.0</td>
+      <td>34.219461</td>
+      <td>3.402609</td>
+      <td>22.9</td>
+      <td>32.400</td>
+      <td>34.9</td>
+      <td>36.600</td>
+      <td>41.6</td>
+      <td>523.0</td>
+      <td>25.894455</td>
+      <td>1.968767</td>
+      <td>18.4</td>
+      <td>24.700</td>
+      <td>26.20</td>
+      <td>27.300</td>
+      <td>30.6</td>
+    </tr>
+    <tr>
+      <th>True</th>
+      <td>31.0</td>
+      <td>38.777419</td>
+      <td>2.884061</td>
+      <td>28.5</td>
+      <td>37.600</td>
+      <td>39.9</td>
+      <td>40.650</td>
+      <td>41.8</td>
+      <td>31.0</td>
+      <td>27.041935</td>
+      <td>2.152018</td>
+      <td>23.3</td>
+      <td>25.200</td>
+      <td>27.30</td>
+      <td>29.200</td>
+      <td>29.9</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">09</th>
+      <th>False</th>
+      <td>505.0</td>
+      <td>29.259802</td>
+      <td>3.976996</td>
+      <td>18.4</td>
+      <td>26.400</td>
+      <td>29.4</td>
+      <td>32.400</td>
+      <td>37.9</td>
+      <td>507.0</td>
+      <td>21.877515</td>
+      <td>2.617675</td>
+      <td>13.8</td>
+      <td>20.000</td>
+      <td>22.00</td>
+      <td>23.900</td>
+      <td>27.4</td>
+    </tr>
+    <tr>
+      <th>True</th>
+      <td>6.0</td>
+      <td>29.200000</td>
+      <td>2.288231</td>
+      <td>26.7</td>
+      <td>27.500</td>
+      <td>29.6</td>
+      <td>29.600</td>
+      <td>32.9</td>
+      <td>6.0</td>
+      <td>21.983333</td>
+      <td>1.101665</td>
+      <td>20.1</td>
+      <td>21.700</td>
+      <td>22.15</td>
+      <td>22.450</td>
+      <td>23.4</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <th>False</th>
+      <td>521.0</td>
+      <td>24.046257</td>
+      <td>3.630050</td>
+      <td>14.8</td>
+      <td>21.600</td>
+      <td>24.1</td>
+      <td>26.200</td>
+      <td>35.6</td>
+      <td>526.0</td>
+      <td>16.331559</td>
+      <td>3.398273</td>
+      <td>-2.1</td>
+      <td>14.100</td>
+      <td>16.40</td>
+      <td>18.675</td>
+      <td>25.0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <th>False</th>
+      <td>507.0</td>
+      <td>18.010454</td>
+      <td>4.529162</td>
+      <td>1.8</td>
+      <td>15.200</td>
+      <td>18.2</td>
+      <td>21.200</td>
+      <td>29.8</td>
+      <td>510.0</td>
+      <td>10.643137</td>
+      <td>3.980150</td>
+      <td>-1.7</td>
+      <td>8.200</td>
+      <td>10.65</td>
+      <td>13.300</td>
+      <td>20.7</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <th>False</th>
+      <td>519.0</td>
+      <td>11.656455</td>
+      <td>3.963257</td>
+      <td>1.4</td>
+      <td>9.000</td>
+      <td>11.5</td>
+      <td>14.100</td>
+      <td>24.2</td>
+      <td>524.0</td>
+      <td>4.300382</td>
+      <td>3.737521</td>
+      <td>-5.8</td>
+      <td>1.500</td>
+      <td>4.40</td>
+      <td>7.200</td>
+      <td>14.3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">g1</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Tx&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Tn&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;month&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.JointGrid at 0x16a0ff3d0&gt;
+</pre></div>
+</div>
+<img alt="_images/L1_51_1.png" src="_images/L1_51_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">g1</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;month&quot;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s2">&quot;Tx&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;is2022&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;month&#39;, ylabel=&#39;Tx&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/L1_52_1.png" src="_images/L1_52_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">g1</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;month==&#39;08&#39;&quot;</span><span class="p">),</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Tx&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;is2022&quot;</span><span class="p">,</span>
+            <span class="n">stat</span><span class="o">=</span><span class="s1">&#39;probability&#39;</span><span class="p">,</span><span class="n">common_norm</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">g1</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;month==&#39;08&#39;&quot;</span><span class="p">),</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Tx&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;is2022&quot;</span><span class="p">,</span>
+            <span class="n">common_norm</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;Tx&#39;, ylabel=&#39;Probability&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/L1_53_1.png" src="_images/L1_53_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span><span class="n">axs</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">ax2</span><span class="o">=</span><span class="n">axs</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">ecdfplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">g1</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;month==&#39;08&#39;&quot;</span><span class="p">),</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Tx&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;is2022&quot;</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">20</span><span class="p">,</span><span class="mf">42.5</span><span class="p">],[</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">20</span><span class="p">,</span><span class="mf">42.5</span><span class="p">],[</span><span class="mf">0.83</span><span class="p">,</span><span class="mf">0.83</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">g1</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;month==&#39;08&#39; and not is2022 &quot;</span><span class="p">),</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;Tx&quot;</span><span class="p">,</span> 
+              <span class="n">estimator</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">,</span> <span class="n">errorbar</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;pi&quot;</span><span class="p">,</span><span class="mi">68</span><span class="p">),</span><span class="n">capsize</span><span class="o">=</span><span class="mf">.1</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">g1</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;month==&#39;08&#39; and not is2022 &quot;</span><span class="p">),</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;Tx&quot;</span><span class="p">,</span>
+              <span class="n">capsize</span><span class="o">=</span><span class="mf">.1</span><span class="p">,</span><span class="n">errorbar</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;se&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">g1</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;month==&#39;08&#39; and is2022 &quot;</span><span class="p">),</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;Tx&quot;</span><span class="p">,</span> 
+              <span class="n">errorbar</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;se&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span><span class="n">capsize</span><span class="o">=</span><span class="mf">.1</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;Tx&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/L1_54_1.png" src="_images/L1_54_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+
+<span class="n">m082022</span><span class="o">=</span><span class="n">g1</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;month==&#39;08&#39; and is2022 &quot;</span><span class="p">)[</span><span class="s1">&#39;Tx&#39;</span><span class="p">]</span>
+<span class="n">m08</span><span class="o">=</span><span class="n">g1</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;month==&#39;08&#39; and not is2022 &quot;</span><span class="p">)[</span><span class="s1">&#39;Tx&#39;</span><span class="p">]</span>
+
+<span class="c1">#print(m082022)</span>
+
+<span class="n">m</span><span class="o">=</span><span class="n">m082022</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="n">xbar</span> <span class="o">=</span> <span class="n">m082022</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="n">m08</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">s2s</span> <span class="o">=</span> <span class="n">m082022</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">m082022</span> <span class="o">-</span> <span class="n">xbar</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">m</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">std_err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">xbar</span><span class="o">-</span><span class="n">mu</span><span class="p">)</span><span class="o">/</span><span class="n">std_err</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">t_dist</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">t</span><span class="p">(</span><span class="n">m</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">t_dist</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;22年8月平均温度 &quot;</span><span class="p">,</span><span class="n">xbar</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">往年8月平均温度 &quot;</span><span class="p">,</span><span class="n">mu</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">scipy计算标准差 &quot;</span><span class="p">,</span><span class="n">s2s</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">手动计算标准差 &quot;</span><span class="p">,</span><span class="n">std_err</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">检验统计量 &quot;</span><span class="p">,</span><span class="n">t</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">p-value &quot;</span><span class="p">,</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>22年8月平均温度  38.777419354838706 
+往年8月平均温度  34.21946050096339 
+scipy计算标准差  2.8840607572679366 
+手动计算标准差  2.8840607572679366 
+检验统计量  8.799274013177417 
+p-value  8.238669619084304e-10
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#with scipy alone</span>
+<span class="n">t</span><span class="p">,</span><span class="n">p</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">ttest_1samp</span><span class="p">(</span><span class="n">m082022</span><span class="p">,</span> <span class="n">mu</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8.799274013177417 8.238669619084304e-10
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span><span class="n">axs</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">g1</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;month==&#39;08&#39; and not is2022 &quot;</span><span class="p">),</span>
+              <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Tx&quot;</span><span class="p">,</span><span class="n">capsize</span><span class="o">=</span><span class="mf">.1</span><span class="p">,</span><span class="n">errorbar</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;se&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">g1</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;month==&#39;08&#39; and is2022 &quot;</span><span class="p">),</span>
+              <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Tx&quot;</span><span class="p">,</span> <span class="n">errorbar</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;se&quot;</span><span class="p">,</span> <span class="mf">8.79</span><span class="p">),</span><span class="n">capsize</span><span class="o">=</span><span class="mf">.1</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;Tx&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/L1_57_1.png" src="_images/L1_57_1.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By The Jupyter Book community<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

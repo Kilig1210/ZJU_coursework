@@ -1,0 +1,981 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>样本空间与概率 &#8212; 统计与大数据分析</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint single-page" id="site-navigation">
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/L2_1.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/L2_1.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   问题
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   教材
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   集合
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   集合运算
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   集合的代数
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#python">
+   Python中的集合运算
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   概率模型
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   概率律
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   离散模型
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     均匀概率律
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id11">
+     Python 列举试验结果，计算概率
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     Python离散随机数产生
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>样本空间与概率</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   问题
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   教材
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   集合
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   集合运算
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   集合的代数
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#python">
+   Python中的集合运算
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   概率模型
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   概率律
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   离散模型
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     均匀概率律
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id11">
+     Python 列举试验结果，计算概率
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     Python离散随机数产生
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <center>
+<h1> 统计与大数据分析</h1>
+<h2>样本空间与概率1</h2>
+<h5>肖朦，2023 </h5>
+</center>
+<section id="id1">
+<h1>样本空间与概率<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
+<section id="id2">
+<h2>问题<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<p>某种疾病在人群中的患病率是0.1%。</p>
+<p>若患病，检测为阳性的的概率是95%。</p>
+<p>若未患病，检测为阴性的概率是95%。</p>
+<p>现一人检测出阳性，他患病的概率是？</p>
+</section>
+<section id="id3">
+<h2>教材<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
+<p>概率导论，Dimitri P.Bertsekas，John N.Tsitsiklis 著，郑忠国，童行伟 译，图灵出品</p>
+</section>
+<section id="id4">
+<h2>集合<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>一群研究对象放在一起，形成集合S，研究对象：元素x, <span class="math notranslate nohighlight">\(x \in S\)</span></p></li>
+<li><p>若x不是S的元素，<span class="math notranslate nohighlight">\( x \notin S\)</span></p></li>
+<li><p>空集:没有元素，<span class="math notranslate nohighlight">\(\emptyset\)</span></p></li>
+<li><p>有限元素
+<span class="math notranslate nohighlight">\(S =\{ x_1,x_2, \cdots, x_n \}\)</span></p></li>
+<li><p>无限元素
+<span class="math notranslate nohighlight">\(S =\{ x_1,x_2, \cdots \}\)</span></p></li>
+<li><p>具有某种性质P为条件的集合
+<span class="math notranslate nohighlight">\(S =\{ x | x满足P \}\)</span>, 例如{x| 0&lt; x &lt;1}</p></li>
+<li><p>集合S所有元素都是集合T的元素，则S是T的子集， <span class="math notranslate nohighlight">\(S\subset T\)</span>，或者<span class="math notranslate nohighlight">\( T \supset S\)</span></p></li>
+<li><p>空间<span class="math notranslate nohighlight">\(\Omega\)</span>，所有元素的集合</p></li>
+</ul>
+</section>
+<section id="id5">
+<h2>集合运算<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>补集：<span class="math notranslate nohighlight">\(\{ x \in \Omega | x \notin S\}\)</span>, 集合S相对于<span class="math notranslate nohighlight">\(\Omega\)</span>的补集，<span class="math notranslate nohighlight">\(S^c\)</span></p></li>
+<li><p>并集：<span class="math notranslate nohighlight">\(S \cup T = \{x | x \in S\ 或\ x \in T\}\)</span></p></li>
+<li><p>交集：<span class="math notranslate nohighlight">\(S \cap T = \{x | x \in S\ 且\ x \in T\}\)</span></p></li>
+<li><p>多个集合的并和交：</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\( \cup_{n=1}^{\infty} S_n = S_1 \cup S_2 \cdots = \{x|x\in S_n对某个n成立\}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( \cap_{n=1}^{\infty} S_n = S_1 \cap S_2 \cdots = \{x|x\in S_n对所有n成立\}\)</span></p></li>
+</ul>
+</li>
+</ul>
+<p>韦恩图：直观理解集合</p>
+<a class="reference internal image-reference" href="_images/韦恩图.jpg"><img alt="_images/韦恩图.jpg" src="_images/韦恩图.jpg" style="width: 800px;" /></a>
+</section>
+<section id="id6">
+<h2>集合的代数<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(S\cup T = T \cup S\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(S\cup (T \cup U) = (S\cup T)\cup U\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(S\cap (T \cup U) = (S\cap T)\cup (S\cap U)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(S\cup (T \cap U) = (S\cup T)\cap (S\cup U)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((S^c)^c =S, S \cap S^c = \emptyset\)</span></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib_venn</span> <span class="kn">import</span> <span class="n">venn3</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">set1</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">}</span> <span class="c1">## 等同于 set1=set((1,2,3))</span>
+<span class="n">set2</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">}</span>
+<span class="n">set3</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">}</span>
+<span class="c1"># Use the venn3 function</span>
+<span class="n">venn3</span><span class="p">([</span><span class="n">set1</span><span class="p">,</span><span class="n">set2</span><span class="p">,</span><span class="n">set3</span><span class="p">],</span>  <span class="p">(</span><span class="s1">&#39;set1&#39;</span><span class="p">,</span> <span class="s1">&#39;set2&#39;</span><span class="p">,</span><span class="s1">&#39;set3&#39;</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/local/anaconda3/envs/py39/lib/python3.9/site-packages/matplotlib_venn/_venn3.py:117: UserWarning: Bad circle positioning
+  warnings.warn(&quot;Bad circle positioning&quot;)
+</pre></div>
+</div>
+<img alt="_images/L2_1_6_1.png" src="_images/L2_1_6_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">set1</span><span class="o">.</span><span class="n">update</span><span class="p">((</span><span class="mi">5</span><span class="p">,))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">set1</span><span class="p">)</span>
+<span class="n">set1</span><span class="o">.</span><span class="n">update</span><span class="p">((</span><span class="mi">1</span><span class="p">,))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">set1</span><span class="p">)</span>
+<span class="n">set1</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">set1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{1, 2, 3, 5}
+{1, 2, 3, 5}
+{1, 2, 3}
+</pre></div>
+</div>
+</div>
+</div>
+<p>请chatGPT用十个形容词形容以下生物</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">小狗</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;可爱的&#39;</span><span class="p">,</span> <span class="s1">&#39;忠诚的&#39;</span><span class="p">,</span> <span class="s1">&#39;活泼的&#39;</span><span class="p">,</span> <span class="s1">&#39;聪明的&#39;</span><span class="p">,</span> <span class="s1">&#39;爱玩的&#39;</span><span class="p">,</span> <span class="s1">&#39;友善的&#39;</span><span class="p">,</span> <span class="s1">&#39;快乐的&#39;</span><span class="p">,</span> <span class="s1">&#39;顽皮的&#39;</span><span class="p">,</span> <span class="s1">&#39;温柔的&#39;</span><span class="p">,</span> <span class="s1">&#39;陪伴的&#39;</span><span class="p">}</span>
+<span class="n">婴儿</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;可爱的&#39;</span><span class="p">,</span> <span class="s1">&#39;温柔的&#39;</span><span class="p">,</span> <span class="s1">&#39;活泼的&#39;</span><span class="p">,</span> <span class="s1">&#39;天真的&#39;</span><span class="p">,</span> <span class="s1">&#39;纯洁的&#39;</span><span class="p">,</span> <span class="s1">&#39;无邪的&#39;</span><span class="p">,</span> <span class="s1">&#39;善良的&#39;</span><span class="p">,</span> <span class="s1">&#39;纯真的&#39;</span><span class="p">,</span> <span class="s1">&#39;懵懂的&#39;</span><span class="p">,</span> <span class="s1">&#39;神奇的&#39;</span><span class="p">}</span>
+<span class="n">大学生</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;好学的&#39;</span><span class="p">,</span> <span class="s1">&#39;积极的&#39;</span><span class="p">,</span> <span class="s1">&#39;奋斗的&#39;</span><span class="p">,</span> <span class="s1">&#39;聪明的&#39;</span><span class="p">,</span> <span class="s1">&#39;创造性的&#39;</span><span class="p">,</span> <span class="s1">&#39;责任感强的&#39;</span><span class="p">,</span> <span class="s1">&#39;多才多艺的&#39;</span><span class="p">,</span> <span class="s1">&#39;独立的&#39;</span><span class="p">,</span> <span class="s1">&#39;好奇的&#39;</span><span class="p">,</span> <span class="s1">&#39;社交能力强的&#39;</span><span class="p">}</span>
+<span class="n">venn3</span><span class="p">([</span><span class="n">小狗</span><span class="p">,</span><span class="n">婴儿</span><span class="p">,</span><span class="n">大学生</span><span class="p">],(</span><span class="s1">&#39;Dog&#39;</span><span class="p">,</span><span class="s1">&#39;Baby&#39;</span><span class="p">,</span><span class="s1">&#39;College Student&#39;</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/L2_1_9_0.png" src="_images/L2_1_9_0.png" />
+</div>
+</div>
+<p>请chatGPT用30个形容词形容以下生物</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">小狗</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;可爱的&#39;</span><span class="p">,</span> <span class="s1">&#39;忠诚的&#39;</span><span class="p">,</span> <span class="s1">&#39;活泼的&#39;</span><span class="p">,</span> <span class="s1">&#39;聪明的&#39;</span><span class="p">,</span> <span class="s1">&#39;友好的&#39;</span><span class="p">,</span> <span class="s1">&#39;温柔的&#39;</span><span class="p">,</span> <span class="s1">&#39;顽皮的&#39;</span><span class="p">,</span> <span class="s1">&#39;机灵的&#39;</span><span class="p">,</span> <span class="s1">&#39;热情的&#39;</span><span class="p">,</span> <span class="s1">&#39;警惕的&#39;</span><span class="p">,</span> <span class="s1">&#39;勇敢的&#39;</span><span class="p">,</span> <span class="s1">&#39;灵巧的&#39;</span><span class="p">,</span> <span class="s1">&#39;快乐的&#39;</span><span class="p">,</span> <span class="s1">&#39;温顺的&#39;</span><span class="p">,</span> <span class="s1">&#39;活力四溢的&#39;</span><span class="p">,</span> <span class="s1">&#39;善解人意的&#39;</span><span class="p">,</span> <span class="s1">&#39;胆小的&#39;</span><span class="p">,</span> <span class="s1">&#39;顺从的&#39;</span><span class="p">,</span> <span class="s1">&#39;敏捷的&#39;</span><span class="p">,</span> <span class="s1">&#39;善良的&#39;</span><span class="p">,</span> <span class="s1">&#39;天真的&#39;</span><span class="p">,</span> <span class="s1">&#39;顾家的&#39;</span><span class="p">,</span> <span class="s1">&#39;忠心的&#39;</span><span class="p">,</span> <span class="s1">&#39;聪慧的&#39;</span><span class="p">,</span> <span class="s1">&#39;好奇的&#39;</span><span class="p">,</span> <span class="s1">&#39;俏皮的&#39;</span><span class="p">,</span> <span class="s1">&#39;无畏的&#39;</span><span class="p">,</span> <span class="s1">&#39;忍耐的&#39;</span><span class="p">,</span> <span class="s1">&#39;顺利的&#39;</span><span class="p">,</span> <span class="s1">&#39;乖巧的&#39;</span><span class="p">,</span> <span class="s1">&#39;懂事的&#39;</span><span class="p">}</span>
+<span class="n">婴儿</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;可爱的&#39;</span><span class="p">,</span> <span class="s1">&#39;天真的&#39;</span><span class="p">,</span> <span class="s1">&#39;无忧无虑的&#39;</span><span class="p">,</span> <span class="s1">&#39;天使般的&#39;</span><span class="p">,</span> <span class="s1">&#39;活泼的&#39;</span><span class="p">,</span> <span class="s1">&#39;灿烂的&#39;</span><span class="p">,</span> <span class="s1">&#39;稚嫩的&#39;</span><span class="p">,</span> <span class="s1">&#39;纯真的&#39;</span><span class="p">,</span> <span class="s1">&#39;温柔的&#39;</span><span class="p">,</span> <span class="s1">&#39;乖巧的&#39;</span><span class="p">,</span> <span class="s1">&#39;机灵的&#39;</span><span class="p">,</span> <span class="s1">&#39;聪明的&#39;</span><span class="p">,</span> <span class="s1">&#39;好奇的&#39;</span><span class="p">,</span> <span class="s1">&#39;快乐的&#39;</span><span class="p">,</span> <span class="s1">&#39;温暖的&#39;</span><span class="p">,</span> <span class="s1">&#39;甜美的&#39;</span><span class="p">,</span> <span class="s1">&#39;娇嫩的&#39;</span><span class="p">,</span> <span class="s1">&#39;宝贝般的&#39;</span><span class="p">,</span> <span class="s1">&#39;天真无邪的&#39;</span><span class="p">,</span> <span class="s1">&#39;亲切的&#39;</span><span class="p">,</span> <span class="s1">&#39;可亲的&#39;</span><span class="p">,</span> <span class="s1">&#39;天生的&#39;</span><span class="p">,</span> <span class="s1">&#39;俏皮的&#39;</span><span class="p">,</span> <span class="s1">&#39;淘气的&#39;</span><span class="p">,</span> <span class="s1">&#39;活力四溢的&#39;</span><span class="p">,</span> <span class="s1">&#39;天使般的&#39;</span><span class="p">,</span> <span class="s1">&#39;小巧玲珑的&#39;</span><span class="p">,</span> <span class="s1">&#39;善解人意的&#39;</span><span class="p">,</span> <span class="s1">&#39;顺从的&#39;</span><span class="p">,</span> <span class="s1">&#39;宝贝般的&#39;</span><span class="p">,</span> <span class="s1">&#39;乖巧的&#39;</span><span class="p">}</span>
+<span class="n">大学生</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;聪明的&#39;</span><span class="p">,</span> <span class="s1">&#39;勤奋的&#39;</span><span class="p">,</span> <span class="s1">&#39;积极的&#39;</span><span class="p">,</span> <span class="s1">&#39;有活力的&#39;</span><span class="p">,</span> <span class="s1">&#39;独立的&#39;</span><span class="p">,</span> <span class="s1">&#39;自信的&#39;</span><span class="p">,</span> <span class="s1">&#39;成熟的&#39;</span><span class="p">,</span> <span class="s1">&#39;创新的&#39;</span><span class="p">,</span> <span class="s1">&#39;担当的&#39;</span><span class="p">,</span> <span class="s1">&#39;乐观的&#39;</span><span class="p">,</span> <span class="s1">&#39;进取的&#39;</span><span class="p">,</span> <span class="s1">&#39;激情的&#39;</span><span class="p">,</span> <span class="s1">&#39;有才华的&#39;</span><span class="p">,</span> <span class="s1">&#39;有责任心的&#39;</span><span class="p">,</span> <span class="s1">&#39;热情洋溢的&#39;</span><span class="p">,</span> <span class="s1">&#39;开朗的&#39;</span><span class="p">,</span> <span class="s1">&#39;好学的&#39;</span><span class="p">,</span> <span class="s1">&#39;善于沟通的&#39;</span><span class="p">,</span> <span class="s1">&#39;团结的&#39;</span><span class="p">,</span> <span class="s1">&#39;有组织能力的&#39;</span><span class="p">,</span> <span class="s1">&#39;有领导才能的&#39;</span><span class="p">,</span> <span class="s1">&#39;有创造力的&#39;</span><span class="p">,</span> <span class="s1">&#39;有决策能力的&#39;</span><span class="p">,</span> <span class="s1">&#39;适应能力强的&#39;</span><span class="p">,</span> <span class="s1">&#39;有合作精神的&#39;</span><span class="p">,</span> <span class="s1">&#39;有追求卓越的&#39;</span><span class="p">,</span> <span class="s1">&#39;具有社交能力的&#39;</span><span class="p">,</span> <span class="s1">&#39;富有同理心的&#39;</span><span class="p">,</span> <span class="s1">&#39;注重个人发展的&#39;</span><span class="p">,</span> <span class="s1">&#39;有人际关系的&#39;</span><span class="p">}</span>
+<span class="n">venn3</span><span class="p">([</span><span class="n">小狗</span><span class="p">,</span><span class="n">婴儿</span><span class="p">,</span><span class="n">大学生</span><span class="p">],(</span><span class="s1">&#39;Dog&#39;</span><span class="p">,</span><span class="s1">&#39;Baby&#39;</span><span class="p">,</span><span class="s1">&#39;College Student&#39;</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/L2_1_11_0.png" src="_images/L2_1_11_0.png" />
+</div>
+</div>
+</section>
+<section id="python">
+<h2>Python中的集合运算<a class="headerlink" href="#python" title="Permalink to this headline">#</a></h2>
+<!-- ![](15_union_intersection_difference_symmetric.webp =x250) -->
+<a class="reference internal image-reference" href="_images/15_union_intersection_difference_symmetric.webp"><img alt="_images/15_union_intersection_difference_symmetric.webp" src="_images/15_union_intersection_difference_symmetric.webp" style="width: 600px;" /></a>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">set1</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">}</span> <span class="c1">## 等同于 set1=set((1,2,3))</span>
+<span class="n">set2</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">}</span>
+<span class="n">set3</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">set1</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">set2</span><span class="p">)</span>
+<span class="n">set1</span><span class="o">|</span><span class="n">set2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{1, 2, 3, 4}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">set1</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">set2</span><span class="p">)</span>
+<span class="n">set1</span> <span class="o">&amp;</span> <span class="n">set2</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{2, 3}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">set1</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">set2</span><span class="p">)</span>
+<span class="n">set1</span><span class="o">-</span><span class="n">set2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{1}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">set2</span><span class="o">.</span><span class="n">symmetric_difference</span><span class="p">(</span><span class="n">set1</span><span class="p">)</span>
+<span class="n">set2</span><span class="o">^</span><span class="n">set1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{1, 4}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">set1</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">}</span> 
+<span class="n">set2</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">set1</span><span class="p">)</span>
+<span class="c1">## 并集，改变set1的值, union</span>
+<span class="n">set1</span><span class="o">.</span><span class="n">update</span><span class="p">(</span> <span class="n">set2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">set1</span><span class="p">)</span>
+<span class="c1">## 交集，改变set1的值, intersection</span>
+<span class="n">set1</span> <span class="o">&amp;=</span> <span class="n">set2</span> 
+<span class="nb">print</span><span class="p">(</span><span class="n">set1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{1, 2, 3}
+{1, 2, 3, 4}
+{2, 3, 4}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">set1</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">}</span> 
+<span class="n">set2</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">}</span>
+<span class="c1">## set1中去掉与set2相同的值, difference</span>
+<span class="n">set1</span> <span class="o">-=</span> <span class="n">set2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">set1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{1}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">set1</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">}</span> 
+<span class="n">set2</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">}</span>
+<span class="c1">## 只在set1或set2中的值，symmetric_difference</span>
+<span class="n">set1</span> <span class="o">^=</span> <span class="n">set2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">set1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{1, 4}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">小狗</span> <span class="o">&amp;</span> <span class="n">婴儿</span> <span class="o">&amp;</span> <span class="n">大学生</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;聪明的&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id7">
+<h2>概率模型<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h2>
+<p>概率模型的构成</p>
+<ul class="simple">
+<li><p>样本空间：一个试验所有可能的结果</p></li>
+<li><p>概率律：试验结果的集合A，概率非负数P(A)</p></li>
+</ul>
+<p>样本空间：不能遗漏任何结果</p>
+<p>例子：抛10次硬币</p>
+<ul class="simple">
+<li><p>例1：每出现1次正面朝上，赢1元</p></li>
+<li><p>例2：每次赢1元，每次遇到正面朝上，每次赢得的钱翻倍</p></li>
+</ul>
+<p>赢得的总额</p>
+<ul class="simple">
+<li><p>例1：[0,10]的数列,样本11</p></li>
+<li><p>例2：[正/反，….,正/反]的序列，样本2^10</p></li>
+</ul>
+</section>
+<section id="id8">
+<h2>概率律<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h2>
+<p>概率公理</p>
+<ul class="simple">
+<li><p>非负性，P(A) &gt;0</p></li>
+<li><p>可加性，若A,B不相交，<span class="math notranslate nohighlight">\(P(A \cup B) = P(A) + P(B)\)</span></p></li>
+<li><p>归一化，整个样本空间的总概率为1，<span class="math notranslate nohighlight">\(P(\Omega)\)</span>=1</p></li>
+</ul>
+<p>概率P(A)是什么？</p>
+<ul class="simple">
+<li><p>大量可重复实验中A出现的频率</p></li>
+<li><p>主观判断：明天是否下雨，哪支球队赢得比赛胜利</p></li>
+</ul>
+</section>
+<section id="id9">
+<h2>离散模型<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h2>
+<p>离散模型：样本空间有限个元素</p>
+<p>事件A={<span class="math notranslate nohighlight">\(s_1,s_2,\cdots,s_n\)</span>}的概率是其包含的试验结果概率之和</p>
+<div class="math notranslate nohighlight">
+\[ P(\{s_1,s_2,\cdots,s_n \}) = P(s_1) + P(s_1) + \cdot + P(s_n)\]</div>
+<section id="id10">
+<h3>均匀概率律<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h3>
+<p>若样本空间每个试验结果是等概率的，则</p>
+<div class="math notranslate nohighlight">
+\[P(A)= \frac{含有A的试验结果数}{n}\]</div>
+<p>例：连续两次掷有4个面的骰子</p>
+<ul class="simple">
+<li><p>P（{两次点数和为偶}）= 1/2</p></li>
+<li><p>P（{两次点数相同}）= 1/4</p></li>
+<li><p>P（{第一次比第二次点数大}）= 3/8</p></li>
+<li><p>P（{至少一次点数为4}）= 7/16</p></li>
+</ul>
+</section>
+<section id="id11">
+<h3>Python 列举试验结果，计算概率<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## 穷举所有排列</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+
+<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1 2 3 4]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of possible results = &quot;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(1, 1), (1, 2), (1, 3), (1, 4), (2, 1), (2, 2), (2, 3), (2, 4), (3, 1), (3, 2), (3, 3), (3, 4), (4, 1), (4, 2), (4, 3), (4, 4)]
+Number of possible results =  16
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span> <span class="nb">sum</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">%</span><span class="k">2</span>==0 for i in y ) ## 两次和为偶数/奇数, 1/2 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Counter({True: 8, False: 8})
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span> <span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y</span> <span class="p">)</span> <span class="c1">## 第一次比第二次大, 3/8</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Counter({False: 10, True: 6})
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span> <span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="mi">4</span> <span class="ow">or</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="mi">4</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y</span> <span class="p">)</span>  <span class="c1">## 至少一次为4, 7/16</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Counter({False: 9, True: 7})
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span> <span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="mi">4</span> <span class="ow">or</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="mi">4</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y</span> <span class="p">)[</span><span class="kc">True</span><span class="p">]</span>  <span class="c1">## 至少一次为4, 7/16</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id12">
+<h3>Python离散随机数产生<a class="headerlink" href="#id12" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1">##在0到4中随机产生一个整数</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3
+2
+2
+2
+3
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3
+2
+0
+1
+2
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1 4 2 1 4]
+ [4 3 2 4 3]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>例：连续两次掷有4个面的骰子</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span><span class="o">=</span><span class="mi">1000</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">sample</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[4 2 1 ... 4 1 4]
+ [2 2 4 ... 1 2 3]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+ 
+<span class="n">f</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">stat</span><span class="o">=</span><span class="s1">&#39;probability&#39;</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">stat</span><span class="o">=</span><span class="s1">&#39;probability&#39;</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:ylabel=&#39;Probability&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/L2_1_40_1.png" src="_images/L2_1_40_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">collections</span>
+<span class="c1">## P（{两次点数和为偶}）= 1/2</span>
+
+<span class="n">counter</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">%</span><span class="k">2</span>==0)
+<span class="nb">print</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">counter</span><span class="p">[</span><span class="kc">True</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Counter({False: 512, True: 488})
+488
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## P（{两次点数相同}）= 1/4</span>
+<span class="c1">## P（{第一次比第二次点数大}）= 3/8</span>
+<span class="c1">## P（{至少一次点数为4}）= 7/16</span>
+
+<span class="n">counter1</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">counter2</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">counter3</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="mi">4</span> <span class="ow">in</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">y</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;随机实验得到P=&quot;</span><span class="p">,</span><span class="n">counter1</span><span class="p">[</span><span class="kc">True</span><span class="p">]</span><span class="o">/</span><span class="n">sample</span><span class="p">,</span><span class="n">counter2</span><span class="p">[</span><span class="kc">True</span><span class="p">]</span><span class="o">/</span><span class="n">sample</span><span class="p">,</span><span class="n">counter3</span><span class="o">/</span><span class="n">sample</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;理论计算得到P=&quot;</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="o">/</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="o">/</span><span class="mi">16</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>随机实验得到P= 0.231 0.373 0.425
+理论计算得到P= 0.25 0.375 0.4375
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 肖朦<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,1236 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>连续随机变量 &#8212; 统计与大数据分析</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint single-page" id="site-navigation">
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/L5.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/L5.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   连续随机变量
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     连续随机变量
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pdf">
+     例：粒子物理中的部分子分布函数（PDF）
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   连续随机变量的期望值和方差
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#uniform">
+     连续均匀分布(Uniform)
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exponential">
+     指数分布 (Exponential)
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#normal-gaussian">
+     正态分布(Normal)/高斯分布(Gaussian)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   二维正态分布
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     条件分布
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     边缘分布
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   二维随机变量生成
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   随机变量的独立性
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   多维随机变量的分布函数
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id10">
+   协方差和相关系数
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id11">
+   作业
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>连续随机变量</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   连续随机变量
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     连续随机变量
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pdf">
+     例：粒子物理中的部分子分布函数（PDF）
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   连续随机变量的期望值和方差
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#uniform">
+     连续均匀分布(Uniform)
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exponential">
+     指数分布 (Exponential)
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#normal-gaussian">
+     正态分布(Normal)/高斯分布(Gaussian)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   二维正态分布
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     条件分布
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     边缘分布
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   二维随机变量生成
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   随机变量的独立性
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   多维随机变量的分布函数
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id10">
+   协方差和相关系数
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id11">
+   作业
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <center>
+<h1> 统计与大数据分析</h1>
+<h2>连续随机变量</h2>
+<h5>肖朦，2023 </h5>
+</center><section id="id1">
+<h1>连续随机变量<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
+<p>问题：</p>
+<p>闯红灯的人数比例为0.01%，在一个十字路口平均1小时有5万人通过，观测到第一个闯红灯的人平均需要多久？标准差？该时间符合什么分布？</p>
+<section id="id2">
+<h2>连续随机变量<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>取值无穷多，不可逐一排列</p></li>
+<li><p>概率分布 =&gt; 概率密度函数 （pdf）,f(x)</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ \int f(x)dx = 1\]</div>
+<ul class="simple">
+<li><p>累积分布函数或分布函数（cdf), F(x)</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ f(x)= F'(x)\]</div>
+<div class="math notranslate nohighlight">
+\[P(a \leq x \leq b) = F(b)-F(a) = \int_a^{b} f(x)dx \]</div>
+<a class="reference internal image-reference" href="_images/pdf.png"><img alt="_images/pdf.png" src="_images/pdf.png" style="width: 500px;" /></a>
+<ul class="simple">
+<li><p>对于单点a, <span class="math notranslate nohighlight">\(P(x=a) = F(a) - F(a) =0\)</span></p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/pdf1.png"><img alt="_images/pdf1.png" src="_images/pdf1.png" style="width: 500px;" /></a>
+<ul class="simple">
+<li><p>P= <span class="math notranslate nohighlight">\(f(x)\delta\)</span> 为x落在<span class="math notranslate nohighlight">\([x,x+\delta]\)</span>区域的概率, f(x)可以大于1</p></li>
+</ul>
+</section>
+<section id="pdf">
+<h2>例：粒子物理中的部分子分布函数（PDF）<a class="headerlink" href="#pdf" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>质子中不同类别夸克和胶子（部分子）携带动量比例的概率密度</p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/Parton.png"><img alt="_images/Parton.png" src="_images/Parton.png" style="width: 300px;" /></a>
+</section>
+</section>
+<section id="id3">
+<h1>连续随机变量的期望值和方差<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h1>
+<div class="math notranslate nohighlight">
+\[ E(x) = \int x f(x) dx \]</div>
+<div class="math notranslate nohighlight">
+\[ E(g(x)) = \int g(x) f(x) dx \]</div>
+<div class="math notranslate nohighlight">
+\[ \text{var}(x) = \int (x-E(x))^2 f(x) dx  = E(x^2)-(E(x))^2\]</div>
+<section id="uniform">
+<h2>连续均匀分布(Uniform)<a class="headerlink" href="#uniform" title="Permalink to this headline">#</a></h2>
+<div class="amsmath math notranslate nohighlight" id="equation-558de2ae-a48d-4eff-a70d-43d704b49a96">
+<span class="eqno">(1)<a class="headerlink" href="#equation-558de2ae-a48d-4eff-a70d-43d704b49a96" title="Permalink to this equation">#</a></span>\[\begin{equation} 
+f(x) =
+\begin{cases}
+\frac{1}{b-a} &amp; a\leq x \leq b \\
+0 &amp; \text{其他}
+\end{cases}
+\end{equation}\]</div>
+<div class="math notranslate nohighlight">
+\[ E(x)= \int_a^{b} x \frac{1}{b-a} dx = \frac{b^2-a^2}{2(b-a)} = \frac{a+b}{2}\]</div>
+<div class="math notranslate nohighlight">
+\[ \text{var}(x) = \int_a^{b} \frac{x^2}{b-a}dx - (\frac{a+b}{2})^2 = \frac{b^3-a^3}{3}-(\frac{a+b}{2})^2 = \frac{(b-a)^2}{12}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">y</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:ylabel=&#39;Count&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/L5_6_1.png" src="_images/L5_6_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="n">x</span><span class="p">,</span><span class="n">stat</span><span class="o">=</span><span class="s1">&#39;density&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="c1">## 注意参数值的意义</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x16e53adf0&gt;]
+</pre></div>
+</div>
+<img alt="_images/L5_7_1.png" src="_images/L5_7_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">skew</span><span class="p">,</span> <span class="n">kurt</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">uniform</span><span class="o">.</span><span class="n">stats</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="n">moments</span><span class="o">=</span><span class="s1">&#39;mvsk&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">skew</span><span class="p">,</span> <span class="n">kurt</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">((</span><span class="mi">7</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.5 2.083333333333333 0.0 -1.2
+2.0833333333333335
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exponential">
+<h2>指数分布 (Exponential)<a class="headerlink" href="#exponential" title="Permalink to this headline">#</a></h2>
+<div class="amsmath math notranslate nohighlight" id="equation-b24a2cf5-c13e-4fc4-bce3-9143ae3c6af9">
+<span class="eqno">(2)<a class="headerlink" href="#equation-b24a2cf5-c13e-4fc4-bce3-9143ae3c6af9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+f(x)= 
+\begin{cases}
+\lambda e^{-\lambda x} &amp; x&gt;0 \\
+0 &amp; x\leq0 \\
+\end{cases}
+\end{equation}\]</div>
+<ul class="simple">
+<li><p>描述某事件发生所需要的时间</p></li>
+<li><p>单位时间事件发生的次数平均值为<span class="math notranslate nohighlight">\(\lambda\)</span>,时长x之内发生的总次数<span class="math notranslate nohighlight">\(\lambda\)</span>x. 实际观察到的次数符合泊松分布</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ g(n) = (\lambda x)^n\frac{e^{-\lambda x}}{(n)!}\]</div>
+<ul>
+<li><p>第一次观察到事件发生需要等待时间x，计算其概率</p>
+<ul class="simple">
+<li><p>在时间<span class="math notranslate nohighlight">\(0-x\)</span>之间，发生事件次数0，对应概率</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ g(0) = (\lambda x)^0 \frac{e^{-\lambda x}}{(0)!}= e^{-\lambda x}\]</div>
+<ul class="simple">
+<li><p>在时间<span class="math notranslate nohighlight">\(x-x+dx\)</span>之间，发生事件1次，对应概率</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ g(1) = (\lambda dx)^1 \frac{e^{-\lambda dx}}{(1)!} = \lambda dx \]</div>
+<ul class="simple">
+<li><p>总概率</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ f(x)dx = g(0)g(1) = \lambda e^{-\lambda x} dx \]</div>
+</li>
+<li><p>期望值: <span class="math notranslate nohighlight">\(1/\lambda\)</span>, 方差 <span class="math notranslate nohighlight">\(1/{\lambda}^2\)</span></p></li>
+<li><p>更详细的内容参见《概率导论》第六章,伯努利过程和泊松过程</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### expon (loc,scale), e^{-(x-loc)/scale}</span>
+<span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">skew</span><span class="p">,</span> <span class="n">kurt</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">expon</span><span class="o">.</span><span class="n">stats</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">moments</span><span class="o">=</span><span class="s1">&#39;mvsk&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">skew</span><span class="p">,</span> <span class="n">kurt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.2 0.04000000000000001 2.0 6.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">expon</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram_bin_edges</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span> <span class="c1">#让numpy优化binning，传递给seaborn</span>
+<span class="n">ax</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span><span class="n">stat</span><span class="o">=</span><span class="s1">&#39;density&#39;</span><span class="p">)</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">expon</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">bins</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bins</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x16e598f10&gt;]
+</pre></div>
+</div>
+<img alt="_images/L5_11_1.png" src="_images/L5_11_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">expon</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.2</span><span class="p">),</span><span class="n">st</span><span class="o">.</span><span class="n">expon</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.13862943611198905 0.2
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">expon</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mf">0.2</span><span class="p">),</span>
+                <span class="n">st</span><span class="o">.</span><span class="n">expon</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.99</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mf">0.2</span><span class="p">),</span> <span class="mi">5000</span><span class="p">)</span> <span class="c1"># ppf返回cdf值为0.01和0.99时所对应的x值</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;b=&quot;</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">expon</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">expon</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;c=&quot;</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">c</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">),</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;median value=&quot;</span><span class="p">,</span><span class="n">b</span><span class="p">[</span><span class="n">c</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b= [0.00201007 0.00219391 0.00237775 ... 0.92066635 0.9208502  0.92103404]
+c= [0.01       0.0109096  0.01181836 ... 0.9899816  0.9899908  0.99      ]
+median value= 0.13878818953517857
+</pre></div>
+</div>
+<img alt="_images/L5_13_1.png" src="_images/L5_13_1.png" />
+</div>
+</div>
+</section>
+<section id="normal-gaussian">
+<h2>正态分布(Normal)/高斯分布(Gaussian)<a class="headerlink" href="#normal-gaussian" title="Permalink to this headline">#</a></h2>
+<div class="math notranslate nohighlight">
+\[ f(x) = \frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\]</div>
+<ul class="simple">
+<li><p>记为 <span class="math notranslate nohighlight">\(X\sim N(\mu,\sigma)\)</span>, <span class="math notranslate nohighlight">\( N(0,1)\)</span>标准正态分布</p></li>
+<li><p>标准正态分布的累积分布函数（cdf）,标记为<span class="math notranslate nohighlight">\(\Phi(x)\)</span></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ \Phi(-x) = 1- \Phi(x)\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+
+<span class="n">x</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">([</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/L5_15_0.png" src="_images/L5_15_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### 修改图例</span>
+<span class="n">ax</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">([</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;scipy&#39;</span><span class="p">,</span><span class="s1">&#39;numpy&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/L5_16_0.png" src="_images/L5_16_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### 修改图例方法2</span>
+<span class="nb">bin</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="nb">bin</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;scipy&#39;</span><span class="p">,</span><span class="s1">&#39;numpy&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x16e668430&gt;
+</pre></div>
+</div>
+<img alt="_images/L5_17_1.png" src="_images/L5_17_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram_bin_edges</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="c1">#print(bins)</span>
+<span class="n">ax</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">([</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">],</span><span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span><span class="n">stat</span><span class="o">=</span><span class="s1">&#39;density&#39;</span><span class="p">,</span><span class="n">common_norm</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">bins</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bins</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x16e9d9280&gt;]
+</pre></div>
+</div>
+<img alt="_images/L5_18_1.png" src="_images/L5_18_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">sigma</span><span class="o">=</span><span class="mi">3</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">bins</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">sigma</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">bins</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">sigma</span><span class="p">)</span>
+<span class="n">ppf</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span><span class="n">sigma</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bins</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> 
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span> <span class="c1">##左右两边的y轴不同</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bins</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> 
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">bins</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">bins</span><span class="o">&lt;-</span><span class="mf">3.</span><span class="p">),</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="n">bins</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="n">ppf</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x16eaeaee0&gt;]
+</pre></div>
+</div>
+<img alt="_images/L5_19_1.png" src="_images/L5_19_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Confidence Interval，置信区间</span>
+<span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">sigma</span><span class="o">=</span><span class="mi">3</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">bins</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">sigma</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bins</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">bins</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">bins</span><span class="p">)</span><span class="o">&lt;</span><span class="n">sigma</span><span class="p">),</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="c1">#ax.fill_between(bins,f,where=(abs(bins)&lt;2*sigma),color=&#39;C1&#39;,alpha=0.3)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PolyCollection at 0x16e64ba30&gt;
+</pre></div>
+</div>
+<img alt="_images/L5_20_1.png" src="_images/L5_20_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">=</span><span class="s2">&quot;sigma&quot;</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">):</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span><span class="s2">&quot;CL: &quot;</span><span class="p">,</span><span class="mi">1</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="o">-</span><span class="n">sigma</span><span class="o">*</span><span class="n">i</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">sigma</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 sigma CL:  0.6826894921370859
+2 sigma CL:  0.9544997361036416
+3 sigma CL:  0.9973002039367398
+4 sigma CL:  0.9999366575163338
+5 sigma CL:  0.9999994266968563
+</pre></div>
+</div>
+</div>
+</div>
+<p>例：某地区的降雪量是正态随机变量，期望值为60，标准差20，本年降雪为至少90的概率是？</p>
+<div class="math notranslate nohighlight">
+\[ Y = \frac{90-60}{20} = 1.5\]</div>
+<div class="math notranslate nohighlight">
+\[ P(x&gt;=Y) = 1-\Phi(Y) \]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="mi">1</span><span class="o">-</span><span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.06680720126885809
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>E(X) = <span class="math notranslate nohighlight">\(\mu\)</span>, var(X) = <span class="math notranslate nohighlight">\(\sigma^2\)</span></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">skew</span><span class="p">,</span> <span class="n">kurt</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">stats</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span> <span class="n">moments</span><span class="o">=</span><span class="s1">&#39;mvsk&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">skew</span><span class="p">,</span> <span class="n">kurt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0 25.0 0.0 0.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="id4">
+<h1>二维正态分布<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h1>
+<div class="math notranslate nohighlight">
+\[ f(x,y) = \frac{1}{\sqrt{1-\rho^2}2\pi\sigma_1\sigma_2}exp (-\frac{1}{2(1-\rho^2)}(\frac{(x-\mu_1)^2}{\sigma_1^2}+\frac{(y-\mu_2)^2}{\sigma_2^2}-\frac{2\rho(x-\mu_1)(y-\mu_2)}{\sigma_1\sigma_2}))\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\Sigma= \begin{bmatrix}
+\sigma_1^2 &amp; \rho \sigma_1\sigma_2 \\
+\rho \sigma_1\sigma_2 &amp; \sigma_2^2
+\end{bmatrix}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[ f(x,y) = \frac{1}{\sqrt{(2\pi)^k \det \Sigma}}  \exp{\bigl(-1/2 (x-\mu)^\intercal \Sigma ^{-1} (x-\mu)\bigl)}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## 多维数组的展开</span>
+<span class="n">a1</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">]</span>
+<span class="n">b1</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">indexing</span><span class="o">=</span><span class="s1">&#39;ij&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dimension a, b, &quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[&#39;a&#39; &#39;a&#39; &#39;a&#39;]
+ [&#39;b&#39; &#39;b&#39; &#39;b&#39;]] 
+ [[1 2 3]
+ [1 2 3]]
+Dimension a, b,  (2, 3) (2, 3)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># #a=[[&#39;a&#39;,&#39;a&#39;,&#39;a&#39;],[&#39;b&#39;,&#39;b&#39;,&#39;b&#39;]] ## 2个成员</span>
+<span class="c1"># #b=[[1,2,3],[1,2,3]] ## 3个成员</span>
+<span class="c1">## 纵向展开</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]),</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> Dimension: &#39;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">])</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="c1">## 横向展开</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]),</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> Dimension: &#39;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">])</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="c1">## 网格展开</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">([</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]),</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> Dimension: &#39;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">([</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">])</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[&#39;a&#39; &#39;a&#39; &#39;a&#39;]
+ [&#39;b&#39; &#39;b&#39; &#39;b&#39;]
+ [&#39;1&#39; &#39;2&#39; &#39;3&#39;]
+ [&#39;1&#39; &#39;2&#39; &#39;3&#39;]] 
+ Dimension:  (4, 3)
+[[&#39;a&#39; &#39;a&#39; &#39;a&#39; &#39;1&#39; &#39;2&#39; &#39;3&#39;]
+ [&#39;b&#39; &#39;b&#39; &#39;b&#39; &#39;1&#39; &#39;2&#39; &#39;3&#39;]] 
+ Dimension:  (2, 6)
+[[[&#39;a&#39; &#39;1&#39;]
+  [&#39;a&#39; &#39;2&#39;]
+  [&#39;a&#39; &#39;3&#39;]]
+
+ [[&#39;b&#39; &#39;1&#39;]
+  [&#39;b&#39; &#39;2&#39;]
+  [&#39;b&#39; &#39;3&#39;]]] 
+ Dimension:  (2, 3, 2)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">multivariate_normal</span><span class="p">,</span><span class="n">norm</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">xmin</span><span class="o">=-</span><span class="mi">4</span><span class="p">;</span><span class="n">xmax</span><span class="o">=</span><span class="mi">6</span><span class="p">;</span><span class="n">ymin</span><span class="o">=-</span><span class="mi">4</span><span class="p">;</span><span class="n">ymax</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">xmean</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">ymean</span><span class="o">=-</span><span class="mi">1</span>
+<span class="n">cov</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>
+<span class="c1">#cmapV=&#39;Set3&#39;</span>
+<span class="n">cmapV</span><span class="o">=</span><span class="s1">&#39;Reds&#39;</span>
+
+<span class="c1">##定义网格坐标</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="n">xmin</span><span class="p">:</span><span class="n">xmax</span><span class="p">:</span><span class="mf">.1</span><span class="p">,</span> <span class="n">ymin</span><span class="p">:</span><span class="n">ymax</span><span class="p">:</span><span class="mf">.06</span><span class="p">]</span>
+<span class="n">pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+
+<span class="c1">##定义二维正态分布的pdf</span>
+<span class="n">rv</span> <span class="o">=</span> <span class="n">multivariate_normal</span><span class="p">([</span><span class="n">xmean</span><span class="p">,</span> <span class="n">ymean</span><span class="p">],</span><span class="n">cov</span> <span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figaspect</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span> <span class="c1">#subplot1,2,1,分为1行2列，得到第一列</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">pos</span><span class="p">),</span> <span class="n">rstride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cstride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmapV</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1">##用颜色表示密度概率函数</span>
+<span class="n">pos2</span><span class="o">=</span><span class="n">ax2</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">pos</span><span class="p">),</span><span class="mi">6</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmapV</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="c1">##等高线</span>
+<span class="n">cset</span><span class="o">=</span><span class="n">ax2</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">pos</span><span class="p">),</span><span class="mi">6</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmapV</span><span class="p">)</span>
+<span class="c1">##等高线的数值</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">cset</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="c1">##密度概率值与颜色对应图例</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pos2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/L5_29_0.png" src="_images/L5_29_0.png" />
+</div>
+</div>
+<section id="id5">
+<h2>条件分布<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rv</span> <span class="o">=</span> <span class="n">multivariate_normal</span><span class="p">([</span><span class="n">xmean</span><span class="p">,</span> <span class="n">ymean</span><span class="p">],</span><span class="n">cov</span> <span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figaspect</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span> <span class="c1">##1,1,1简写</span>
+
+<span class="n">x1d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span><span class="n">xmax</span><span class="p">,</span><span class="mf">.1</span><span class="p">)</span>
+<span class="n">y1d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mf">.06</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">yval</span> <span class="ow">in</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]:</span>
+    <span class="n">z</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x1d</span><span class="p">:</span>
+        <span class="n">z</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">([</span><span class="n">i</span><span class="p">,</span><span class="n">yval</span><span class="p">]))</span>
+    <span class="n">con</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1d</span><span class="p">,</span><span class="n">z</span><span class="o">/</span><span class="nb">sum</span><span class="p">(</span><span class="n">z</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;y=</span><span class="si">{:.1f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">yval</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x16eb7f9a0&gt;
+</pre></div>
+</div>
+<img alt="_images/L5_31_1.png" src="_images/L5_31_1.png" />
+</div>
+</div>
+</section>
+<section id="id6">
+<h2>边缘分布<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats.contingency</span> <span class="kn">import</span> <span class="n">margins</span>
+
+<span class="n">fig2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figaspect</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+<span class="n">ax3</span> <span class="o">=</span> <span class="n">fig2</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+
+<span class="n">x1d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span><span class="n">xmax</span><span class="p">,</span><span class="mf">.1</span><span class="p">)</span>
+<span class="n">y1d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">ymin</span><span class="p">,</span><span class="n">ymax</span><span class="p">,</span><span class="mf">.06</span><span class="p">)</span>
+
+<span class="n">xmargin</span><span class="p">,</span> <span class="n">ymargin</span> <span class="o">=</span> <span class="n">margins</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">pos</span><span class="p">))</span>
+
+<span class="n">ax3</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1d</span><span class="p">,</span><span class="n">xmargin</span><span class="o">/</span><span class="nb">sum</span><span class="p">(</span><span class="n">xmargin</span><span class="p">),</span><span class="n">y1d</span><span class="p">,</span><span class="n">ymargin</span><span class="o">.</span><span class="n">T</span><span class="o">/</span><span class="nb">sum</span><span class="p">(</span><span class="n">ymargin</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x16ef93940&gt;,
+ &lt;matplotlib.lines.Line2D at 0x16ef93970&gt;]
+</pre></div>
+</div>
+<img alt="_images/L5_33_1.png" src="_images/L5_33_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats.contingency</span> <span class="kn">import</span> <span class="n">margins</span>
+
+<span class="n">fig2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figaspect</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+<span class="n">ax3</span> <span class="o">=</span> <span class="n">fig2</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+
+<span class="n">x1d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span><span class="n">xmax</span><span class="p">,</span><span class="mf">.1</span><span class="p">)</span>
+<span class="n">y1d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">ymin</span><span class="p">,</span><span class="n">ymax</span><span class="p">,</span><span class="mf">.06</span><span class="p">)</span>
+
+<span class="n">xmargin</span><span class="p">,</span> <span class="n">ymargin</span> <span class="o">=</span> <span class="n">margins</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">pos</span><span class="p">))</span>
+
+<span class="n">ax3</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1d</span><span class="p">,</span><span class="n">xmargin</span><span class="o">/</span><span class="nb">sum</span><span class="p">(</span><span class="n">xmargin</span><span class="p">),</span><span class="n">y1d</span><span class="p">,</span><span class="n">ymargin</span><span class="o">.</span><span class="n">T</span><span class="o">/</span><span class="nb">sum</span><span class="p">(</span><span class="n">ymargin</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+
+<span class="n">rvx</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">xmean</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span> <span class="p">)</span>
+<span class="n">rvy</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">ymean</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">cov</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> <span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1d</span><span class="p">,</span><span class="n">rvx</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x1d</span><span class="p">)</span><span class="o">/</span><span class="nb">sum</span><span class="p">(</span><span class="n">rvx</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x1d</span><span class="p">)),</span><span class="s1">&#39;+&#39;</span><span class="p">,</span><span class="n">y1d</span><span class="p">,</span><span class="n">rvy</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">y1d</span><span class="p">)</span><span class="o">/</span><span class="nb">sum</span><span class="p">(</span><span class="n">rvy</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">y1d</span><span class="p">)),</span><span class="s1">&#39;+&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x16e76cd60&gt;,
+ &lt;matplotlib.lines.Line2D at 0x16e76c520&gt;]
+</pre></div>
+</div>
+<img alt="_images/L5_34_1.png" src="_images/L5_34_1.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="id7">
+<h1>二维随机变量生成<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cov</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>
+
+<span class="n">rns</span><span class="o">=</span><span class="n">multivariate_normal</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">[</span><span class="n">xmean</span><span class="p">,</span><span class="n">ymean</span><span class="p">],</span> <span class="n">cov</span><span class="o">=</span><span class="n">cov</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+<span class="n">g</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">rns</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">y</span><span class="o">=</span><span class="n">rns</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">g</span><span class="o">.</span><span class="n">plot_joint</span><span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.JointGrid at 0x16ed9b310&gt;
+</pre></div>
+</div>
+<img alt="_images/L5_36_1.png" src="_images/L5_36_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figaspect</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">ax3</span> <span class="o">=</span> <span class="n">fig2</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+
+<span class="n">rns</span><span class="o">=</span><span class="n">multivariate_normal</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">[</span><span class="n">xmean</span><span class="p">,</span><span class="n">ymean</span><span class="p">],</span> <span class="n">cov</span><span class="o">=</span><span class="n">cov</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rns</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">rns</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="p">,</span><span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.6</span><span class="p">,</span><span class="n">markersize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">markeredgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">markeredgewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">conf</span><span class="o">=</span><span class="n">ax3</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">pos</span><span class="p">),</span><span class="mi">6</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmapV</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">pos</span><span class="p">),</span><span class="mi">6</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmapV</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x16f0b8310&gt;
+</pre></div>
+</div>
+<img alt="_images/L5_37_1.png" src="_images/L5_37_1.png" />
+</div>
+</div>
+</section>
+<section id="id8">
+<h1>随机变量的独立性<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cov</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>
+
+<span class="n">rv</span> <span class="o">=</span> <span class="n">multivariate_normal</span><span class="p">([</span><span class="n">xmean</span><span class="p">,</span> <span class="n">ymean</span><span class="p">],</span><span class="n">cov</span> <span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figaspect</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+
+<span class="n">x1d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span><span class="n">xmax</span><span class="p">,</span><span class="mf">.1</span><span class="p">)</span>
+<span class="n">y1d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mf">.06</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">yval</span> <span class="ow">in</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]:</span>
+    <span class="n">z</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x1d</span><span class="p">:</span>
+        <span class="n">z</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">([</span><span class="n">i</span><span class="p">,</span><span class="n">yval</span><span class="p">]))</span>
+    <span class="n">con</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1d</span><span class="p">,</span><span class="n">z</span><span class="o">/</span><span class="nb">sum</span><span class="p">(</span><span class="n">z</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;y=</span><span class="si">{:.1f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">yval</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x16e7dab20&gt;
+</pre></div>
+</div>
+<img alt="_images/L5_39_1.png" src="_images/L5_39_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rns</span><span class="o">=</span><span class="n">multivariate_normal</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">[</span><span class="n">xmean</span><span class="p">,</span><span class="n">ymean</span><span class="p">],</span> <span class="n">cov</span><span class="o">=</span><span class="n">cov</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+<span class="n">g</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">rns</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">y</span><span class="o">=</span><span class="n">rns</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">g</span><span class="o">.</span><span class="n">plot_joint</span><span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.JointGrid at 0x16eb75fa0&gt;
+</pre></div>
+</div>
+<img alt="_images/L5_40_1.png" src="_images/L5_40_1.png" />
+</div>
+</div>
+</section>
+<section id="id9">
+<h1>多维随机变量的分布函数<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figaspect</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+<span class="n">ax3</span> <span class="o">=</span> <span class="n">fig2</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+
+<span class="n">pos3</span><span class="o">=</span><span class="n">ax3</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rv</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">pos</span><span class="p">),</span><span class="mi">6</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmapV</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">cset</span><span class="o">=</span><span class="n">ax3</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rv</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">pos</span><span class="p">),</span><span class="mi">6</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmapV</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">cset</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">fig2</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pos3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x171d2efd0&gt;
+</pre></div>
+</div>
+<img alt="_images/L5_42_1.png" src="_images/L5_42_1.png" />
+</div>
+</div>
+</section>
+<section id="id10">
+<h1>协方差和相关系数<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Cov(X,Y)=<span class="math notranslate nohighlight">\(E[(x-\mu_1)(y-\mu_2)] = E(xy)-\mu_1\mu_2\)</span></p></li>
+<li><p>若X,Y独立，则Cov(X,Y)=0</p></li>
+<li><p>相关系数 Corr(X,Y) = Cov (X,Y)/<span class="math notranslate nohighlight">\(\sigma_1 \sigma_2\)</span></p></li>
+<li><p>二维正态分布的Cov(X,Y) = <span class="math notranslate nohighlight">\(\rho \sigma_1 \sigma_2\)</span>, Corr(X,Y) = <span class="math notranslate nohighlight">\(\rho\)</span></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figaspect</span><span class="p">(</span><span class="mf">0.3</span><span class="p">))</span>
+<span class="n">ax3</span> <span class="o">=</span> <span class="n">fig2</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">k</span><span class="o">=</span><span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.3</span><span class="p">]:</span>
+    <span class="n">cov</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">i</span><span class="p">],</span> <span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>
+    <span class="n">rv</span> <span class="o">=</span> <span class="n">multivariate_normal</span><span class="p">([</span><span class="n">xmean</span><span class="p">,</span> <span class="n">ymean</span><span class="p">],</span><span class="n">cov</span> <span class="p">)</span>
+
+    <span class="n">conf</span><span class="o">=</span><span class="n">ax3</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">pos</span><span class="p">),</span><span class="mi">6</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmapV</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+    <span class="n">ax3</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">pos</span><span class="p">),</span><span class="mi">6</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmapV</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+    <span class="n">k</span><span class="o">+=</span><span class="mi">1</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x171ea5460&gt;
+</pre></div>
+</div>
+<img alt="_images/L5_44_1.png" src="_images/L5_44_1.png" />
+</div>
+</div>
+</section>
+<section id="id11">
+<h1>作业<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h1>
+<p>随机数个相互独立的随机变量之和</p>
+<ul class="simple">
+<li><p>记<span class="math notranslate nohighlight">\(X_1,\cdots,\)</span>为均值 E[X] ,方差为 var(X) 的同分布随机变量</p></li>
+<li><p>记N为取值非负的随机变量,有均值 E[N] ,方差 var(N)，若</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[Y= X_1 + X_2 + \cdots X_N\]</div>
+<p>那么</p>
+<div class="math notranslate nohighlight">
+\[ E(Y) = E(N)E(X)\]</div>
+<div class="math notranslate nohighlight">
+\[ \text {var}(Y) = \text {var}(X)E(N)+ (E(X))^2\text {var}(N) \]</div>
+<ul class="simple">
+<li><p>假设小明为买书去很多家书店，每家书店有这本书的概率是p=0.1。</p></li>
+<li><p>他在每家书店停留的时间服从指数分布，<span class="math notranslate nohighlight">\(\lambda=0.5\)</span>。</p></li>
+<li><p>他会一直逛书店，直到买到书为止。</p></li>
+</ul>
+<p>记他为了买书所花费的时间总和为Y，请用公式计算Y的</p>
+<ul class="simple">
+<li><p>均值</p></li>
+<li><p>方差</p></li>
+</ul>
+<p>并用随机数产生子方法验证以上结果。</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 肖朦<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
